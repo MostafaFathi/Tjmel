@@ -24,7 +24,7 @@ class Service extends Model
 
     public function getStatusNameAttribute()
     {
-        return ['Pending', 'Published', 'Rejected'][$this->status];
+        return ['قيد الانتظار', 'تم نشره', 'مرفوض'][$this->status];
     }
 
     public function getStatusColorAttribute()
