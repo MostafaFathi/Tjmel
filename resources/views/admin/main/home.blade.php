@@ -64,7 +64,7 @@
                 <div class="card card-body">
                     <div class="media">
                         <div class="media-body" style="">
-                            <h6 class="media-title font-weight-semibold">Number of users</h6>
+                            <h6 class="media-title font-weight-semibold">--</h6>
                             <h3><b>{{$appUsers}}</b></h3>
 
                         </div>
@@ -76,7 +76,7 @@
                 <div class="card card-body">
                     <div class="media">
                         <div class="media-body" style="">
-                            <h6 class="media-title font-weight-semibold">Number of orders</h6>
+                            <h6 class="media-title font-weight-semibold">--</h6>
                             <h3><b>{{$orders}}</b></h3>
 
                         </div>
@@ -88,7 +88,7 @@
                 <div class="card card-body">
                     <div class="media">
                         <div class="media-body" style="">
-                            <h6 class="media-title font-weight-semibold">Number of agents</h6>
+                            <h6 class="media-title font-weight-semibold">--</h6>
                             <h3><b>{{$agents}}</b></h3>
 
                         </div>
@@ -101,7 +101,7 @@
                 <div class="card card-body">
                     <div class="media">
                         <div class="media-body" style="">
-                            <h6 class="media-title font-weight-semibold">Number of approved orders</h6>
+                            <h6 class="media-title font-weight-semibold">--</h6>
                             <h3><b>{{$approvedOrders}}</b></h3>
 
                         </div>
@@ -112,7 +112,7 @@
                 <div class="card card-body">
                     <div class="media">
                         <div class="media-body" style="">
-                            <h6 class="media-title font-weight-semibold">Number of canceled orders</h6>
+                            <h6 class="media-title font-weight-semibold">--</h6>
                             <h3><b>{{$canceledOrders}}</b></h3>
 
                         </div>
@@ -128,7 +128,7 @@
                     <div class="media">
                         <div class="media-body">
                             <h3 class="mb-0">{{$todayIncome}}</h3>
-                            <span class="text-uppercase font-size-xs font-weight-bold">Daily income</span>
+                            <span class="text-uppercase font-size-xs font-weight-bold">--</span>
                         </div>
 
                         <div class="ml-3 align-self-center">
@@ -142,7 +142,7 @@
                     <div class="media">
                         <div class="media-body ">
                             <h3 class="mb-0">{{$monthIncome}}</h3>
-                            <span class="text-uppercase font-size-xs font-weight-bold">Month income</span>
+                            <span class="text-uppercase font-size-xs font-weight-bold">--</span>
                         </div>
 
                         <div class="mr-3 align-self-center">
@@ -156,7 +156,7 @@
                     <div class="media">
                         <div class="media-body">
                             <h3 class="mb-0">{{$yearIncome}}</h3>
-                            <span class="text-uppercase font-size-xs font-weight-bold">Year income</span>
+                            <span class="text-uppercase font-size-xs font-weight-bold">--</span>
                         </div>
 
                         <div class="ml-3 align-self-center">
@@ -171,10 +171,10 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Agent</th>
-                            <th>No. orders</th>
-                            <th>Current orders</th>
-                            <th>Payment received</th>
+                            <th>--</th>
+                            <th>--</th>
+                            <th>--</th>
+                            <th>---</th>
                         </tr>
                         </thead>
                         <tbody>
