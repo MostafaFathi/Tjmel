@@ -99,6 +99,17 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::get('/profile', [UserController::class, 'showProfile'])->name('profile.show');
     Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
     /* End Dashboard general routes */
+
+    Route::get('/git/stash', function () {
+        dd(shell_exec('cd .. && git stash'));
+    });
+    Route::get('/git/reset', function () {
+        dd(shell_exec('cd .. && git reset --hard'));
+    });
+    Route::get('/git/pull', function () {
+        dd(shell_exec('cd .. && git pull origin master'));
+    });
+
 });
 Route::get('/order', [OrderController::class, 'viewOrder'])->name('viewOrder');
 Route::post('/order/callback', [OrderController::class, 'callback'])->name('order.callback');
