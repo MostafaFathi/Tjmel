@@ -6,7 +6,7 @@
     <div class="page-header page-header-light">
         <div class="page-header-content header-elements-md-inline">
             <div class="page-title d-flex">
-                <h4><span class="font-weight-semibold">About us </span></h4>
+                <h4><span class="font-weight-semibold">من نحن ؟ </span></h4>
                 <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
             </div>
 
@@ -16,7 +16,7 @@
         <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
             <div class="d-flex">
                 <div class="breadcrumb">
-                    <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                    <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> الرئيسية</a>
                 </div>
 
             </div>
@@ -31,7 +31,7 @@
 
         <div class="card">
             <div class="card-header header-elements-inline">
-                <h5 class="card-title">About us</h5>
+                <h5 class="card-title">من نحن</h5>
 
             </div>
 
@@ -60,7 +60,7 @@
                         <div class="col-6 ">
 
                             <div class="form-group">
-                                <label class="control-label" for="content_ar">Content (AR)</label>
+                                <label class="control-label" for="content_ar">المحتوى (عربي)</label>
                                 <textarea rows="15" class="form-control" name="content_ar">{{$aboutUs->content_ar ?? ''}}</textarea>
                             </div>
 
@@ -71,7 +71,7 @@
                         <div class="col-6 ">
 
                             <div class="form-group">
-                                <label class="control-label" for="content_en">Content (EN)</label>
+                                <label class="control-label" for="content_en">المحتوى (انجليزي)</label>
                                 <textarea rows="15" class="form-control" name="content_en">{{$aboutUs->content_en ?? ''}}</textarea>
                             </div>
 
@@ -85,7 +85,7 @@
 
                     <div class="form-group">
 
-                        <button class="btn btn-success">Save</button>
+                        <button class="btn btn-success">حفظ التغييرات</button>
 
                     </div>
 

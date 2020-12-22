@@ -1,12 +1,17 @@
 @extends('admin.layouts.app')
 
 @section('content')
-
+    <style>
+        .nav-tabs .nav-item .nav-link .badge{
+            position: relative;
+            top: -4px;
+        }
+    </style>
     <!-- Page header -->
     <div class="page-header page-header-light">
         <div class="page-header-content header-elements-md-inline">
             <div class="page-title d-flex">
-                <h4><span class="font-weight-semibold">Show </span></h4>
+                <h4><span class="font-weight-semibold">عرض تفاصيل العيادة </span></h4>
                 <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
             </div>
 
@@ -16,9 +21,9 @@
         <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
             <div class="d-flex">
                 <div class="breadcrumb">
-                    <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                    <a href="{{route('clinics.index')}}" class="breadcrumb-item">Clinic</a>
-                    <span class="breadcrumb-item active">Show</span>
+                    <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> الرئيسة</a>
+                    <a href="{{route('clinics.index')}}" class="breadcrumb-item">العيادات</a>
+                    <span class="breadcrumb-item active">عرض</span>
                 </div>
 
             </div>
@@ -32,15 +37,15 @@
     <div class="content">
         <div class="card">
             <div class="card-header header-elements-inline">
-                <h6 class="card-title">Clinic Details</h6>
+                <h6 class="card-title">تفاصيل العيادة</h6>
             </div>
 
             <div class="card-body">
                 <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
-                    <li class="nav-item"><a href="#justified-right-icon-tab1" class="nav-link tab-link {{request()->get('page') == '' || request()->get('page') == 'details' ? 'active' : ''}}" name="details" data-toggle="tab">Details <i class="icon-grid4 ml-2"></i></a></li>
-                    <li class="nav-item"><a href="#justified-right-icon-tab2" class="nav-link tab-link {{request()->get('page') == 'services' ? 'active' : ''}}" name="services" data-toggle="tab"><span class="badge badge-warning mr-1 ml-1">{{count($clinic->services)}}</span>Services <i class="icon-yin-yang ml-2"></i></a></li>
-                    <li class="nav-item"><a href="#justified-right-icon-tab3" class="nav-link tab-link {{request()->get('page') == 'offers' ? 'active' : ''}}" name="offers" data-toggle="tab"><span class="badge badge-success mr-1 ml-1">{{count($clinic->offers)}}</span>Offers <i class="icon-price-tag2 ml-2"></i></a></li>
-                    <li class="nav-item"><a href="#justified-right-icon-tab4" class="nav-link tab-link {{request()->get('page') == 'rating' ? 'active' : ''}}" name="rating" data-toggle="tab"><span class="badge badge-primary mr-1 ml-1">{{count($clinic->rates)}}</span>Rating <i class="icon-star-full2 ml-2"></i></a></li>
+                    <li class="nav-item"><a href="#justified-right-icon-tab1" class="nav-link tab-link {{request()->get('page') == '' || request()->get('page') == 'details' ? 'active' : ''}}" name="details" data-toggle="tab"><i class="icon-grid4 mr-2"></i>معلومات عامة </a></li>
+                    <li class="nav-item"><a href="#justified-right-icon-tab2" class="nav-link tab-link {{request()->get('page') == 'services' ? 'active' : ''}}" name="services" data-toggle="tab"><i class="icon-yin-yang mr-2"></i>الخدمات <span class="badge badge-warning mr-1 ml-1">{{count($clinic->services)}}</span></a></li>
+                    <li class="nav-item"><a href="#justified-right-icon-tab3" class="nav-link tab-link {{request()->get('page') == 'offers' ? 'active' : ''}}" name="offers" data-toggle="tab"><i class="icon-price-tag2 mr-2"></i>العروض <span class="badge badge-success mr-1 ml-1">{{count($clinic->offers)}}</span></a></li>
+                    <li class="nav-item"><a href="#justified-right-icon-tab4" class="nav-link tab-link {{request()->get('page') == 'rating' ? 'active' : ''}}" name="rating" data-toggle="tab"><i class="icon-star-full2 mr-2"></i>التقييم <span class="badge badge-primary mr-1 ml-1">{{count($clinic->rates)}}</span></a></li>
 
                 </ul>
 
@@ -56,27 +61,27 @@
                                 <div class="col-6 ">
 
                                     <div class="form-group">
-                                        <label class="control-label" for="name">Name</label>
+                                        <label class="control-label" for="name">الاسم</label>
                                         <input type="text" class="form-control" disabled id="clinic_name_ar" name="clinic_name_ar"
                                                value="{{$clinic->name_ar}}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label" for="name">Phone</label>
+                                        <label class="control-label" for="name">رقم الجوال</label>
                                         <input type="text" class="form-control" disabled id="phone" name="phone"
                                                value="{{$clinic->phone}}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label" for="name">Full address</label>
+                                        <label class="control-label" for="name">العنوان بالكامل</label>
                                         <input type="text" class="form-control" disabled id="full_address_ar" name="full_address_ar"
                                                value="{{$clinic->full_address_ar}}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label" for="name">City</label>
+                                        <label class="control-label" for="name">المدينة</label>
                                         <input disabled type="text" class="form-control" id="user_name_ar" name="user_name_ar"
                                                value="{{$clinic->city->name_ar}}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label" for="name">District</label>
+                                        <label class="control-label" for="name">الحي</label>
                                         <input disabled type="text" class="form-control" id="user_name_ar" name="user_name_ar"
                                                value="{{$clinic->district->name_ar}}">
                                     </div>
@@ -84,12 +89,12 @@
                                 <div class="col-6 ">
 
                                     <div class="form-group">
-                                        <label class="control-label" for="name">Username</label>
+                                        <label class="control-label" for="name">اسم المستخدم</label>
                                         <input disabled type="text" class="form-control" id="user_name_ar" name="user_name_ar"
                                                value="{{$clinic->user->name_ar}}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label" for="name">User email</label>
+                                        <label class="control-label" for="name">البريد الالكتروني</label>
                                         <input disabled type="email" class="form-control" id="email" name="email"
                                                value="{{$clinic->user->email}}">
                                     </div>
@@ -99,21 +104,21 @@
 
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label class="control-label">Logo</label>
+                                    <label class="control-label">شعار العيادة</label>
                                     <input type="file" name="logo" class="file-input-logo" data-show-caption="false"
                                            data-show-upload="false" data-fouc>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <label class="control-label">Images</label>
+                                    <label class="control-label">صور العيادة</label>
                                     <input type="file" name="images[]" class="file-input" data-show-caption="false"
                                            data-show-upload="false" multiple data-fouc>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-lg-12">
-                                    <label class="control-label">Location</label>
+                                    <label class="control-label">الموقع على الخريطة</label>
                                     <div id="map_canvas" class="maps" style="width:100%; height:300px;"></div>
                                     <input type="hidden" name="location" id="coordinates" value="{{$clinic->location}}">
                                 </div>

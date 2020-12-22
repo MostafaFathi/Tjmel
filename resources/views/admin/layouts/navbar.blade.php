@@ -35,10 +35,10 @@
 				</a>
 
 				<div class="dropdown-menu dropdown-menu-right">
-					<a href="{{ route('profile.show') }}" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
+					<a href="{{ route('profile.show') }}" class="dropdown-item"><i class="icon-user-plus"></i> بياناتي</a>
 					<div class="dropdown-divider"></div>
 
-					<a href="{{ route('log_out') }}" class="dropdown-item"><i class="icon-switch2"></i> Logout</a>
+					<a href="{{ route('log_out') }}" class="dropdown-item"><i class="icon-switch2"></i> تسجيل الخروج</a>
 				</div>
 			</li>
 

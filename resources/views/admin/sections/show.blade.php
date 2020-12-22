@@ -6,7 +6,7 @@
     <div class="page-header page-header-light">
         <div class="page-header-content header-elements-md-inline">
             <div class="page-title d-flex">
-                <h4><span class="font-weight-semibold">Edit </span></h4>
+                <h4><span class="font-weight-semibold">عرض تفاصيل القسم </span></h4>
                 <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
             </div>
 
@@ -16,9 +16,9 @@
         <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
             <div class="d-flex">
                 <div class="breadcrumb">
-                    <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                    <a href="{{route('sections.index')}}" class="breadcrumb-item">Section</a>
-                    <span class="breadcrumb-item active">Edit</span>
+                    <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> الرئيسية</a>
+                    <a href="{{route('sections.index')}}" class="breadcrumb-item">الاقسام</a>
+                    <span class="breadcrumb-item active">عرض</span>
                 </div>
 
             </div>
@@ -33,7 +33,7 @@
 
         <div class="card">
             <div class="card-header header-elements-inline">
-                <h5 class="card-title">Section Details</h5>
+                <h5 class="card-title">تفاصيل القسم</h5>
 
             </div>
 
@@ -61,7 +61,7 @@
                         <div class="col-6 ">
 
                             <div class="form-group">
-                                <label class="control-label" for="name">Name</label>
+                                <label class="control-label" for="name">الاسم</label>
                                 <input type="text" class="form-control" id="title_ar" disabled name="title_ar" value="{{$section->title_ar}}">
                             </div>
 

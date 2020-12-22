@@ -5,12 +5,12 @@
 
                     <tr>
 
-                        <th class="numeric">id</th>
-                        <th class="">Name</th>
-                        <th class="">Section</th>
-                        <th class="">Price</th>
-                        <th class="">Status</th>
-                        <th class="">Control</th>
+                        <th class="numeric">#</th>
+                        <th class="">الاسم</th>
+                        <th class="">القسم</th>
+                        <th class="">السعر</th>
+                        <th class="">الحالة</th>
+                        <th class="">التحكم</th>
 
                     </tr>
 
@@ -26,23 +26,22 @@
                             <td>{{$offer->name_ar}}</td>
                             <td>{{$offer->section->title_ar ?? '--'}}</td>
                             <td>
-                            <div style="text-decoration: line-through;color: #9E9E9E;">before:{{$offer->price_before ?? '--'}}</div>
-                            <div class="font-weight-bold">after:{{$offer->price_after ?? '--'}}</div>
+                            <div style="text-decoration: line-through;color: #9E9E9E;">قبل الخصم:{{$offer->price_before ?? '--'}}</div>
+                            <div class="font-weight-bold">بعد الخصم:{{$offer->price_after ?? '--'}}</div>
 
                             </td>
                             <td><span class="badge badge-{{$offer->status_color}}">{{$offer->status_name}}</span></td>
                             <td>
-                                <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Take
-                                    action</a>
+                                <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown">إتخذ إجراء</a>
 
                                 <div class="dropdown-menu dropdown-menu-lg">
-                                <a class="dropdown-item " data-placement="top" title="Show"
+                                <a class="dropdown-item " data-placement="top" title="عرض"
                                    href="{{route('admin.offers.show',$offer->id)}}"
-                                  ><i class="icon-eye"></i>Show</a>
+                                  ><i class="icon-eye"></i>عرض</a>
 
-                                <a class="dropdown-item" data-placement="top" title="{{$offer->status == 0 or $offer->status == 2 ? 'Approve' : 'Reject'}}" href="javascript:void(0)"
+                                <a class="dropdown-item" data-placement="top" title="{{$offer->status == 0 or $offer->status == 2 ? 'موافقة ونشر' : 'رفض وإخفاء'}}" href="javascript:void(0)"
                                    onclick="approve_item_offer('{{$offer->id}}','{{$offer->name}}')" data-toggle="modal"
-                                   data-target="#delete_item_modal_offer"><i class="{{$offer->status == 0 || $offer->status == 2 ? 'icon-check2' : 'icon-cross3'}} "></i>{{$offer->status == 0 || $offer->status == 2 ? 'Approve' : 'Reject'}}</a>
+                                   data-target="#delete_item_modal_offer"><i class="{{$offer->status == 0 || $offer->status == 2 ? 'icon-check2' : 'icon-cross3'}} "></i>{{$offer->status == 0 || $offer->status == 2 ? 'موافقة ونشر' : 'رفض وإخفاء'}}</a>
 
                                 </div>
 
@@ -56,7 +55,7 @@
                     @if(count($clinic->offers) == 0)
                         <tr>
                             <td colspan="6" class="text-center">
-                                There is no rows
+                                لا يوجد بيانات
                             </td>
                         </tr>
                     @endif
@@ -73,18 +72,18 @@
                         @csrf
                         <input name="id" id="item_id" class="form-control" type="hidden">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel">Approve/Reject offer <span id="del_label_title"></span>
+                            <h4 class="modal-title" id="myModalLabel">موافقة/رفض العرض <span id="del_label_title"></span>
                             </h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
                         <div class="modal-body">
-                            <h4>Confirm Approve/Reject offer</h4>
+                            <h4>تأكيد الموافقة/الرفض للعرض</h4>
                             <p id="grup_title"></p>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success waves-effect" id="delete_url">Save New Status</button>
+                            <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">اغلاق</button>
+                            <button type="submit" class="btn btn-success waves-effect" id="delete_url">حفظ الحالة الجديدة</button>
                         </div>
                     </form>
                 </div>

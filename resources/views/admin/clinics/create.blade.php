@@ -6,7 +6,7 @@
     <div class="page-header page-header-light">
         <div class="page-header-content header-elements-md-inline">
             <div class="page-title d-flex">
-                <h4><span class="font-weight-semibold">Create </span></h4>
+                <h4><span class="font-weight-semibold">عيادة جديدة </span></h4>
                 <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
             </div>
 
@@ -16,9 +16,9 @@
         <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
             <div class="d-flex">
                 <div class="breadcrumb">
-                    <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                    <a href="{{route('clinics.index')}}" class="breadcrumb-item">Clinic</a>
-                    <span class="breadcrumb-item active">Create</span>
+                    <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> الرئيسية</a>
+                    <a href="{{route('clinics.index')}}" class="breadcrumb-item">العيادات</a>
+                    <span class="breadcrumb-item active">جديد</span>
                 </div>
 
             </div>
@@ -33,7 +33,7 @@
 
         <div class="card">
             <div class="card-header header-elements-inline">
-                <h5 class="card-title">Clinic Details</h5>
+                <h5 class="card-title">تفاصيل العيادة</h5>
 
             </div>
 
@@ -61,21 +61,21 @@
                         <div class="col-6 ">
 
                             <div class="form-group">
-                                <label class="control-label" for="name">Name</label>
+                                <label class="control-label" for="name">الإسم</label>
                                 <input type="text" class="form-control" id="clinic_name_ar" name="clinic_name_ar" value="{{old('clinic_name_ar')}}">
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="name">Phone</label>
+                                <label class="control-label" for="name">رقم الجوال</label>
                                 <input type="text" class="form-control" id="phone" name="phone" value="{{old('phone')}}">
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="name">Full address</label>
+                                <label class="control-label" for="name">العنوان بالكامل</label>
                                 <input type="text" class="form-control" id="full_address_ar" name="full_address_ar" value="{{old('full_address_ar')}}">
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="name">City</label>
+                                <label class="control-label" for="name">المدينة</label>
                                 <select name="city_id" id="city" class="city form-control" required>
-                                    <option value="">Choose</option>
+                                    <option value="">إختر</option>
                                     @foreach($cities as $city)
                                         <option
                                             value="{{$city->id}}" {{old('city_id') == $city->id ? 'selected' : ''}}>{{$city->name_ar}}</option>
@@ -83,24 +83,24 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="name">District</label>
+                                <label class="control-label" for="name">الحي</label>
                                 <select name="district_id" id="districts" class=" districts form-control">
-                                    <option value="">Firstly, Choose city</option>
+                                    <option value="">أولاً إخنر مدينة</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-6 ">
 
                             <div class="form-group">
-                                <label class="control-label" for="name">Username</label>
+                                <label class="control-label" for="name">إسم المستخدم</label>
                                 <input type="text" class="form-control" id="user_name_ar" name="user_name_ar" value="{{old('user_name_ar')}}">
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="name">User email</label>
+                                <label class="control-label" for="name">البريد الالكتروني</label>
                                 <input type="email" class="form-control" id="email" name="email" value="{{old('email')}}">
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="name">User password</label>
+                                <label class="control-label" for="name">كلمة السر</label>
                                 <input type="password" class="form-control" id="password" name="password" value="{{old('password')}}">
                             </div>
                         </div>
@@ -109,26 +109,26 @@
 
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <label class="control-label">Logo</label>
+                            <label class="control-label">شعار العيادة</label>
                             <input type="file" name="logo" class="file-input-logo" data-show-caption="false" data-show-upload="false"  data-fouc>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <label class="control-label">Images</label>
+                            <label class="control-label">صور العيادة</label>
                             <input type="file" name="images[]"  class="file-input" data-show-caption="false" data-show-upload="false" multiple data-fouc>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-12">
-                            <label class="control-label">Location</label>
+                            <label class="control-label">الموقع على الخريطة</label>
                             <div id="map_canvas" class="maps" style="width:100%; height:300px;"></div>
                             <input type="hidden" name="location" id="coordinates" value="{{old('location')}}">
                         </div>
                     </div>
                     <div class="form-group">
 
-                        <button class="btn btn-success">Save</button>
+                        <button class="btn btn-success">حفظ</button>
 
                     </div>
 
@@ -159,9 +159,9 @@
                     $('#districts').html(data.options);
                 }, error: function (data) {
                     if (city_id === '') {
-                        $('#districts').html('<option value="">Firstly, Choose city</option>');
+                        $('#districts').html('<option value="">أولاً إختر مدينة</option>');
                     } else {
-                        $('#districts').html('<option value="">There is no districts</option>');
+                        $('#districts').html('<option value="">لا يوجد أحياء مضافة</option>');
                     }
                 }
             });
@@ -217,7 +217,7 @@
         };
 
         $('.file-input').fileinput({
-            browseLabel: 'Browse',
+            browseLabel: 'إختر ملف',
             browseIcon: '<i class="icon-file-plus mr-2"></i>',
             uploadIcon: '<i class="icon-file-upload2 mr-2"></i>',
             removeIcon: '<i class="icon-cross2 font-size-base mr-2"></i>',
@@ -234,7 +234,7 @@
         });
 
         $('.file-input-logo').fileinput({
-            browseLabel: 'Browse',
+            browseLabel: 'إختر ملف',
             browseIcon: '<i class="icon-file-plus mr-2"></i>',
             uploadIcon: '<i class="icon-file-upload2 mr-2"></i>',
             removeIcon: '<i class="icon-cross2 font-size-base mr-2"></i>',

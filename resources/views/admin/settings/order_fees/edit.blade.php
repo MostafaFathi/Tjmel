@@ -6,7 +6,7 @@
     <div class="page-header page-header-light">
         <div class="page-header-content header-elements-md-inline">
             <div class="page-title d-flex">
-                <h4><span class="font-weight-semibold">Edit </span></h4>
+                <h4><span class="font-weight-semibold">تعديل الاعدادات </span></h4>
                 <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
             </div>
 
@@ -16,8 +16,8 @@
         <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
             <div class="d-flex">
                 <div class="breadcrumb">
-                    <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                    <span class="breadcrumb-item active">Edit</span>
+                    <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> الرئيسية</a>
+                    <span class="breadcrumb-item active">الاعدادات</span>
                 </div>
 
             </div>
@@ -32,7 +32,6 @@
 
         <div class="card">
             <div class="card-header header-elements-inline">
-                <h5 class="card-title">Settings</h5>
 
             </div>
 
@@ -68,7 +67,7 @@
                                 <input type="number" class="form-control" id="vat_id" name="vat_id" value="{{$vat_id->value}}">
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="name">Advance Payment</label>
+                                <label class="control-label" for="name">الدفعة المقدمة (العربون)</label>
                                 <input type="number" class="form-control" id="advance_payment" name="advance_payment" value="{{$advance_payment->value}}">
                             </div>
 
@@ -76,7 +75,7 @@
                     </div>
                     <div class="form-group">
 
-                        <button class="btn btn-success">Save</button>
+                        <button class="btn btn-success">حفظ</button>
 
                     </div>
 

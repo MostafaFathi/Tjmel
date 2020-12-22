@@ -6,7 +6,7 @@
     <div class="page-header page-header-light">
         <div class="page-header-content header-elements-md-inline">
             <div class="page-title d-flex">
-                <h4><span class="font-weight-semibold">Create </span></h4>
+                <h4><span class="font-weight-semibold">جديد </span></h4>
                 <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
             </div>
 
@@ -16,9 +16,9 @@
         <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
             <div class="d-flex">
                 <div class="breadcrumb">
-                    <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                    <a href="{{route('advertisements.index')}}" class="breadcrumb-item">Advertisement</a>
-                    <span class="breadcrumb-item active">Create</span>
+                    <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> الرئيسية</a>
+                    <a href="{{route('advertisements.index')}}" class="breadcrumb-item">الإعلانات</a>
+                    <span class="breadcrumb-item active">جديد</span>
                 </div>
 
             </div>
@@ -33,7 +33,7 @@
 
         <div class="card">
             <div class="card-header header-elements-inline">
-                <h5 class="card-title">Advertisement Details</h5>
+                <h5 class="card-title">تفاصيل الاعلان</h5>
 
             </div>
 
@@ -104,7 +104,7 @@
 
                     <div class="form-group">
 
-                        <button class="btn btn-success">Save</button>
+                        <button class="btn btn-success">حفظ</button>
 
                     </div>
 
@@ -167,7 +167,7 @@
         };
 
         $('.file-input').fileinput({
-            browseLabel: 'Browse',
+            browseLabel: 'إختر ملف',
             browseIcon: '<i class="icon-file-plus mr-2"></i>',
             uploadIcon: '<i class="icon-file-upload2 mr-2"></i>',
             removeIcon: '<i class="icon-cross2 font-size-base mr-2"></i>',

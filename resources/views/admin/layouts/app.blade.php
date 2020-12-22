@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"  dir="rtl">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -60,9 +60,9 @@
         }
         .sidebar-dark .nav-sidebar .nav-link, .sidebar-light .card[class*=bg-]:not(.bg-light):not(.bg-white):not(.bg-transparent) .nav-sidebar .nav-link {
             color: #969696 !important;
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 400;
-            padding: 5px 20px;
+            padding: 8px 20px;
         }
         .nav-sidebar .nav-link i{
             margin-right: 10px;
@@ -106,7 +106,7 @@
             overflow-y: hidden !important;
         }
         .sidebar-expand-md:not(.sidebar-component) {
-            border-right: 1px solid #dddddd;
+            border-left: 1px solid #dddddd;
         }
         .bg-blue-400 {
             background-color: #593B6B;

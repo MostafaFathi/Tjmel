@@ -6,7 +6,7 @@
     <div class="page-header page-header-light">
         <div class="page-header-content header-elements-md-inline">
             <div class="page-title d-flex">
-                <h4><span class="font-weight-semibold">Services</span></h4>
+                <h4><span class="font-weight-semibold">الخدمات</span></h4>
             </div>
 
         </div>
@@ -14,8 +14,8 @@
         <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
             <div class="d-flex">
                 <div class="breadcrumb">
-                    <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                    <a href="{{route('services.acceptance')}}" class="breadcrumb-item">Services</a>
+                    <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> الرئيسية</a>
+                    <a href="{{route('services.acceptance')}}" class="breadcrumb-item">الخدمات</a>
 
                 </div>
 
@@ -38,13 +38,13 @@
 
                     <tr>
 
-                        <th class="numeric">id</th>
-                        <th class="">Clinic</th>
-                        <th class="">Name</th>
-                        <th class="">Section</th>
-                        <th class="">Price</th>
-                        <th class="">Status</th>
-                        <th class="">Control</th>
+                        <th class="numeric">#</th>
+                        <th class="">عنوان الخدمة</th>
+                        <th class="">العيادة</th>
+                        <th class="">القسم</th>
+                        <th class="">السعر</th>
+                        <th class="">الحالة</th>
+                        <th class="">التحكم</th>
 
                     </tr>
 
@@ -57,23 +57,22 @@
 
                         <tr @if(session('id') === $service->id)class="bg-green" @endif>
                             <td>{{$service->id}}</td>
-                            <td>{{$service->clinic->name_ar ?? '--'}}</td>
                             <td>{{$service->name_ar}}</td>
+                            <td>{{$service->clinic->name_ar ?? '--'}}</td>
                             <td>{{$service->section->title_ar ?? '--'}}</td>
                             <td>{{$service->price ?? '--'}}</td>
                             <td><span class="badge badge-{{$service->status_color}}">{{$service->status_name}}</span></td>
                             <td>
-                                <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Take
-                                    action</a>
+                                <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown">اتخذ اجراء</a>
 
                                 <div class="dropdown-menu dropdown-menu-lg">
-                                <a class="dropdown-item " data-placement="top" title="Show"
+                                <a class="dropdown-item " data-placement="top" title="عرض"
                                    href="{{route('admin.services.show',$service->id)}}"
-                                  ><i class="icon-eye"></i>Show</a>
+                                  ><i class="icon-eye"></i>عرض</a>
 
-                                <a class="dropdown-item" data-placement="top" title="{{$service->status == 0 || $service->status == 2 ? 'Approve' : 'Reject'}}" href="javascript:void(0)"
+                                <a class="dropdown-item" data-placement="top" title="{{$service->status == 0 || $service->status == 2 ? 'موافقة ونشر' : 'رفض واخفاء'}}" href="javascript:void(0)"
                                    onclick="approve_item('{{$service->id}}','{{$service->name}}')" data-toggle="modal"
-                                   data-target="#delete_item_modal"><i class="{{$service->status == 0 || $service->status == 2 ? 'icon-check2' : 'icon-cross3'}} "></i>{{$service->status == 0 || $service->status == 2 ? 'Approve' : 'Reject'}}</a>
+                                   data-target="#delete_item_modal"><i class="{{$service->status == 0 || $service->status == 2 ? 'icon-check2' : 'icon-cross3'}} "></i>{{$service->status == 0 || $service->status == 2 ? 'موافقة ونشر' : 'رفض واخفاء'}}</a>
 
                                 </div>
 
@@ -104,18 +103,18 @@
                         @csrf
                         <input name="id" id="item_id" class="form-control" type="hidden">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel">Approve/Reject service <span id="del_label_title"></span>
+                            <h4 class="modal-title" id="myModalLabel">موافقة/رفض الخدمة <span id="del_label_title"></span>
                             </h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
                         <div class="modal-body">
-                            <h4>Confirm Approve/Reject service</h4>
+                            <h4>تأكيد الموافقة/الرفض للخدمة</h4>
                             <p id="grup_title"></p>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success waves-effect" id="delete_url">Save New Status</button>
+                            <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">اغلاق</button>
+                            <button type="submit" class="btn btn-success waves-effect" id="delete_url">حفظ الحالة الجديدة</button>
                         </div>
                     </form>
                 </div>

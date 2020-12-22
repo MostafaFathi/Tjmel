@@ -6,10 +6,10 @@
     <div class="page-header page-header-light">
         <div class="page-header-content header-elements-md-inline">
             <div class="page-title d-flex">
-                <h4><span class="font-weight-semibold">Clinic</span></h4>
+                <h4><span class="font-weight-semibold">العيادات</span></h4>
             </div>
             <div class="header-elements">
-                <a type="button" class="btn btn-primary" href="{{route('clinics.create')}}">Create</a>
+                <a type="button" class="btn btn-primary" href="{{route('clinics.create')}}">عيادة جديدة</a>
             </div>
 
         </div>
@@ -17,8 +17,8 @@
         <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
             <div class="d-flex">
                 <div class="breadcrumb">
-                    <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                    <a href="{{route('clinics.index')}}" class="breadcrumb-item">Clinic</a>
+                    <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> الرئيسية</a>
+                    <a href="{{route('clinics.index')}}" class="breadcrumb-item">العيادات</a>
 
                 </div>
 
@@ -41,13 +41,13 @@
 
                     <tr>
 
-                        <th class="numeric">id</th>
-                        <th class="">Logo</th>
-                        <th class="">Title</th>
-                        <th class="">City</th>
-                        <th class="">District</th>
-                        <th class="">User</th>
-                        <th class="">Control</th>
+                        <th class="numeric">#</th>
+                        <th class="">الشعار</th>
+                        <th class="">الإسم</th>
+                        <th class="">المدينة</th>
+                        <th class="">الحي</th>
+                        <th class="">المستخدم</th>
+                        <th class="">التحكم</th>
 
                     </tr>
 
@@ -66,20 +66,19 @@
                             <td>{{$clinic->district->name_ar ?? '--'}}</td>
                             <td>{{$clinic->user->name_ar ?? '--'}}</td>
                             <td>
-                                <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Take
-                                    action</a>
+                                <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown">إتخذ اجراء</a>
 
                                 <div class="dropdown-menu dropdown-menu-lg">
                                 <a class="dropdown-item " data-placement="top" title="Show"
                                    href="{{route('clinics.show',$clinic->id)}}"
-                                  ><i class="icon-eye"></i>Show</a>
+                                  ><i class="icon-eye"></i>عرض</a>
 
-                                <a class="dropdown-item" data-placement="top" title="Delete" href="javascript:void(0)"
+                                <a class="dropdown-item" data-placement="top" title="حذف" href="javascript:void(0)"
                                    onclick="delete_item('{{$clinic->id}}','{{$clinic->name}}')" data-toggle="modal"
-                                   data-target="#delete_item_modal"><i class="icon-cross3"></i>Delete</a>
+                                   data-target="#delete_item_modal"><i class="icon-cross3"></i>حذف</a>
 
-                                <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Edit"
-                                   href="{{route('clinics.edit',$clinic->id)}}"><i class="icon-pencil7"></i>Edit</a>
+                                <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="تعديل"
+                                   href="{{route('clinics.edit',$clinic->id)}}"><i class="icon-pencil7"></i>تعديل</a>
 
                                 </div>
 
@@ -112,18 +111,18 @@
                         <input name="id" id="item_id" class="form-control" type="hidden">
                         <input name="_method" type="hidden" value="DELETE">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel">Delete Product <span id="del_label_title"></span>
+                            <h4 class="modal-title" id="myModalLabel">حذف عيادة <span id="del_label_title"></span>
                             </h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
                         <div class="modal-body">
-                            <h4>Confirm Delete Product</h4>
+                            <h4>تأكيد حذف العيادة</h4>
                             <p id="grup_title"></p>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-danger waves-effect" id="delete_url">Delete</button>
+                            <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">اغلاق</button>
+                            <button type="submit" class="btn btn-danger waves-effect" id="delete_url">حذف</button>
                         </div>
                     </form>
                 </div>

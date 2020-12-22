@@ -23,7 +23,7 @@
                 <div class="media">
 
                     <div class="media-body">
-                        <div class="media-title font-weight-semibold"><span>Welcome</span>, {{auth()->user()->name}}
+                        <div class="media-title font-weight-semibold"><span>مرحبا بك </span>, {{auth()->user()->name}}
                         </div>
 
                     </div>
@@ -44,7 +44,7 @@
                 <li class="nav-item">
                     <a href="{{route('dashboard')}}" class="nav-link ">
                         <i class="icon-home4"></i>
-                        <span>Dashboard</span>
+                        <span>الرئيسية</span>
                     </a>
                 </li>
                 @hasanyrole('admin')
@@ -52,35 +52,35 @@
                     <a href="{{route('advertisements.index')}}"
                        class="nav-link  {{request()->routeIs('advertisements.*')?'active' :'' }}">
                         <i class="icon-megaphone"></i>
-                        <span>Manage Advertisements</span>
+                        <span>إدارة الاعلانات</span>
                     </a>
                 </li>
                 <li class="nav-item ">
                     <a href="{{route('clinics.index')}}"
                        class="nav-link  {{request()->routeIs('clinics.*')?'active' :'' }}">
                         <i class="icon-office"></i>
-                        <span>Manage Clinics</span>
+                        <span>إدارة العيادات</span>
                     </a>
                 </li>
                 <li class="nav-item ">
                     <a href="{{route('sections.index')}}"
                        class="nav-link  {{request()->routeIs('sections.*')?'active' :'' }}">
                         <i class="icon-menu3"></i>
-                        <span>Manage Sections</span>
+                        <span>إدارة الاقسام</span>
                     </a>
                 </li>
                 <li class="nav-item ">
                     <a href="{{route('services.acceptance')}}"
                        class="nav-link  {{request()->routeIs('services.*')?'active' :'' }}">
                         <i class="icon-yin-yang"></i>
-                        <span>Manage Services</span>
+                        <span>إدارة الخدمات</span>
                     </a>
                 </li>
                 <li class="nav-item ">
                     <a href="{{route('offers.acceptance')}}"
                        class="nav-link  {{request()->routeIs('offers.*')?'active' :'' }}">
                         <i class="icon-price-tag2"></i>
-                        <span>Manage Offers</span>
+                        <span>إدارة العروض</span>
                     </a>
                 </li>
                 @endhasanyrole
@@ -89,41 +89,41 @@
                     <a href="{{route('settings.edit',0)}}"
                        class="nav-link  {{request()->routeIs('edit.*')?'active' :'' }}">
                         <i class="icon-coins"></i>
-                        <span>Advance Payment</span>
+                        <span> الدفعة المقدمة</span>
                     </a>
                 </li>
                 @endhasanyrole
                 @hasanyrole('admin')
                 <li class="nav-item-header">
-                    <div class="text-uppercase font-size-xs line-height-xs">Settings</div>
+                    <div class="text-uppercase font-size-xs line-height-xs">الاعدادات</div>
                     <i class="icon-menu" title="Admin"></i>
                 </li>
                 <li class="nav-item ">
                     <a href="{{route('users.index')}}"
                        class="nav-link  {{request()->routeIs('users.*')?'active' :'' }}">
                         <i class="icon-user"></i>
-                        <span>Users</span>
+                        <span>إدارة المستخدمين</span>
                     </a>
                 </li>
                 <li class="nav-item ">
                     <a href="{{route('about_us.create')}}"
                        class="nav-link  {{request()->routeIs('about_us.*')?'active' :'' }}">
                         <i class="icon-info22"></i>
-                        <span>About us</span>
+                        <span>من نحن</span>
                     </a>
                 </li>
                 <li class="nav-item ">
                     <a href="{{route('contact_us.index')}}"
                        class="nav-link  {{request()->routeIs('contact_us.*')?'active' :'' }}">
                         <i class="icon-envelop"></i>
-                        <span>Contact us</span>
+                        <span>اتصل بنا</span>
                     </a>
                 </li>
                 <li class="nav-item ">
                     <a href="{{route('telescope_view')}}"
                        class="nav-link  {{request()->routeIs('telescope_view*')?'active' :'' }}">
                         <i class="icon-eye"></i>
-                        <span>Telescope</span>
+                        <span>تلسكوب</span>
                     </a>
                 </li>
 
@@ -133,14 +133,14 @@
                     <a href="{{route('users_groups.index')}}"
                        class="nav-link  {{request()->routeIs('users_groups.*')?'active' :'' }}">
                         <i class="icon-users4"></i>
-                        <span>Manage Groups</span>
+                        <span>إدارة المجموعات</span>
                     </a>
                 </li>
                 <li class="nav-item d-none">
                     <a href="{{route('users_groups_permissions.index')}}"
                        class="nav-link  {{request()->routeIs('users_groups_permissions.*')?'active' :'' }}">
                         <i class="icon-user-tie"></i>
-                        <span>Manage Permissions</span>
+                        <span>إدارة الصلاحيات</span>
                     </a>
                 </li>
 

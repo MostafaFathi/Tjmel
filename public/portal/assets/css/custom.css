@@ -1,5 +1,13 @@
 @charset "UTF-8";
+@font-face {
+    font-family: 'Droid Arabic Kufi';
+    src: url(../font/DroidKufi-Regular.woff2),url(../font/DroidKufi-Bold.woff2);
+}
 
+body{
+    font-family: 'Droid Arabic Kufi', serif !important;
+
+}
 .navbar-brand img {
     height: 2.3rem;
 
