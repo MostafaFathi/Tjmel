@@ -64,7 +64,7 @@
                 <div class="card card-body">
                     <div class="media">
                         <div class="media-body" style="">
-                            <h6 class="media-title font-weight-semibold">--</h6>
+                            <h6 class="media-title font-weight-semibold">---</h6>
                             <h3><b>{{$appUsers}}</b></h3>
 
                         </div>
