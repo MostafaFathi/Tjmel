@@ -18,12 +18,19 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+    <style>
+        @font-face {
+            font-family: 'Droid Arabic Kufi';
+            src: url({{ asset('portal/assets/font/DroidKufi-Regular.woff2') }}),url({{ asset('portal/assets/font/DroidKufi-Bold.woff2') }});
+        }
+    </style>
 <style type="text/css">
     html , body{
         height: 100%;
     }
     body{
+        font-family: 'Droid Arabic Kufi', serif !important;
+
         background: url({{ url('/') }}/portal/assets/images/background.jpg);
         background-size: cover;
     }

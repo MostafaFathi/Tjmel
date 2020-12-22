@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-
+    <style>
+        @font-face {
+            font-family: 'Droid Arabic Kufi';
+            src: url({{ asset('portal/assets/font/DroidKufi-Regular.woff2') }}),url({{ asset('portal/assets/font/DroidKufi-Bold.woff2') }});
+        }
+    </style>
 </head>
 
 <style type="text/css">
@@ -14,7 +19,7 @@
         height: 100%;
     }
     body{
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Droid Arabic Kufi', serif !important;
         background: #CFDE40 url('{{asset('portal/assets/images/background.jpg')}}') no-repeat;
         background-size: cover;
         background-position: center;
@@ -78,9 +83,9 @@
 
     <div class="links">
 
-        <a class="btn-login" href="{{route('login')}}">Login</a>
+        <a class="btn-login" href="{{route('login')}}">تسجيل الدخول</a>
 
-        <a class="btn-continue" href="{{ Auth::check() ? route('dashboard') : route('landing.page')}}">Continue</a>
+        <a class="btn-continue" href="{{ Auth::check() ? route('dashboard') : route('landing.page')}}">إستمرار</a>
 
     </div>
 
