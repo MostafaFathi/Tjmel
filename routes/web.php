@@ -107,7 +107,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         dd(shell_exec('cd .. && git reset --hard'));
     });
     Route::get('/git/pull', function () {
-        dd(shell_exec('cd .. && git pull origin master'));
+        dd(shell_exec('cd .. && git pull origin main'));
     });
 
 });
