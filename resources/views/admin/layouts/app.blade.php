@@ -62,7 +62,7 @@
             color: #969696 !important;
             font-size: 16px;
             font-weight: 400;
-            padding: 8px 20px;
+            padding: 15px 20px;
         }
         .nav-sidebar .nav-link i{
             margin-right: 10px;
@@ -104,6 +104,9 @@
             bottom: auto !important;
             width: inherit !important;
             overflow-y: hidden !important;
+        }
+        .nav-sidebar .nav-item:not(.nav-item-divider){
+            border-bottom: 1px solid #f5f5f5 !important;
         }
         .sidebar-expand-md:not(.sidebar-component) {
             border-left: 1px solid #dddddd;
