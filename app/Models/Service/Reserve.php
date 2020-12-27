@@ -11,6 +11,8 @@ class Reserve extends Model
 {
     use HasFactory;
 
+    protected $appends = ['status_name'];
+
     public function app_user()
     {
         return $this->belongsTo(AppUser::class, 'app_user_id');
@@ -24,5 +26,10 @@ class Reserve extends Model
     public function clinic()
     {
         return $this->belongsTo(Clinic::class);
+    }
+
+    public function getStatusNameAttribute()
+    {
+        return ['جديد', 'مكتمل', 'غير مكتمل عدم حضور العميل', 'إلغاء من العيادة', 'إلغاء من العميل'][$this->status];
     }
 }

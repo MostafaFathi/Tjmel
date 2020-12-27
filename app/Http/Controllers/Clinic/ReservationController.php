@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Clinic;
 
 use App\Http\Controllers\Controller;
+use App\Models\Service\Reserve;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -15,8 +16,9 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $todayReservations = auth()->user()->clinic->reservations->where('appointment_date',Carbon::today()->format('Y-m-d'));
-        $nowReservations = auth()->user()->clinic->reservations->where('appointment_date',Carbon::today())->where('appointment_time',Carbon::now()->format('H:i a'));
+        $todayReservations = auth()->user()->clinic->reservations->where('status',0)->where('appointment_date',Carbon::today()->format('Y-m-d'));
+        $nowReservations = Reserve::where('clinic_id',auth()->user()->clinic->id)->where('appointment_date',Carbon::today())
+            ->whereBetween('appointment_time',[Carbon::now()->subMinutes(30),Carbon::now()])->get();
         $completedReservations = auth()->user()->clinic->reservations->where('status',1);
         $unCompletedReservations = auth()->user()->clinic->reservations->whereIn('status',[2,3,4]);
         return view('clinic.reservations.index',compact('todayReservations','nowReservations','completedReservations','unCompletedReservations'));
@@ -86,5 +88,14 @@ class ReservationController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function changeStatus(Request $request,$id,$status)
+    {
+        $reservation = Reserve::find($id);
+        $reservation->status = $status;
+        $reservation->reason = $request->comment;
+        $reservation->save();
+        return back();
     }
 }
