@@ -6,6 +6,7 @@ use App\Helpers\File;
 use App\Models\Data\City;
 use App\Models\Data\District;
 use App\Models\Service\Offer;
+use App\Models\Service\Reserve;
 use App\Models\Service\Service;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -50,6 +51,11 @@ class Clinic extends Model
         return $this->hasMany(Offer::class);
     }
 
+    public function reservations()
+    {
+        return $this->hasMany(Reserve::class);
+    }
+
     public function getLogoAttribute($logo)
     {
         if ($logo)
@@ -61,6 +67,6 @@ class Clinic extends Model
     public function getRatingAttribute()
     {
         $rate = count($this->rates) > 0 ? $this->rates->sum('rate') / count($this->rates) : 0;
-        return $rate ;
+        return $rate;
     }
 }

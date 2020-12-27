@@ -22,6 +22,15 @@ class Service extends Model
         return $this->belongsTo(Section::class);
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
+    public function reservations()
+    {
+        return $this->hasMany(Reserve::class);
+    }
+
     public function getStatusNameAttribute()
     {
         return ['قيد الانتظار', 'تم نشره', 'مرفوض'][$this->status];

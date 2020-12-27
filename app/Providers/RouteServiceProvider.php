@@ -27,6 +27,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/admin/home';
     public const ADMIN_HOME = '/admin/home';
+    public const CLINIC_HOME = '/clinic/home';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -70,6 +71,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
+        $this->mapClinicRoutes();
 
         //
     }
@@ -86,6 +88,13 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/web.php'));
+    }
+
+    protected function mapClinicRoutes()
+    {
+        Route::middleware('clinic')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/clinic.php'));
     }
 
     /**
