@@ -46,7 +46,7 @@
                     @endforeach
                     @if(count($unCompletedReservations) == 0)
                         <tr>
-                            <td colspan="7" class="text-center">
+                            <td colspan="8" class="text-center">
                                 لا يوجد بيانات
                             </td>
                         </tr>
