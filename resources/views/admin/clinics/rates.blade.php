@@ -4,10 +4,10 @@
         <div class="form-group">
             <label class="control-label font-weight-bold" for="name">التقييم العام : </label>
 
-            @for($i = 0;$i < floor($clinic->rating);$i++)
+            @for($i = 0;$i < round($clinic->rating);$i++)
                 <i class="icon-star-full2" style="color: orange;font-size: 22px"></i>
             @endfor
-            @for($i = 0;$i < (5 - floor($clinic->rating));$i++)
+            @for($i = 0;$i < (5 - round($clinic->rating));$i++)
                 <i class="icon-star-empty3" style="color: #cdcdcd;font-size: 22px"></i>
             @endfor
             <span class="font-weight-bold">{{ ($clinic->rating / 5) * 100 }} %</span>

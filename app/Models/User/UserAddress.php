@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Models\Clinic;
+namespace App\Models\User;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Rate extends Model
+class UserAddress extends Model
 {
     use HasFactory;
-    protected $hidden = ['created_at','updated_at'];
-
 }

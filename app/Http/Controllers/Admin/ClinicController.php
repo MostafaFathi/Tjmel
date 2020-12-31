@@ -10,6 +10,7 @@ use App\Models\User\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ClinicController extends Controller
 {
@@ -55,6 +56,8 @@ class ClinicController extends Controller
         $clinic->phone = $request->phone;
         $clinic->full_address_ar = $request->full_address_ar;
         $clinic->location = $request->location;
+        $clinic->longitude = Str::replaceFirst('(','',explode(', ',$request->location)[0]);
+        $clinic->latitude= Str::replaceLast(')','',explode(', ',$request->location)[1]);
         $clinic->city_id = $request->city_id;
         $clinic->district_id = $request->district_id;
         if ($request->has('logo') and $request->logo != null) {
@@ -118,6 +121,8 @@ class ClinicController extends Controller
         $clinic->phone = $request->phone;
         $clinic->full_address_ar = $request->full_address_ar;
         $clinic->location = $request->location;
+        $clinic->longitude = Str::replaceFirst('(','',explode(', ',$request->location)[0]);
+        $clinic->latitude= Str::replaceLast(')','',explode(', ',$request->location)[1]);
         $clinic->city_id = $request->city_id;
         $clinic->district_id = $request->district_id;
         if ($request->has('logo') and $request->logo != null) {

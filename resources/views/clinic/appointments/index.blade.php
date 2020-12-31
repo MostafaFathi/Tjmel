@@ -87,8 +87,9 @@
                                 <div class="row timeList">
                                     <ul class="ul-times">
                                         @foreach($times as $time)
-                                            <li class="time-btn" time="{{$time}}">
+                                            <li class="time-btn" time="{{$time}}" status="">
                                                 <input type="hidden" class="my-time" name="times[]" value="">
+                                                <input type="hidden" class="my-time-status" name="status[]" value="">
                                                 {{$time}}
                                             </li>
                                         @endforeach
@@ -174,11 +175,14 @@
         });
         $(document).on("click",".time-btn", function (e) {
             var time =  $(this).attr('time');
+            var status =  $(this).attr('status');
             if($(this).hasClass('checked')){
                 $(this).find('.my-time').val('');
+                $(this).find('.my-time-status').val('');
                 $(this).removeClass('checked');
             }else{
                 $(this).find('.my-time').val(time);
+                $(this).find('.my-time-status').val(status);
                 $(this).addClass('checked');
             }
             return false;
@@ -188,13 +192,16 @@
                 $(this).removeClass('checked');
                 $('.ul-times li').each(function(i){
                     $(this).find('.my-time').val('');
+                    $(this).find('.my-time-status').val('');
                     $(this).removeClass('checked');
                 });
             }else{
                 $(this).addClass('checked');
                 $('.ul-times li').each(function(i){
                     var time =  $(this).attr('time');
+                    var status =  $(this).attr('status');
                     $(this).find('.my-time').val(time);
+                    $(this).find('.my-time-status').val(status);
                     $(this).addClass('checked');
                 });
             }
@@ -207,6 +214,7 @@
             $('.loader').removeClass('d-none');
             $('.ul-times li').each(function(i){
                 $(this).find('.my-time').val('');
+                $(this).find('.my-time-status').val('');
                 $(this).removeClass('checked');
             });
             $('.month-days li').each(function(i){
@@ -225,8 +233,10 @@
                     for (let i = 0; i < data.selectedTimes.length; i++) {
                         $('.ul-times li').each(function(j){
                             var time =  $(this).attr('time');
-                            if (data.selectedTimes[i] == time){
+                            var status =  $(this).attr('status');
+                            if (data.selectedTimes[i].time == time){
                                 $(this).find('.my-time').val(time);
+                                $(this).find('.my-time-status').val(status);
                                 $(this).addClass('checked');
                             }
 

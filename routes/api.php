@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\ClinicController;
+use App\Http\Controllers\Api\FavoriteController;
+use App\Http\Controllers\Api\OfferController;
+use App\Http\Controllers\Api\ReservationController;
+use App\Http\Controllers\Api\ServiceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,51 +28,42 @@ Route::group(['middleware' => ['localization', 'auth:sanctum', 'throttle:api'], 
 
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
         /* one route calls */
-        Route::get('/profile', [UserController::class, 'showUserProfile'])->name('profile');
-        Route::post('/profile', [UserController::class, 'updateUserProfile'])->name('profile.update');
-        Route::post('/password/update', [UserController::class, 'updatePassword'])->name('password.update');
-        Route::post('/password/forgot/update', [UserController::class, 'updateForgotPassword'])->name('forgot.password.update');
-
+        Route::get('/', [UserController::class, 'showUserProfile'])->name('show');
+        Route::post('/', [UserController::class, 'updateUserProfile'])->name('update');
+        Route::get('/reservations', [ReservationController::class, 'showUserReservations'])->name('reservations');
     });
-    Route::group(['prefix' => 'category', 'as' => 'category.'], function () {
+    Route::group(['prefix' => 'favorite', 'as' => 'favorite.'], function () {
         /* one route calls */
-        Route::get('/', [CategoryController::class, 'showCategories'])->name('all');
-        Route::get('/{category}', [CategoryController::class, 'showSubCategories'])->name('subcategories');
-        Route::get('/agent/{agent_id}', [CategoryController::class, 'showAgentCategories'])->name('agent.subcategories');
-        Route::get('/subcategory/{subcategory}/products', [ProductController::class, 'showProducts'])->name('subcategories.products');
-        Route::get('/{category}/subcategories/all/products', [ProductController::class, 'showAllProducts'])->name('products.all');
-
+        Route::get('/', [FavoriteController::class, 'showUserFavorites'])->name('index');
+        Route::post('/', [FavoriteController::class, 'storeUserFavorite'])->name('store');
+        Route::post('/remove', [FavoriteController::class, 'destroyUserFavorite'])->name('destroy');
     });
-    Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
+    Route::group(['prefix' => 'clinic', 'as' => 'clinic.'], function () {
         /* one route calls */
-        Route::get('/', [CartController::class, 'showListUserCart'])->name('all');
-        Route::get('/current', [CartController::class, 'showUserCart'])->name('show');
-        Route::post('/', [CartController::class, 'makeUserCart'])->name('store');
-        Route::post('/item/{cart_item_id}/update', [CartController::class, 'updateCartItem'])->name('update');
-        Route::delete('/{id}', [CartController::class, 'removeCartItem'])->name('destroy');
-        Route::post('/{id}/delivery/location', [CartController::class, 'setCartDeliveryLocation'])->name('delivery.location');
-        Route::post('/{id}/pay/cash', [OrderController::class, 'makeCashOrder'])->name('cash');
-        Route::post('/{id}/pay/paypal', [OrderController::class, 'makePayPalOrder'])->name('paypal');
-
+        Route::get('/rating', [ClinicController::class, 'showClinicsByRating'])->name('rating.order');
+        Route::get('/location', [ClinicController::class, 'showClinicsByLocation'])->name('location.order');
+        Route::get('/{id}', [ClinicController::class, 'showClinic'])->name('show');
+        Route::post('/{id}/service/{service_id}/reserve', [ClinicController::class, 'reserveClinicService'])->name('reserve');
     });
-    Route::group(['prefix' => 'order', 'as' => 'order.'], function () {
+    Route::group(['prefix' => 'offer', 'as' => 'offer.'], function () {
         /* one route calls */
-        Route::get('/', [OrderController::class, 'showUserOrders'])->name('all');
-        Route::get('/{id}', [OrderController::class, 'showOrder'])->name('show');
-        Route::post('/{id}/rate', [OrderController::class, 'makeOrderRating'])->name('rate');
-
+        Route::get('/price', [OfferController::class, 'showOffersByPrice'])->name('price.order');
+        Route::get('/location', [OfferController::class, 'showOffersByLocation'])->name('location.order');
     });
-
+    Route::group(['prefix' => 'service', 'as' => 'service.'], function () {
+        /* one route calls */
+        Route::get('/price', [ServiceController::class, 'showServicesByPrice'])->name('price.order');
+        Route::get('/location', [ServiceController::class, 'showServicesByLocation'])->name('location.order');
+    });
 
 });
 
 /* Start General routes */
 Route::group(['as' => 'api.', 'middleware' => ['localization', 'throttle:api']], function () {
     /* one route calls */
-    Route::post('/user/register', [RegisterController::class, 'register'])->name('user.register');
-    Route::post('/user/login', [LoginController::class, 'login'])->name('user.login');
-    Route::post('/user/otp/send', [UserController::class, 'sendOtpCode'])->name('user.otp.send');
-    Route::post('/user/otp/verify', [UserController::class, 'verifyOtpCode'])->name('user.otp.verify');
+    Route::post('/register/otp/send', [RegisterController::class, 'sendOtpCode'])->name('register.otp.send');
+    Route::post('/login/otp/send', [LoginController::class, 'sendOtpCode'])->name('login.otp.send');
+    Route::post('/user/otp/verify', [UserController::class, 'userVerifyOtpCode'])->name('user.otp.verify');
 
     Route::group(['prefix' => 'setting', 'as' => 'setting.'], function () {
         /* one route calls */

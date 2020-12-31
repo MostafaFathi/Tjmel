@@ -19,76 +19,22 @@ use Illuminate\Support\Facades\Validator;
 class RegisterController extends Controller
 {
 
-    public function register(Request $request)
+    public function sendOtpCode(Request $request)
     {
         $rules = [
             'name' => 'required',
-            'email' => 'required',
-            'account_type' => 'required',
-            'login_method' => 'required',
-            'password' => 'required|confirmed|min:6',
-
+            'mobile' => 'required',
         ];
-
         $validator = Validate::validateRequest($request, $rules);
-        if ($validator != 'valid') return $validator;
-        if ($request->login_method == 'normal') {
-            $rules['mobile'] = 'required|unique:app_users,mobile';
-            $validator = Validate::validateRequest($request, $rules);
-            if ($validator != 'valid') return $validator;
-        }
-        $user = AppUser::where('email', $request->email)->first();
-        if (!$user) {
-            $user = new AppUser();
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->mobile = $request->mobile;
-            $user->account_type = $request->account_type;
-            $user->password = Hash::make($request->password);
-            if ($request->login_method == 'normal') {
-                if ($request->has('image') and $request->image != null) {
-                    $imageName = $request->image->store('public/user');
-                    $user->image = $imageName;
-                }
-            } else if ($request->login_method == 'social') {
-                if ($request->has('image') and $request->image != null) {
-                    $user->image = '*facebook*' . $request->image;
-                }
-            }
+        if ($validator !== 'valid') return $validator;
 
-            $user->save();
-            $token = $user->createToken('Graphic Town Registration token')->plainTextToken;
-            return response()->json(['user' => $user, 'token' => $token,'currentCartCount'=>0, 'status' => true], 200);
 
-        } else {
-            if (Hash::check($request->password, $user->password)) {
+        return $this->phoneOtpCode($request);
+    }
 
-                $currentCart = $user->carts()->where('status', 0)->orderBy('id', 'desc')->first();
-                $currentCartCount = 0;
-                if ($currentCart)
-                    $currentCartCount = $currentCart->items->count();
-
-                if ($request->login_method == 'normal') {
-                    if ($request->has('image') and $request->image != null) {
-                        $imageName = $request->image->store('public/user');
-                        $user->image = $imageName;
-                        $user->save();
-
-                    }
-                } else if ($request->login_method == 'social') {
-                    if ($request->has('image') and $request->image != null) {
-                        $user->image = '*facebook*' . $request->image;
-                        $user->save();
-                    }
-                }
-                $token = $user->createToken('Graphic Town Registration token')->plainTextToken;
-                return response()->json(['user' => $user, 'token' => $token,'currentCartCount'=>$currentCartCount, 'status' => true], 200);
-
-            }
-        }
-
-        return response()->json(['message' => 'invalid username or password', 'status' => false], 422);
-
+    public function registerVerifyOtpCode(Request $request)
+    {
+        return $this->verifyOtpCode($request);
     }
 
 }

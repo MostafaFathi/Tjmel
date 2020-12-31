@@ -4,8 +4,10 @@ namespace App\Models\User;
 
 use App\Helpers\File;
 
+use App\Models\Clinic\Favorite;
 use App\Models\Order\Cart;
 use App\Models\Order\Order;
+use App\Models\Service\Reserve;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,12 +26,19 @@ class AppUser extends Authenticatable
         'remember_token',
         'created_at',
         'updated_at',
-        'email_verified_at'
+        'email_verified_at',
+        'account_type',
+        'otp_code',
+        'email'
     ];
 
-    public function carts()
+    public function favorites()
     {
-        return $this->hasMany(Cart::class);
+        return $this->hasMany(Favorite::class);
+    }
+    public function reservations()
+    {
+        return $this->hasMany(Reserve::class);
     }
     public function getImageAttribute($value)
     {

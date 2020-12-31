@@ -25,9 +25,9 @@ class AppointmentController extends Controller
         $currentMonth = $date->format('Y-m');
         $nextMonth = $date->addMonth()->format('Y-m');
         $prevMonth = $date->subMonths(2)->format('Y-m');
-        $times = $this->generateTimeIntervals('7:00 am','1:30 am');
+        $times = $this->generateTimeIntervals('7:00 am', '1:30 am');
 
-        return view('clinic.appointments.index', compact('services', 'days','times', 'currentMonthName','currentMonth', 'nextMonth', 'prevMonth'));
+        return view('clinic.appointments.index', compact('services', 'days', 'times', 'currentMonthName', 'currentMonth', 'nextMonth', 'prevMonth'));
     }
 
     public function getDate($month, $id = null)
@@ -41,43 +41,43 @@ class AppointmentController extends Controller
         $prevMonth = $date->subMonths(2)->format('Y-m');
         $selectedTimes = [];
         $appointments = [];
-        if ($id){
-            $appointments = Appointment::where('clinic_id',auth()->user()->clinic->id)
-                ->where('service_id',$id)
-                ->where('date','like','%'.$month.'%')
+        if ($id) {
+            $appointments = Appointment::where('clinic_id', auth()->user()->clinic->id)
+                ->where('service_id', $id)
+                ->where('date', 'like', '%' . $month . '%')
                 ->get();
             $monthList = '<ul class="month-days">';
             for ($i = 1; $i <= $days; $i++) {
                 $flag = false;
-            foreach ($appointments as $appointment) {
+                foreach ($appointments as $appointment) {
 
-                    if (explode(' ',$appointment->date)[0] == $month.'-'.str_pad($i, 2, '0', STR_PAD_LEFT)){
-                        $flag =true;
-                        array_push($selectedTimes,$appointment->times);
-                        $monthList .= '<li class="day-btn checked" date="'.$currentMonth.'-'.$i.'"><input type="hidden" class="day-date" name="dates[]" value="'.$currentMonth.'-'.$i.'">'.$i.'<span>'.Carbon::parse($currentMonth.'-'.$i)->translatedFormat('l').'</span></li>';
+                    if (explode(' ', $appointment->date)[0] == $month . '-' . str_pad($i, 2, '0', STR_PAD_LEFT)) {
+                        $flag = true;
+                        array_push($selectedTimes, $appointment->times);
+                        $monthList .= '<li class="day-btn checked" date="' . $currentMonth . '-' . $i . '"><input type="hidden" class="day-date" name="dates[]" value="' . $currentMonth . '-' . $i . '">' . $i . '<span>' . Carbon::parse($currentMonth . '-' . $i)->translatedFormat('l') . '</span></li>';
                     }
                 }
-            if (!$flag){
-                $monthList .= '<li class="day-btn" date="'.$currentMonth.'-'.$i.'"><input type="hidden" class="day-date" name="dates[]" value="">'.$i.'<span>'.Carbon::parse($currentMonth.'-'.$i)->translatedFormat('l').'</span></li>';
+                if (!$flag) {
+                    $monthList .= '<li class="day-btn" date="' . $currentMonth . '-' . $i . '"><input type="hidden" class="day-date" name="dates[]" value="">' . $i . '<span>' . Carbon::parse($currentMonth . '-' . $i)->translatedFormat('l') . '</span></li>';
 
-            }
+                }
 
             }
             $monthList .= '<li class="all-days-btn">حدد كل الشهر <span>جميع الايام</span></li>';
             $monthList .= '</ul>';
         }
-        if(!$id || count($appointments) == 0){
+        if (!$id || count($appointments) == 0) {
             $monthList = '<ul class="month-days">';
             for ($i = 1; $i <= $days; $i++) {
-                $monthList .= '<li class="day-btn" date="'.$currentMonth.'-'.$i.'"><input type="hidden" class="day-date" name="dates[]" value="">'.$i.'<span>'.Carbon::parse($currentMonth.'-'.$i)->translatedFormat('l').'</span></li>';
+                $monthList .= '<li class="day-btn" date="' . $currentMonth . '-' . $i . '"><input type="hidden" class="day-date" name="dates[]" value="">' . $i . '<span>' . Carbon::parse($currentMonth . '-' . $i)->translatedFormat('l') . '</span></li>';
             }
             $monthList .= '<li class="all-days-btn">حدد كل الشهر <span>جميع الايام</span></li>';
             $monthList .= '</ul>';
         }
 
-        $times = $this->generateTimeIntervals('7:00 am','1:30 am');
-        $selectedTimes = array_unique(Arr::collapse($selectedTimes));
-        return response()->json(['days' => $days, 'monthList'=>$monthList, 'times'=>$times, 'selectedTimes'=>$selectedTimes,'currentMonthName' => $currentMonthName, 'currentMonth' => $currentMonth, 'nextMonth' => $nextMonth, 'prevMonth' => $prevMonth]);
+        $times = $this->generateTimeIntervals('7:00 am', '1:30 am');
+        $selectedTimes = array_unique(Arr::collapse($selectedTimes),SORT_REGULAR);
+        return response()->json(['days' => $days, 'monthList' => $monthList, 'times' => $times, 'selectedTimes' => $selectedTimes, 'currentMonthName' => $currentMonthName, 'currentMonth' => $currentMonth, 'nextMonth' => $nextMonth, 'prevMonth' => $prevMonth]);
     }
 
 
@@ -101,29 +101,30 @@ class AppointmentController extends Controller
     {
         $request->validate([
             'service_id' => 'required',
-        ],[
+        ], [
             'service_id.required' => 'حقل اسم الخدمة مطلوب',
         ]);
-        $service = auth()->user()->clinic->services->where('id',$request->service_id)->first();
+        $service = auth()->user()->clinic->services->where('id', $request->service_id)->first();
         if (!$service)
             return back()->withErrors('إما انك لم تقم باختيار خدمة او ان هذه الخدمة ليست لعيادتكم.');
 
         $timesArray = [];
-        foreach ($request->times as $time){
-            if ($time){
-                array_push($timesArray,$time);
+        $key = 0;
+        foreach ($request->times as $time) {
+            if ($time) {
+                array_push($timesArray, ['time' => $time, 'status' => $request->status[$key]]);
             }
-
+            $key++;
         }
-        $aa = Appointment::where('clinic_id',auth()->user()->clinic->id)
-            ->where('service_id',$request->service_id)
-            ->where('date','like','%'.$request->current_month.'%')
+        $aa = Appointment::where('clinic_id', auth()->user()->clinic->id)
+            ->where('service_id', $request->service_id)
+            ->where('date', 'like', '%' . $request->current_month . '%')
             ->pluck('id');
         Appointment::destroy($aa);
-        foreach ($request->dates as $date){
-            if ($date){
+        foreach ($request->dates as $date) {
+            if ($date) {
 
-                $appointment =  new Appointment();
+                $appointment = new Appointment();
                 $appointment->clinic_id = auth()->user()->clinic->id;
                 $appointment->service_id = $request->service_id;
                 $appointment->date = $date;
@@ -133,7 +134,7 @@ class AppointmentController extends Controller
 
         }
 
-        return back()->with('success','تمت عملية الحفظ بنجاح');
+        return back()->with('success', 'تمت عملية الحفظ بنجاح');
     }
 
     /**
@@ -180,6 +181,7 @@ class AppointmentController extends Controller
     {
         //
     }
+
     public function generateTimeIntervals($from, $to)
     {
         $intervals = [];
@@ -190,9 +192,6 @@ class AppointmentController extends Controller
             $time_from_string = $time_from->format('h:i a');
             array_push($intervals, $time_from_string);
             $time_from = $time_from->addMinutes(30);
-
-
-
 
 
             if ($time_from_string == $to) break;

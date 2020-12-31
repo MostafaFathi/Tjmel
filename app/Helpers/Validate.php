@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Validator;
 
 class Validate
 {
-    public static function validateRequest($request, $rules)
+    public static function validateRequest($request, $rules,$messages = [])
     {
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), $rules,$messages);
         if ($validator->fails()) {
             return response()->json(['errors' => Arr::flatten($validator->errors()->all()), 'status' => false], 422);
         }

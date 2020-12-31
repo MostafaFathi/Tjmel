@@ -10,7 +10,8 @@ class Service extends Model
 {
     use HasFactory;
 
-    protected $appends = ['status_name', 'status_color'];
+    protected $appends = ['status_name', 'status_color','clinic_logo'];
+    protected $hidden = ['created_at','updated_at','clinic'];
 
     public function clinic()
     {
@@ -39,5 +40,9 @@ class Service extends Model
     public function getStatusColorAttribute()
     {
         return ['warning', 'success', 'danger'][$this->status];
+    }
+    public function getClinicLogoAttribute()
+    {
+        return $this->clinic->logo;
     }
 }
