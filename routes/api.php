@@ -72,7 +72,6 @@ Route::group(['as' => 'api.', 'middleware' => ['localization', 'throttle:api']],
         Route::get('/advertisements', [SettingController::class, 'getAdvertisement'])->name('advertisements');
 
     });
-
     /* redirect not logged-in users to unauthenticated route */
     Route::get('/unauthenticated', function () {
         return response()->json(['message' => 'unauthenticated', 'status' => false], 401);

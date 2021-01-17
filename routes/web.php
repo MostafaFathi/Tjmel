@@ -69,27 +69,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         //end admin services and offers
 
     });
-    Route::group(['middleware' => ['role:admin|agent']], function () {
-        /* Resources calls */
-        Route::resources(['categories' => CategoryController::class]);
-        Route::resources(['subcategories' => SubCategoryController::class]);
-        Route::resources(['products' => ProductController::class]);
-        Route::resources(['orders' => OrderController::class]);
-        /* one route calls */
-        Route::get('/orders/{order}/processing', [OrderController::class, 'processing'])->name('orders.processing');
-        Route::get('/orders/{order}/approve', [OrderController::class, 'approve'])->name('orders.approve');
-        Route::get('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
-        Route::post('/orders/delivery/{order}', [OrderController::class, 'delivery'])->name('orders.delivery');
-        Route::post('/orders/redirect/{order}', [OrderController::class, 'redirect'])->name('orders.redirect');
 
-        Route::get('/categories/{category}/subcategories/create', [SubCategoryController::class, 'create'])->name('subcategories.create');
-        Route::get('/categories/{category}/activate', [CategoryController::class, 'activate'])->name('categories.activate');
-        Route::get('/categories/subcategories/{id}', [CategoryController::class, 'subcategories'])->name('categories.subcategories');
-        Route::get('/subcategories/{subcategory}/activate', [SubCategoryController::class, 'activate'])->name('subcategories.activate');
-
-        Route::post('/products/image/delete/{id}', [ProductController::class, 'destroyProductImage'])->name('products.image.destroy');
-
-    });
     /* End Dashboard management routes */
 
     /* Start Dashboard general routes */
@@ -111,6 +91,3 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     });
 
 });
-Route::get('/order', [OrderController::class, 'viewOrder'])->name('viewOrder');
-Route::post('/order/callback', [OrderController::class, 'callback'])->name('order.callback');
-Route::get('/order/orderSuccess', [OrderController::class, 'orderSuccess'])->name('order.orderSuccess');

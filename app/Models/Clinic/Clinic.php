@@ -57,6 +57,10 @@ class Clinic extends Model
     {
         return $this->hasMany(Reserve::class);
     }
+    public function rejectedReservationsByClinic()
+    {
+        return $this->hasMany(Reserve::class)->where('status',3);
+    }
 
     public function getLogoAttribute($logo)
     {

@@ -46,6 +46,7 @@
                     <li class="nav-item"><a href="#justified-right-icon-tab2" class="nav-link tab-link {{request()->get('page') == 'services' ? 'active' : ''}}" name="services" data-toggle="tab"><i class="icon-yin-yang mr-2"></i>الخدمات <span class="badge badge-warning mr-1 ml-1">{{count($clinic->services)}}</span></a></li>
                     <li class="nav-item"><a href="#justified-right-icon-tab3" class="nav-link tab-link {{request()->get('page') == 'offers' ? 'active' : ''}}" name="offers" data-toggle="tab"><i class="icon-price-tag2 mr-2"></i>العروض <span class="badge badge-success mr-1 ml-1">{{count($clinic->offers)}}</span></a></li>
                     <li class="nav-item"><a href="#justified-right-icon-tab4" class="nav-link tab-link {{request()->get('page') == 'rating' ? 'active' : ''}}" name="rating" data-toggle="tab"><i class="icon-star-full2 mr-2"></i>التقييم <span class="badge badge-primary mr-1 ml-1">{{count($clinic->rates)}}</span></a></li>
+                    <li class="nav-item"><a href="#justified-right-icon-tab5" class="nav-link tab-link {{request()->get('page') == 'reservations' ? 'active' : ''}}" name="reservations" data-toggle="tab"><i class="icon-cross3 mr-2"></i>حجوزات ملغية <span class="badge badge-danger mr-1 ml-1">{{count($clinic->rejectedReservationsByClinic)}}</span></a></li>
 
                 </ul>
 
@@ -137,6 +138,9 @@
 
                     <div class="tab-pane fade {{request()->get('page') == 'rating'  ? 'show active' : ''}}" id="justified-right-icon-tab4">
                         @include('admin.clinics.rates')
+                    </div>
+                    <div class="tab-pane fade {{request()->get('page') == 'reservations'  ? 'show active' : ''}}" id="justified-right-icon-tab5">
+                        @include('admin.clinics.reservations')
                     </div>
                 </div>
             </div>
