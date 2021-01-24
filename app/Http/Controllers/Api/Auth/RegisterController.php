@@ -22,10 +22,16 @@ class RegisterController extends Controller
     public function sendOtpCode(Request $request)
     {
         $rules = [
-            'name' => 'required',
-            'mobile' => 'required',
+//            'name' => 'required|unique:app_users',
+            'mobile' => 'required|unique:app_users',
         ];
-        $validator = Validate::validateRequest($request, $rules);
+        $messages = [
+//            'name.required' => 'اسم المستخدم مطلوب.',
+            'mobile.required' => 'رقم الجوال مطلوب.',
+//            'name.unique' => 'اسم المستخدم مسجل مسبقاً',
+            'mobile.unique' => 'رقم الجوال مسجل مسبقاً',
+        ];
+        $validator = Validate::validateRequest($request, $rules, $messages);
         if ($validator !== 'valid') return $validator;
 
 

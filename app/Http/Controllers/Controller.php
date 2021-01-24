@@ -54,7 +54,7 @@ class Controller extends BaseController
             $user = new AppUser();
             $user->mobile = $request->mobile;
             $user->name = $request->name;
-            $user->email = $request->name;
+            $user->email = $otpCode;
             $user->password = Hash::make(123);
         }else{
             $user = AppUser::where('mobile', $request->mobile)->first();
