@@ -89,7 +89,7 @@
                     <a href="{{route('settings.edit',0)}}"
                        class="nav-link  {{request()->routeIs('edit.*')?'active' :'' }}">
                         <i class="icon-coins"></i>
-                        <span> الدفعة المقدمة</span>
+                        <span> الاعدادات</span>
                     </a>
                 </li>
                 @endhasanyrole
