@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AgreementController;
 use App\Http\Controllers\Admin\ClinicController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\ServiceOfferController;
@@ -49,6 +50,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         Route::resources(['users_groups_permissions' => UserGroupsPermissionsController::class]);
         Route::resources(['advertisements' => AdvertisementController::class]);
         Route::resources(['about_us' => AboutUsController::class]);
+        Route::resources(['agreement' => AgreementController::class]);
         Route::resources(['contact_us' => ContactUsController::class]);
         Route::resources(['settings' => SettingController::class]);
         Route::resources(['clinics' => ClinicController::class]);

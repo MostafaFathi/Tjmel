@@ -68,8 +68,10 @@ Route::group(['as' => 'api.', 'middleware' => ['localization', 'throttle:api']],
     Route::group(['prefix' => 'setting', 'as' => 'setting.'], function () {
         /* one route calls */
         Route::get('/about_us', [SettingController::class, 'showAboutUs'])->name('about_us');
+        Route::get('/agreement', [SettingController::class, 'showAgreement'])->name('agreement');
         Route::post('/contact_us', [SettingController::class, 'storeContactUs'])->name('contact_us');
         Route::get('/advertisements', [SettingController::class, 'getAdvertisement'])->name('advertisements');
+        Route::get('/', [SettingController::class, 'showSettings'])->name('show');
 
     });
     /* redirect not logged-in users to unauthenticated route */

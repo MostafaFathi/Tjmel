@@ -113,6 +113,13 @@
                     </a>
                 </li>
                 <li class="nav-item ">
+                    <a href="{{route('agreement.create')}}"
+                       class="nav-link  {{request()->routeIs('agreement.*')?'active' :'' }}">
+                        <i class="icon-quill4"></i>
+                        <span>اتفاقية المستخدم</span>
+                    </a>
+                </li>
+                <li class="nav-item ">
                     <a href="{{route('contact_us.index')}}"
                        class="nav-link  {{request()->routeIs('contact_us.*')?'active' :'' }}">
                         <i class="icon-envelop"></i>

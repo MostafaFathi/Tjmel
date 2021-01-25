@@ -6,10 +6,12 @@ use App\Helpers\Validate;
 use App\Http\Controllers\Controller;
 use App\Models\Advertisement\Advertisement;
 use App\Models\Data\AboutUs;
+use App\Models\Data\Agreement;
 use App\Models\Data\Category;
 use App\Models\Data\City;
 use App\Models\Data\ContactUs;
 use App\Models\Data\District;
+use App\Models\Data\Setting;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -18,6 +20,16 @@ class SettingController extends Controller
     {
         $about_us = AboutUs::get()->first();
         return response()->json(['data' => $about_us], 200);
+    }
+    public function showAgreement()
+    {
+        $agreement = Agreement::get()->first();
+        return response()->json(['data' => $agreement], 200);
+    }
+    public function showSettings()
+    {
+        $settings = Setting::get();
+        return response()->json(['data' => $settings], 200);
     }
     public function storeContactUs(Request $request)
     {

@@ -59,10 +59,10 @@ class SettingController extends Controller
      */
     public function edit($id)
     {
-        $order_fees = Setting::firstorcreate(['key'=>'order_fees'],['key'=>'order_fees','value'=>0]);
-        $vat_id = Setting::firstorcreate(['key'=>'vat_id'],['key'=>'vat_id','value'=>1111111]);
+//        $order_fees = Setting::firstorcreate(['key'=>'order_fees'],['key'=>'order_fees','value'=>0]);
+        $whatsapp = Setting::firstorcreate(['key'=>'whatsapp'],['key'=>'whatsapp','value'=>599]);
         $advance_payment = Setting::firstorcreate(['key'=>'advance_payment'],['key'=>'advance_payment','value'=>0]);
-        return view('admin.settings.order_fees.edit', compact('order_fees','vat_id','advance_payment'));
+        return view('admin.settings.order_fees.edit', compact('whatsapp','advance_payment'));
     }
 
     /**
@@ -74,12 +74,12 @@ class SettingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $order_fees =  Setting::firstorcreate(['key'=>'order_fees'],['key'=>'order_fees','value'=>0]);
-        $order_fees->value = $request->value;
-        $order_fees->save();
-        $vat_id =  Setting::firstorcreate(['key'=>'vat_id'],['key'=>'vat_id','value'=>123456]);
-        $vat_id->value = $request->vat_id;
-        $vat_id->save();
+//        $order_fees =  Setting::firstorcreate(['key'=>'order_fees'],['key'=>'order_fees','value'=>0]);
+//        $order_fees->value = $request->value;
+//        $order_fees->save();
+        $whatsapp =  Setting::firstorcreate(['key'=>'whatsapp'],['key'=>'whatsapp','value'=>599]);
+        $whatsapp->value = $request->whatsapp;
+        $whatsapp->save();
         $advance_payment = Setting::firstorcreate(['key'=>'advance_payment'],['key'=>'advance_payment','value'=>0]);
         $advance_payment->value = $request->advance_payment;
         $advance_payment->save();
