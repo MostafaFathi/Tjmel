@@ -88,7 +88,7 @@
                 <li class="nav-item ">
                     <a href="{{route('settings.edit',0)}}"
                        class="nav-link  {{request()->routeIs('edit.*')?'active' :'' }}">
-                        <i class="icon-coins"></i>
+                        <i class="icon-cog3"></i>
                         <span> الاعدادات</span>
                     </a>
                 </li>

@@ -30,6 +30,7 @@ Route::group(['middleware' => ['localization', 'auth:sanctum', 'throttle:api'], 
         /* one route calls */
         Route::get('/', [UserController::class, 'showUserProfile'])->name('show');
         Route::post('/', [UserController::class, 'updateUserProfile'])->name('update');
+        Route::post('/address', [UserController::class, 'updateUserAddress'])->name('address.update');
         Route::get('/reservations', [ReservationController::class, 'showUserReservations'])->name('reservations');
     });
     Route::group(['prefix' => 'favorite', 'as' => 'favorite.'], function () {
