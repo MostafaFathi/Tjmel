@@ -65,4 +65,41 @@ class Controller extends BaseController
         $user->save();
         return response()->json(['otpCode' => $otpCode, 'status' => true], 200);
     }
+
+    protected function getLocationLongAlt()
+    {
+        if ($this->isGust()) {
+            if (request()->has('location') and request()->get('location') != '') {
+                return $this->getExplodeLocation(request()->get('location'));
+            }
+        } else {
+            if ($this->hasAddresses()) {
+                $current = auth('sanctum')->user()->addresses->where('is_current', true)->first();
+                if (!$current)
+                    return $this->getExplodeLocation(request()->get('location'));
+
+                return $this->getExplodeLocation($current->location);
+            }else{
+                return $this->getExplodeLocation(request()->get('location'));
+            }
+        }
+        return ['longitude' => '', 'latitude' => ''];
+    }
+
+    protected function isGust()
+    {
+        return auth('sanctum')->user()->id == 10101010;
+    }
+
+    protected function hasAddresses()
+    {
+        return auth('sanctum')->user()->addresses->count() > 0;
+    }
+    protected function getExplodeLocation($location)
+    {
+        $long = explode(',', $location)[0];
+        $lat = explode(',', $location)[1];
+        return ['longitude' => $long, 'latitude' => $lat];
+    }
+
 }

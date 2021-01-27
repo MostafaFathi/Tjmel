@@ -18,19 +18,23 @@ class OfferController extends Controller
     public function showOffersByLocation()
     {
         $perPage = request('per_page') ?? 10;
-        $offers = $this->findNearestOffers( '46.67304098848261','24.714827555713196',$perPage);
+        $location = $this->getLocationLongAlt();
+
+        $latitude = $location['latitude'] ?? '';
+        $longitude = $location['longitude'] ?? '';
+        $offers = $this->findNearestOffers( $latitude,$longitude,$perPage);
         return response()->json(['data' => $offers], 200);
     }
     private function findNearestOffers($latitude, $longitude, $perPage)
     {
 
         $offers = Clinic::selectRaw("*,
-                     ( 6371000 * acos( cos( radians(?) ) *
+                     truncate(( 6371 * acos( cos( radians(?) ) *
                        cos( radians( latitude ) )
                        * cos( radians( longitude ) - radians(?)
                        ) + sin( radians(?) ) *
                        sin( radians( latitude ) ) )
-                     ) AS distance", [$latitude, $longitude, $latitude])
+                     ),2) AS distance", [$latitude, $longitude, $latitude])
             ->orderBy("distance",'asc')
             ->paginate($perPage);
 

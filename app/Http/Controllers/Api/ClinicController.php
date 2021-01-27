@@ -9,6 +9,7 @@ use App\Models\Service\Appointment;
 use App\Models\Service\Reserve;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ClinicController extends Controller
 {
@@ -16,17 +17,18 @@ class ClinicController extends Controller
     {
         $perPage = request('per_page') ?? 10;
 
-        $latitude = '46.67304098848261';
-        $longitude = '24.714827555713196';
+        $location = $this->getLocationLongAlt();
 
+        $latitude = $location['latitude'] ?? '';
+        $longitude = $location['longitude'] ?? '';
         $clinics = Clinic::orderBy('rating', 'desc')
             ->selectRaw("*,
-                     ( 6371 * acos( cos( radians(?) ) *
+                     truncate(( 6371 * acos( cos( radians(?) ) *
                        cos( radians( latitude ) )
                        * cos( radians( longitude ) - radians(?)
                        ) + sin( radians(?) ) *
                        sin( radians( latitude ) ) )
-                     ) AS distance", [$latitude, $longitude, $latitude])
+                     ),2) AS distance", [$latitude, $longitude, $latitude])
             ->paginate($perPage);
 
         return response()->json(['data' => $clinics->makeHidden('rates')], 200);
@@ -35,8 +37,10 @@ class ClinicController extends Controller
     public function showClinicsByLocation()
     {
         $perPage = request('per_page') ?? 10;
-        $latitude = '46.67304098848261';
-        $longitude = '24.714827555713196';
+        $location = $this->getLocationLongAlt();
+
+        $latitude = $location['latitude'] ?? '';
+        $longitude = $location['longitude'] ?? '';
         $clinics = $this->findNearestClinics($latitude, $longitude, $perPage);
         return response()->json(['data' => $clinics->makeHidden('rates')], 200);
     }
@@ -80,7 +84,7 @@ class ClinicController extends Controller
 
         $reservation = new Reserve();
         $reservation->app_user_id = auth('sanctum')->user()->id;
-        $reservation->display_id =  mt_rand(100000, 999999).'-'.Carbon::today()->format('m-Y');
+        $reservation->display_id = mt_rand(100000, 999999) . '-' . Carbon::today()->format('m-Y');
         $reservation->clinic_id = $id;
         $reservation->service_id = $request->service_id;
         $reservation->appointment_date = $appointment->date;
@@ -97,23 +101,25 @@ class ClinicController extends Controller
         $appointment->times = $appointmentTimes;
         $appointment->save();
 
-        return response()->json(['data' => $reservation->makeHidden('clinic','service')], 200);
+        return response()->json(['data' => $reservation->makeHidden('clinic', 'service')], 200);
     }
 
     private function findNearestClinics($latitude, $longitude, $perPage)
     {
 
         $clinics = Clinic::selectRaw("*,
-                     ( 6371 * acos( cos( radians(?) ) *
+                    truncate(( 6371 * acos( cos( radians(?) ) *
                        cos( radians( latitude ) )
                        * cos( radians( longitude ) - radians(?)
                        ) + sin( radians(?) ) *
                        sin( radians( latitude ) ) )
-                     ) AS distance", [$latitude, $longitude, $latitude])
+                     ),2)  AS distance", [$latitude, $longitude, $latitude])
             ->orderBy("distance", 'asc')
             ->paginate($perPage);
 
 
         return $clinics;
     }
+
+
 }
