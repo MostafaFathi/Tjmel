@@ -9,5 +9,6 @@ class UserAddress extends Model
 {
     use HasFactory;
     protected $hidden = [ 'created_at', 'updated_at','app_user_id'];
+    protected $casts = ['is_current'=>'boolean'];
 
 }

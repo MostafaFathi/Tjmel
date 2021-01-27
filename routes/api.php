@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\OfferController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\ServiceController;
+use App\Http\Controllers\Api\UserAddressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,8 +31,15 @@ Route::group(['middleware' => ['localization', 'auth:sanctum', 'throttle:api'], 
         /* one route calls */
         Route::get('/', [UserController::class, 'showUserProfile'])->name('show');
         Route::post('/', [UserController::class, 'updateUserProfile'])->name('update');
-        Route::post('/address', [UserController::class, 'updateUserAddress'])->name('address.update');
         Route::get('/reservations', [ReservationController::class, 'showUserReservations'])->name('reservations');
+        Route::group(['prefix' => 'address', 'as' => 'address.'], function () {
+            /* one route calls */
+            Route::get('/', [UserAddressController::class, 'showUserAddresses'])->name('show');
+            Route::post('/', [UserAddressController::class, 'storeUserAddress'])->name('store');
+            Route::post('/{id}', [UserAddressController::class, 'updateUserAddress'])->name('update');
+            Route::delete('/{id}', [UserAddressController::class, 'destroyUserAddress'])->name('destroy');
+            Route::post('/{id}/current', [UserAddressController::class, 'makeUserAddressAsCurrent'])->name('current');
+        });
     });
     Route::group(['prefix' => 'favorite', 'as' => 'favorite.'], function () {
         /* one route calls */

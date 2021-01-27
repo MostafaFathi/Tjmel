@@ -41,26 +41,7 @@ class UserController extends Controller
 
 
     }
-    public function updateUserAddress(Request $request)
-    {
-        $rules = [
-            'location' => 'required',
-        ];
-        $validator = Validate::validateRequest($request, $rules);
-        if ($validator != 'valid') return $validator;
 
-        $address = auth('sanctum')->user()->address;
-        if (!$address)
-            $address = new UserAddress();
-
-        $address->app_user_id = auth('sanctum')->user()->id;
-        $address->title = $request->title;
-        $address->location = $request->location;
-        $address->save();
-        return response()->json(['data' => $address, 'status' => true], 200);
-
-
-    }
     public function userVerifyOtpCode(Request $request)
     {
         return $this->verifyOtpCode($request);

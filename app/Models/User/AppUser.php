@@ -32,7 +32,7 @@ class AppUser extends Authenticatable
         'otp_code',
         'email'
     ];
-    protected $with = ['address'];
+    protected $with = ['addresses'];
 
     public function favorites()
     {
@@ -43,7 +43,10 @@ class AppUser extends Authenticatable
     {
         return $this->hasMany(Reserve::class);
     }
-
+    public function addresses()
+    {
+        return $this->hasMany(UserAddress::class, 'app_user_id');
+    }
     public function getImageAttribute($value)
     {
         if (Str::contains($value, '*facebook*')) {
@@ -57,8 +60,5 @@ class AppUser extends Authenticatable
 //        return $this->address ? $this->address->location
 //    }
 
-    public function address()
-    {
-        return $this->hasOne(UserAddress::class, 'app_user_id');
-    }
+
 }
