@@ -32,6 +32,7 @@ class AppUser extends Authenticatable
         'otp_code',
         'email'
     ];
+    protected $appends = ['current_address'];
     protected $with = ['addresses'];
 
     public function favorites()
@@ -55,10 +56,10 @@ class AppUser extends Authenticatable
             return File::getUrl($value);
         }
     }
-//    public function getAddressAttribute($value)
-//    {
-//        return $this->address ? $this->address->location
-//    }
+    public function getCurrentAddressAttribute()
+    {
+        return $this->addresses->where('is_current',true)->first();
+    }
 
 
 }
