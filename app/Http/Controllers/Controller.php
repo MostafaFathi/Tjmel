@@ -39,7 +39,7 @@ class Controller extends BaseController
         } else {
             return response()->json(['message' => 'User not found, or otp verification error', 'status' => false], 422);
         }
-        return response()->json(['user' => $user, 'token' => $token, 'status' => true], 200);
+        return response()->json(['user' => $user->makeHidden('addresses'), 'token' => $token, 'status' => true], 200);
     }
 
     protected function phoneOtpCode($request)
