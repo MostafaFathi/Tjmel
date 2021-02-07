@@ -18,10 +18,11 @@ class ClinicController extends Controller
         $perPage = request('per_page') ?? 10;
 
         $location = $this->getLocationLongAlt();
-
+        $city_id = request()->get('city_id') ?? 1; /* default is riyadh */
         $latitude = $location['latitude'] ?? '';
         $longitude = $location['longitude'] ?? '';
-        $clinics = Clinic::orderBy('rating', 'desc')
+        $clinics = Clinic::where('city_id',$city_id)
+            ->orderBy('rating', 'desc')
             ->selectRaw("*,
                      truncate(( 6371 * acos( cos( radians(?) ) *
                        cos( radians( latitude ) )
@@ -39,9 +40,10 @@ class ClinicController extends Controller
         $perPage = request('per_page') ?? 10;
         $location = $this->getLocationLongAlt();
 
+        $city_id = request()->get('city_id') ?? 1; /* default is riyadh */
         $latitude = $location['latitude'] ?? '';
         $longitude = $location['longitude'] ?? '';
-        $clinics = $this->findNearestClinics($latitude, $longitude, $perPage);
+        $clinics = $this->findNearestClinics($latitude, $longitude,$city_id, $perPage);
         return response()->json(['data' => $clinics->makeHidden('rates')], 200);
     }
 
@@ -104,10 +106,10 @@ class ClinicController extends Controller
         return response()->json(['data' => $reservation->makeHidden('clinic', 'service')], 200);
     }
 
-    private function findNearestClinics($latitude, $longitude, $perPage)
+    private function findNearestClinics($latitude, $longitude,$city_id, $perPage)
     {
 
-        $clinics = Clinic::selectRaw("*,
+        $clinics = Clinic::where('city_id',$city_id)->selectRaw("*,
                     truncate(( 6371 * acos( cos( radians(?) ) *
                        cos( radians( latitude ) )
                        * cos( radians( longitude ) - radians(?)

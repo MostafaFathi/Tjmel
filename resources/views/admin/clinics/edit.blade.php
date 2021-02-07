@@ -148,7 +148,7 @@
 @endsection
 @section('js_assets')
     <script src="{{asset('portal/global_assets/js/plugins/uploaders/fileinput/fileinput.min.js')}}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&language=ar"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&language=ar&key=AIzaSyDScfghcvcJjgyREld1pFDVhdQgLQInWYE"></script>
 
 @endsection
 @section('js_code')
@@ -306,14 +306,41 @@
                 animation: google.maps.Animation.DROP,
                 position: parliament
             });
-            google.maps.event.addListener(marker, 'dragend', function () {
+            google.maps.event.addListener(marker, 'dragend', function (e) {
                 var pp = marker.getPosition();
                 $("#coordinates").val(pp).keyup();
+                console.log()
+                getAddress(e.latLng.lat(), e.latLng.lng()).then(console.log).catch(console.error);
                 map.setCenter(marker.getPosition());
 
             });
         }
 
         initialize();
+
+        function getAddress (latitude, longitude) {
+            return new Promise(function (resolve, reject) {
+                var request = new XMLHttpRequest();
+
+                var method = 'GET';
+                var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true&key=AIzaSyDScfghcvcJjgyREld1pFDVhdQgLQInWYE';
+                var async = true;
+
+                request.open(method, url, async);
+                request.onreadystatechange = function () {
+                    if (request.readyState == 4) {
+                        if (request.status == 200) {
+                            var data = JSON.parse(request.responseText);
+                            var address = data.results[0];
+                            resolve(address);
+                        }
+                        else {
+                            reject(request.status);
+                        }
+                    }
+                };
+                request.send();
+            });
+        };
     </script>
 @endsection

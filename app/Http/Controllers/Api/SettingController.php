@@ -31,6 +31,11 @@ class SettingController extends Controller
         $settings = Setting::get();
         return response()->json(['data' => $settings], 200);
     }
+    public function showCities()
+    {
+        $cities = City::get();
+        return response()->json(['data' => $cities], 200);
+    }
     public function storeContactUs(Request $request)
     {
         $rules = [
