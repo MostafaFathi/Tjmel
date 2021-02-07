@@ -40,7 +40,7 @@ class ClinicController extends Controller
                        sin( radians( latitude ) ) )
                      ),2) AS distance", [$latitude, $longitude, $latitude])
             ->paginate($perPage);
-
+dd($clinics);
         return response()->json(['data' => $clinics->makeHidden('rates')], 200);
     }
 
