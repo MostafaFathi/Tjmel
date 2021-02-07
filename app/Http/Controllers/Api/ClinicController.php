@@ -15,13 +15,22 @@ class ClinicController extends Controller
 {
     public function showClinicsByRating()
     {
+        $rules = [
+            'city_name' => 'required',
+         ];
+        $messages = [
+            'city_name.required' => 'حقل اسم المدينة مطلوب',
+        ];
+        $validator = Validate::validateRequest(request(), $rules, $messages);
+        if ($validator !== 'valid') return $validator;
+
         $perPage = request('per_page') ?? 10;
 
         $location = $this->getLocationLongAlt();
-        $city_id = request()->get('city_id') ?? 1; /* default is riyadh */
+        $city_name = request()->get('city_name') ?? ''; /* default is riyadh */
         $latitude = $location['latitude'] ?? '';
         $longitude = $location['longitude'] ?? '';
-        $clinics = Clinic::where('city_id',$city_id)
+        $clinics = Clinic::where('city_name','like','%'.$city_name.'%')
             ->orderBy('rating', 'desc')
             ->selectRaw("*,
                      truncate(( 6371 * acos( cos( radians(?) ) *

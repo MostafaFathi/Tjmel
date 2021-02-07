@@ -76,16 +76,10 @@
                                        value="{{$clinic->full_address_ar}}">
                             </div>
                             <div class="form-group">
-                                <label class="control-label" for="name">المدينة</label>
-                                <select name="city_id" id="city" class="city form-control" required>
-                                    <option value="">إختر مدينة</option>
-                                    @foreach($cities as $city)
-                                        <option
-                                            value="{{$city->id}}" {{$clinic->city_id == $city->id ? 'selected' : ''}}>{{$city->name_ar}}</option>
-                                    @endforeach
-                                </select>
+                                <label class="control-label" for="name">المدينة - الحي</label>
+                                <input name="city_district" id="city" value="{{$clinic->city_district}}" class="city form-control" placeholder="يتم تحديدها عن طريق الخريطة بالاسفل" required>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group d-none">
                                 <label class="control-label" for="name">الحي</label>
                                 <select name="district_id" id="districts" class=" districts form-control">
                                     <option value="">أولاً إخنر مدينة</option>
@@ -148,7 +142,7 @@
 @endsection
 @section('js_assets')
     <script src="{{asset('portal/global_assets/js/plugins/uploaders/fileinput/fileinput.min.js')}}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&language=ar&key=AIzaSyDScfghcvcJjgyREld1pFDVhdQgLQInWYE"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&language=ar&key=AIzaSyAzSJQ93PnItj-wB5HsNCBBUZQTzCqqCDM"></script>
 
 @endsection
 @section('js_code')
@@ -306,41 +300,46 @@
                 animation: google.maps.Animation.DROP,
                 position: parliament
             });
+            const geocoder = new google.maps.Geocoder();
+            const infowindow = new google.maps.InfoWindow();
             google.maps.event.addListener(marker, 'dragend', function (e) {
                 var pp = marker.getPosition();
                 $("#coordinates").val(pp).keyup();
-                console.log()
-                getAddress(e.latLng.lat(), e.latLng.lng()).then(console.log).catch(console.error);
+                console.log();
+                // getAddress (e.latLng.lat(), e.latLng.lng())
+                geocodeLatLng(geocoder, map, infowindow,marker);
                 map.setCenter(marker.getPosition());
 
             });
         }
 
         initialize();
+        function geocodeLatLng(geocoder, map, infowindow,marker) {
+            const input = document.getElementById("coordinates").value;
+           var value = input.replace('(','');
+            value = value.replace(')','');
 
-        function getAddress (latitude, longitude) {
-            return new Promise(function (resolve, reject) {
-                var request = new XMLHttpRequest();
 
-                var method = 'GET';
-                var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true&key=AIzaSyDScfghcvcJjgyREld1pFDVhdQgLQInWYE';
-                var async = true;
-
-                request.open(method, url, async);
-                request.onreadystatechange = function () {
-                    if (request.readyState == 4) {
-                        if (request.status == 200) {
-                            var data = JSON.parse(request.responseText);
-                            var address = data.results[0];
-                            resolve(address);
-                        }
-                        else {
-                            reject(request.status);
-                        }
+            const latlngStr = value.split(",");
+            const latlng = {
+                lat: parseFloat(latlngStr[0]),
+                lng: parseFloat(latlngStr[1]),
+            };
+            geocoder.geocode({ location: latlng }, (results, status) => {
+                if (status === "OK") {
+                    if (results[0]) {
+                        console.log(results[0],'results[0]')
+                        var city_name = results[0].address_components[3].long_name+' - '+results[0].address_components[2].long_name;
+                        $('.city').val(city_name);
+                        infowindow.setContent(city_name);
+                        infowindow.open(map, marker);
+                    } else {
+                        window.alert("No results found");
                     }
-                };
-                request.send();
+                } else {
+                    window.alert("Geocoder failed due to: " + status);
+                }
             });
-        };
+        }
     </script>
 @endsection

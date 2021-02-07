@@ -49,6 +49,7 @@ class ClinicController extends Controller
         $request->validate([
             'email' => 'email|required|unique:users',
             'clinic_name_ar' => 'required',
+            'city_district' => 'required',
             'password' => 'required',
         ]);
         $clinic = new Clinic();
@@ -58,8 +59,11 @@ class ClinicController extends Controller
         $clinic->location = $request->location;
         $clinic->longitude = Str::replaceFirst('(','',explode(', ',$request->location)[0]);
         $clinic->latitude= Str::replaceLast(')','',explode(', ',$request->location)[1]);
-        $clinic->city_id = $request->city_id;
-        $clinic->district_id = $request->district_id;
+        $clinic->city_id = $request->city_id ?? '1';
+        $clinic->district_id = $request->district_id ?? '5';
+        $clinic->city_district = $request->city_district ?? '';
+        $clinic->city_name =  trim(explode('-',$request->city_district ?? '')[0] ?? '');
+
         if ($request->has('logo') and $request->logo != null) {
             $imageName = $request->logo->store('public/clinic/logo');
             $clinic->logo = $imageName;
@@ -115,6 +119,7 @@ class ClinicController extends Controller
         $request->validate([
             'email' => 'required|unique:users,email,' . $clinic->user_id,
             'clinic_name_ar' => 'required',
+            'city_district' => 'required',
         ]);
 
         $clinic->name_ar = $request->clinic_name_ar;
@@ -123,8 +128,10 @@ class ClinicController extends Controller
         $clinic->location = $request->location;
         $clinic->longitude = Str::replaceFirst('(','',explode(', ',$request->location)[0]);
         $clinic->latitude= Str::replaceLast(')','',explode(', ',$request->location)[1]);
-        $clinic->city_id = $request->city_id;
-        $clinic->district_id = $request->district_id;
+        $clinic->city_id = $request->city_id ?? '1';
+        $clinic->district_id = $request->district_id ?? '5';
+        $clinic->city_district = $request->city_district ?? '';
+        $clinic->city_name =  trim(explode('-',$request->city_district ?? '')[0] ?? '');
         if ($request->has('logo') and $request->logo != null) {
             $imageName = $request->logo->store('public/clinic/logo');
             $clinic->logo = $imageName;
