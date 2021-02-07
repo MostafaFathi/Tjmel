@@ -99,6 +99,8 @@ class Controller extends BaseController
     {
         $long = explode(',', $location)[0];
         $lat = explode(',', $location)[1];
+        $city_name = trim(explode('-',$city_name ?? '')[0] ?? '');
+        dd($city_name);
         return ['longitude' => $long, 'latitude' => $lat, 'city_name' => $city_name];
     }
 
