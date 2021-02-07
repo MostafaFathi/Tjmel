@@ -323,7 +323,7 @@
                 var request = new XMLHttpRequest();
 
                 var method = 'GET';
-                var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true&key=AIzaSyDScfghcvcJjgyREld1pFDVhdQgLQInWYE';
+                var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=true&key=AIzaSyDScfghcvcJjgyREld1pFDVhdQgLQInWYE';
                 var async = true;
 
                 request.open(method, url, async);
