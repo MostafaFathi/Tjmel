@@ -27,6 +27,7 @@ class UserAddressController extends Controller
         $address->app_user_id = auth('sanctum')->user()->id;
         $address->title = $request->title;
         $address->location = $request->location;
+        $address->city_name = $request->city_name;
         $address->is_current = auth('sanctum')->user()->addresses->count() == 0;
         $address->save();
         return response()->json(['data' => $address, 'status' => true], 200);
@@ -46,6 +47,7 @@ class UserAddressController extends Controller
 
         $address->title = $request->title;
         $address->location = $request->location;
+        $address->city_name = $request->city_name;
         $address->save();
         return response()->json(['data' => $address, 'status' => true], 200);
     }

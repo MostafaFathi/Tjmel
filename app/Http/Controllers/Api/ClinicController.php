@@ -27,7 +27,7 @@ class ClinicController extends Controller
         $perPage = request('per_page') ?? 10;
 
         $location = $this->getLocationLongAlt();
-        $city_name = request()->get('city_name') ?? ''; /* default is riyadh */
+        $city_name = $location['city_name'] ?? '';
         $latitude = $location['latitude'] ?? '';
         $longitude = $location['longitude'] ?? '';
         $clinics = Clinic::where('city_name','like','%'.$city_name.'%')
@@ -46,13 +46,24 @@ class ClinicController extends Controller
 
     public function showClinicsByLocation()
     {
+        $rules = [
+            'city_name' => 'required',
+        ];
+        $messages = [
+            'city_name.required' => 'حقل اسم المدينة مطلوب',
+        ];
+        $validator = Validate::validateRequest(request(), $rules, $messages);
+        if ($validator !== 'valid') return $validator;
+
+
         $perPage = request('per_page') ?? 10;
         $location = $this->getLocationLongAlt();
 
-        $city_id = request()->get('city_id') ?? 1; /* default is riyadh */
+        $city_name = $location['city_name'] ?? '';
+
         $latitude = $location['latitude'] ?? '';
         $longitude = $location['longitude'] ?? '';
-        $clinics = $this->findNearestClinics($latitude, $longitude,$city_id, $perPage);
+        $clinics = $this->findNearestClinics($latitude, $longitude,$city_name, $perPage);
         return response()->json(['data' => $clinics->makeHidden('rates')], 200);
     }
 
@@ -115,10 +126,10 @@ class ClinicController extends Controller
         return response()->json(['data' => $reservation->makeHidden('clinic', 'service')], 200);
     }
 
-    private function findNearestClinics($latitude, $longitude,$city_id, $perPage)
+    private function findNearestClinics($latitude, $longitude,$city_name, $perPage)
     {
 
-        $clinics = Clinic::where('city_id',$city_id)->selectRaw("*,
+        $clinics = Clinic::where('city_name','like','%'.$city_name.'%')->selectRaw("*,
                     truncate(( 6371 * acos( cos( radians(?) ) *
                        cos( radians( latitude ) )
                        * cos( radians( longitude ) - radians(?)

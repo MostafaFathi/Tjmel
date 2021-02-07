@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Validate;
 use App\Http\Controllers\Controller;
 use App\Models\Clinic\Clinic;
 use App\Models\Service\Service;
@@ -17,17 +18,28 @@ class ServiceController extends Controller
     }
     public function showServicesByLocation()
     {
+        $rules = [
+            'city_name' => 'required',
+        ];
+        $messages = [
+            'city_name.required' => 'حقل اسم المدينة مطلوب',
+        ];
+        $validator = Validate::validateRequest(request(), $rules, $messages);
+        if ($validator !== 'valid') return $validator;
+
         $perPage = request('per_page') ?? 10;
         $location = $this->getLocationLongAlt();
 
+        $city_name = $location['city_name'] ?? '';
+
         $latitude = $location['latitude'] ?? '';
         $longitude = $location['longitude'] ?? '';
-        $services = $this->findNearestServices( $latitude,$longitude,$perPage);
+        $services = $this->findNearestServices( $latitude,$longitude,$city_name,$perPage);
         return response()->json(['data' => $services], 200);
     }
-    private function findNearestServices($latitude, $longitude, $perPage)
+    private function findNearestServices($latitude, $longitude,$city_name, $perPage)
     {
-        $services = Clinic::selectRaw("*,
+        $services = Clinic::where('city_name','like','%'.$city_name.'%')->selectRaw("*,
                      truncate(( 6371 * acos( cos( radians(?) ) *
                        cos( radians( latitude ) )
                        * cos( radians( longitude ) - radians(?)
