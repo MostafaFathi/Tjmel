@@ -27,10 +27,11 @@ class ClinicController extends Controller
         $perPage = request('per_page') ?? 10;
 
         $location = $this->getLocationLongAlt();
-        $city_name = $location['city_name'] ?? '';
+        $city_name = '%'.$location['city_name'].'%' ?? '';
         $latitude = $location['latitude'] ?? '';
         $longitude = $location['longitude'] ?? '';
-        $clinics = Clinic::where('city_name','like','%'.$city_name.'%')
+//        dd($city_name);
+        $clinics = Clinic::where('city_name','LIKE',$city_name)
             ->orderBy('rating', 'desc')
             ->selectRaw("*,
                      truncate(( 6371 * acos( cos( radians(?) ) *
@@ -40,7 +41,6 @@ class ClinicController extends Controller
                        sin( radians( latitude ) ) )
                      ),2) AS distance", [$latitude, $longitude, $latitude])
             ->paginate($perPage);
-dd($clinics);
         return response()->json(['data' => $clinics->makeHidden('rates')], 200);
     }
 
