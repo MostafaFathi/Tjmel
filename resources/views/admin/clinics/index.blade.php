@@ -44,8 +44,8 @@
                         <th class="numeric">#</th>
                         <th class="">الشعار</th>
                         <th class="">الإسم</th>
-                        <th class="">المدينة</th>
-                        <th class="">الحي</th>
+                        <th class="">المدينة - الحي</th>
+{{--                        <th class=""></th>--}}
                         <th class="">المستخدم</th>
                         <th class="">التحكم</th>
 
@@ -62,8 +62,8 @@
                             <td>{{$clinic->id}}</td>
                             <td><img src="{{$clinic->logo}}" alt="" style="width: 60px;border-radius: 8px"></td>
                             <td>{{$clinic->name_ar}}  @if(session('id') === $clinic->id) | updated @endif</td>
-                            <td>{{$clinic->city->name_ar ?? '--'}}</td>
-                            <td>{{$clinic->district->name_ar ?? '--'}}</td>
+                            <td>{{$clinic->city_district ?? '--'}}</td>
+{{--                            <td>{{$clinic->district->name_ar ?? '--'}}</td>--}}
                             <td>{{$clinic->user->name_ar ?? '--'}}</td>
                             <td>
                                 <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown">إتخذ اجراء</a>

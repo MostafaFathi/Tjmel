@@ -77,15 +77,15 @@
                                                value="{{$clinic->full_address_ar}}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label" for="name">المدينة</label>
+                                        <label class="control-label" for="name">المدينة - الحي</label>
                                         <input disabled type="text" class="form-control" id="user_name_ar" name="user_name_ar"
-                                               value="{{$clinic->city->name_ar}}">
+                                               value="{{$clinic->city_district}}">
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label" for="name">الحي</label>
-                                        <input disabled type="text" class="form-control" id="user_name_ar" name="user_name_ar"
-                                               value="{{$clinic->district->name_ar}}">
-                                    </div>
+{{--                                    <div class="form-group">--}}
+{{--                                        <label class="control-label" for="name"></label>--}}
+{{--                                        <input disabled type="text" class="form-control" id="user_name_ar" name="user_name_ar"--}}
+{{--                                               value="{{$clinic->district->name_ar}}">--}}
+{{--                                    </div>--}}
                                 </div>
                                 <div class="col-6 ">
 
