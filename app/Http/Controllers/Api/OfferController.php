@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class OfferController extends Controller
 {
+    public function showOffer($id)
+    {
+        $offer = Offer::find($id);
+        return response()->json(['data' => $offer], 200);
+    }
     public function showOffersByPrice()
     {
         $perPage = request('per_page') ?? 10;

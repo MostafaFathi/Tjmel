@@ -14,6 +14,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+//        dd(auth()->user()->clinic->services[2]->earliest_appointment);
         return view('clinic.main.home');
 
     }

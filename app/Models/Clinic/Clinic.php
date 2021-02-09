@@ -22,7 +22,7 @@ class Clinic extends Model
         'images' => 'json'
     ];
     //,'city_name','district_name'
-    protected $appends = ['rating','images_urls','location_on_map'];
+    protected $appends = ['rating','images_urls','location_on_map','city','district'];
 
     public function city()
     {
@@ -98,5 +98,13 @@ class Clinic extends Model
         $location = Str::replaceFirst('(','',$this->location);
         $location = Str::replaceLast(')','',$location);
         return $location;
+    }
+    public function getCityAttribute()
+    {
+        return trim(explode('-',$request->city_district ?? '')[0] ?? '');
+    }
+    public function getDistrictAttribute()
+    {
+        return trim(explode('-',$request->city_district ?? '')[1] ?? '');
     }
 }

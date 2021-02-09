@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
+    public function showService($id)
+    {
+        $service = Service::find($id);
+        return response()->json(['data' => $service], 200);
+    }
     public function showServicesByPrice()
     {
         $perPage = request('per_page') ?? 10;
@@ -37,6 +42,7 @@ class ServiceController extends Controller
         $services = $this->findNearestServices( $latitude,$longitude,$city_name,$perPage);
         return response()->json(['data' => $services], 200);
     }
+
     private function findNearestServices($latitude, $longitude,$city_name, $perPage)
     {
         $services = Clinic::where('city_name','like','%'.$city_name.'%')->selectRaw("*,

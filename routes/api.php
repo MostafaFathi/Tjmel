@@ -58,11 +58,13 @@ Route::group(['middleware' => ['localization', 'auth:sanctum', 'throttle:api'], 
         /* one route calls */
         Route::get('/price', [OfferController::class, 'showOffersByPrice'])->name('price.order');
         Route::get('/location', [OfferController::class, 'showOffersByLocation'])->name('location.order');
+        Route::get('/{id}', [OfferController::class, 'showOffer'])->name('show');
     });
     Route::group(['prefix' => 'service', 'as' => 'service.'], function () {
         /* one route calls */
         Route::get('/price', [ServiceController::class, 'showServicesByPrice'])->name('price.order');
         Route::get('/location', [ServiceController::class, 'showServicesByLocation'])->name('location.order');
+        Route::get('/{id}', [ServiceController::class, 'showService'])->name('show');
     });
 
 });
