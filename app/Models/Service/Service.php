@@ -27,7 +27,7 @@ class Service extends Model
 
     public function appointments()
     {
-        return $this->hasMany(Appointment::class)->orderBy('date', 'asc');
+        return $this->hasMany(Appointment::class)->where('date', '>=', Carbon::today())->orderBy('date', 'asc');
     }
 
     public function reservations()
@@ -67,7 +67,7 @@ class Service extends Model
 
     public function getEarliestAppointmentAttribute()
     {
-        $appointments = $this->appointments->where('date', '>=', Carbon::today());
+        $appointments = $this->appointments;
         foreach ($appointments as $appointment) {
             foreach ($appointment->times as $time) {
                 if (!$time['status']) {
