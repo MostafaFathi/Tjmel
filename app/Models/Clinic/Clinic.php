@@ -22,7 +22,7 @@ class Clinic extends Model
         'images' => 'json'
     ];
     //,'city_name','district_name'
-    protected $appends = ['rating', 'images_urls', 'location_on_map', 'city', 'district', 'is_favorite'];
+    protected $appends = ['rating', 'images_urls', 'location_on_map', 'city', 'district_name', 'is_favorite'];
 
     public function city()
     {
@@ -124,7 +124,7 @@ class Clinic extends Model
         return trim(explode('-', $request->city_district ?? '')[0] ?? '');
     }
 
-    public function getDistrictAttribute()
+    public function getDistrictNameAttribute()
     {
         return trim(explode('-', $request->city_district ?? '')[1] ?? '');
     }
