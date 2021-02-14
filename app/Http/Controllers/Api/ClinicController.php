@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\Validate;
 use App\Http\Controllers\Controller;
 use App\Models\Clinic\Clinic;
+use App\Models\Clinic\ClinicRequest;
 use App\Models\Service\Appointment;
 use App\Models\Service\Reserve;
 use Carbon\Carbon;
@@ -143,5 +144,21 @@ class ClinicController extends Controller
         return $clinics;
     }
 
+    public function storeClinicRequest(Request $request)
+    {
+        $rules = [
+            'name' => 'required',
+            'phone' => 'required',
+        ];
+        $validator = Validate::validateRequest($request, $rules);
+        if ($validator != 'valid') return $validator;
 
+        $clinicRequest = new ClinicRequest();
+        $clinicRequest->name_ar = $request->name;
+        $clinicRequest->phone = $request->phone;
+        $clinicRequest->save();
+        return response()->json(['clinic_application' => $clinicRequest, 'status' => true], 200);
+
+
+    }
 }

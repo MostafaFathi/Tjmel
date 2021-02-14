@@ -41,6 +41,10 @@ class UserController extends Controller
 
 
     }
+    public function getUserWallet()
+    {
+        return response()->json(['wallet' => auth('sanctum')->user()->wallet, 'status' => true], 200);
+    }
 
     public function userVerifyOtpCode(Request $request)
     {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\Validate;
 use App\Http\Controllers\Controller;
 use App\Models\Clinic\Clinic;
+use App\Models\Clinic\Favorite;
 use Illuminate\Http\Request;
 
 class FavoriteController extends Controller
@@ -38,6 +39,10 @@ class FavoriteController extends Controller
         if (!$clinic)
             return response()->json(['message' => 'العيادة غير موجودة'], 422);
 
+        $favorite = auth('sanctum')->user()->favorites->where('clinic_id', $request->clinic_id)->first();
+        if ($favorite)
+            return response()->json(['message' => 'لا يمكن اضافة العيادة مرة اخرى للمفضلة'], 422);
+
         $favorite = auth('sanctum')->user()->favorites()->create(['clinic_id' => $request->clinic_id]);
 
         return response()->json(['data' => $favorite], 200);
@@ -65,7 +70,6 @@ class FavoriteController extends Controller
             return response()->json(['message' => 'العيادة غير مضافة إلى المفضلة'], 422);
 
         $favorite->delete();
-
         return response()->json(['message' =>  'تمت إزالة العيادة من المفضلة'], 200);
     }
 }

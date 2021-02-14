@@ -32,6 +32,7 @@ Route::group(['middleware' => ['localization', 'auth:sanctum', 'throttle:api'], 
         Route::get('/', [UserController::class, 'showUserProfile'])->name('show');
         Route::post('/', [UserController::class, 'updateUserProfile'])->name('update');
         Route::get('/reservations', [ReservationController::class, 'showUserReservations'])->name('reservations');
+        Route::get('/wallet', [UserController::class, 'getUserWallet'])->name('wallet');
         Route::group(['prefix' => 'address', 'as' => 'address.'], function () {
             /* one route calls */
             Route::get('/', [UserAddressController::class, 'showUserAddresses'])->name('show');
@@ -75,6 +76,7 @@ Route::group(['as' => 'api.', 'middleware' => ['localization', 'throttle:api']],
     Route::post('/register/otp/send', [RegisterController::class, 'sendOtpCode'])->name('register.otp.send');
     Route::post('/login/otp/send', [LoginController::class, 'sendOtpCode'])->name('login.otp.send');
     Route::post('/user/otp/verify', [UserController::class, 'userVerifyOtpCode'])->name('user.otp.verify');
+    Route::post('/clinic/application', [ClinicController::class, 'storeClinicRequest'])->name('application.store');
 
     Route::group(['prefix' => 'setting', 'as' => 'setting.'], function () {
         /* one route calls */
