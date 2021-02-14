@@ -121,11 +121,11 @@ class Clinic extends Model
 
     public function getCityAttribute()
     {
-        return trim(explode('-', $request->city_district ?? '')[0] ?? '');
+        return trim(explode('-', $this->city_district ?? '')[0] ?? '');
     }
 
     public function getDistrictNameAttribute()
     {
-        return trim(explode('-', $request->city_district ?? '')[1] ?? '');
+        return trim(explode('-', $this->city_district ?? '')[1] ?? '');
     }
 }
