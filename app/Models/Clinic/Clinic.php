@@ -95,7 +95,7 @@ class Clinic extends Model
             return null;
 //        dd(auth('sanctum')->user()->favorites);
         $isFavorite = false;
-        foreach (auth('sanctum')->user()->favorites as $favorite) {
+        foreach (auth('sanctum')->user()->favorites ?? [] as $favorite) {
            if ($favorite->clinic_id == $this->id){
                $isFavorite = true;
                break;
