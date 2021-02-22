@@ -7,6 +7,7 @@ use App\Models\Data\Setting;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Service extends Model
 {
@@ -75,11 +76,11 @@ class Service extends Model
                     if ((Carbon::today()->format('Y-m-d') == $appointment->date->format('Y-m-d'))) {
                         if ($myTime > Carbon::now()) {
                             Carbon::setLocale('ar');
-                            return $myTime->diffForHumans();
+                            return Str::replaceFirst('من الآن','',$myTime->diffForHumans());
                         }
                     } else {
                         Carbon::setLocale('ar');
-                        return $myTime->diffForHumans();
+                        return Str::replaceFirst('من الآن','',$myTime->diffForHumans());
                     }
 
                 }
