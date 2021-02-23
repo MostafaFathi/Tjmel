@@ -129,7 +129,6 @@ class ClinicController extends Controller
 
     private function findNearestClinics($latitude, $longitude,$city_name, $perPage)
     {
-        dd($city_name);
         $clinics = Clinic::where('city_name','like','%'.$city_name.'%')->selectRaw("*,
                     truncate(( 6371 * acos( cos( radians(?) ) *
                        cos( radians( latitude ) )
