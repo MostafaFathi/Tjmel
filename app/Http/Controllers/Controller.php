@@ -78,6 +78,7 @@ class Controller extends BaseController
                 if (!$current)
                     return $this->getExplodeLocation(request()->get('location'),request()->get('city_name'));
 
+                dd($current);
                 return $this->getExplodeLocation($current->location,$current->city_name);
             }else{
                 return $this->getExplodeLocation(request()->get('location'),request()->get('city_name'));
