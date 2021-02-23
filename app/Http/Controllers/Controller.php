@@ -78,7 +78,6 @@ class Controller extends BaseController
                 if (!$current)
                     return $this->getExplodeLocation(request()->get('location'),request()->get('city_name'));
 
-                dd($current);
                 return $this->getExplodeLocation($current->location,$current->city_name);
             }else{
                 return $this->getExplodeLocation(request()->get('location'),request()->get('city_name'));
@@ -101,6 +100,7 @@ class Controller extends BaseController
         $long = explode(',', $location)[0];
         $lat = explode(',', $location)[1];
         $city_name = trim(explode('-',$city_name ?? '')[0] ?? '');
+        dd($city_name);
         return ['longitude' => $long, 'latitude' => $lat, 'city_name' => $city_name];
     }
 
