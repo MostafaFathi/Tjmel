@@ -146,7 +146,8 @@ class Clinic extends Model
 
             $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
                     cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
-            return (float) number_format($angle * 6371,2);
+            $distance = number_format($angle * 6371,2);
+            return (float) $distance;
         }
 
 //        return $this->selectRaw("*,
