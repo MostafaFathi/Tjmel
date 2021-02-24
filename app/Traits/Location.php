@@ -6,8 +6,9 @@ trait Location
     protected function getLocationLongAlt()
     {
         if ($this->isGust()) {
+            dd(request()->get('location'));
             if (request()->has('location') and request()->get('location') != '') {
-                dd(request()->get('location'));
+
                 return $this->getExplodeLocation(request()->get('location'),request()->get('city_name'));
             }
         } else {
