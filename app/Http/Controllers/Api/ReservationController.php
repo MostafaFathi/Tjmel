@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Traits\Location;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
+    use Location;
     public function showUserReservations()
     {
         if (auth('sanctum')->user()->id == 1 or auth('sanctum')->user()->id == 2)

@@ -8,12 +8,14 @@ use App\Models\Clinic\Clinic;
 use App\Models\Clinic\ClinicRequest;
 use App\Models\Service\Appointment;
 use App\Models\Service\Reserve;
+use App\Traits\Location;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ClinicController extends Controller
 {
+    use Location;
     public function showClinicsByRating()
     {
         $rules = [
@@ -29,18 +31,17 @@ class ClinicController extends Controller
 
         $location = $this->getLocationLongAlt();
         $city_name = '%'.$location['city_name'].'%' ?? '';
-        $latitude = $location['latitude'] ?? '';
-        $longitude = $location['longitude'] ?? '';
-//        dd($city_name);
+//        $latitude = $location['latitude'] ?? '';
+//        $longitude = $location['longitude'] ?? '';
         $clinics = Clinic::where('city_name','LIKE',$city_name)
             ->orderBy('rating', 'desc')
-            ->selectRaw("*,
-                     truncate(( 6371 * acos( cos( radians(?) ) *
-                       cos( radians( latitude ) )
-                       * cos( radians( longitude ) - radians(?)
-                       ) + sin( radians(?) ) *
-                       sin( radians( latitude ) ) )
-                     ),2) AS distance", [$latitude, $longitude, $latitude])
+//            ->selectRaw("*,
+//                     truncate(( 6371 * acos( cos( radians(?) ) *
+//                       cos( radians( latitude ) )
+//                       * cos( radians( longitude ) - radians(?)
+//                       ) + sin( radians(?) ) *
+//                       sin( radians( latitude ) ) )
+//                     ),2) AS distance", [$latitude, $longitude, $latitude])
             ->paginate($perPage);
         return response()->json(['data' => $clinics->makeHidden('rates')], 200);
     }

@@ -9,20 +9,21 @@ use App\Models\Service\Offer;
 use App\Models\Service\Reserve;
 use App\Models\Service\Service;
 use App\Models\User\User;
+use App\Traits\Location;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Clinic extends Model
 {
-    use HasFactory;
+    use HasFactory,Location;
 
     protected $hidden = ['images', 'city_id', 'district_id', 'created_at', 'updated_at', 'city', 'district', 'location'];
     protected $casts = [
         'images' => 'json'
     ];
     //,'city_name','district_name'
-    protected $appends = ['rating', 'images_urls', 'location_on_map', 'city', 'district_name', 'is_favorite'];
+    protected $appends = ['rating', 'images_urls', 'location_on_map', 'city', 'district_name', 'is_favorite','distance'];
 
     public function city()
     {
@@ -127,5 +128,33 @@ class Clinic extends Model
     public function getDistrictNameAttribute()
     {
         return trim(explode('-', $this->city_district ?? '')[1] ?? '');
+    }
+    public function getDistanceAttribute()
+    {
+         if (explode('.',request()->route()->action['as'])[0] == 'api'){
+
+             $location = $this->getLocationLongAlt();
+            $latitude = $location['latitude'] ?? '';
+            $longitude = $location['longitude'] ?? '';
+            $latFrom = deg2rad($this->latitude);
+            $lonFrom = deg2rad($this->longitude);
+            $latTo = deg2rad($latitude);
+            $lonTo = deg2rad($longitude);
+
+            $latDelta = $latTo - $latFrom;
+            $lonDelta = $lonTo - $lonFrom;
+
+            $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
+                    cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+            return number_format($angle * 6371,2);
+        }
+
+//        return $this->selectRaw("*,
+//                    truncate(( 6371 * acos( cos( radians(?) ) *
+//                       cos( radians( latitude ) )
+//                       * cos( radians( longitude ) - radians(?)
+//                       ) + sin( radians(?) ) *
+//                       sin( radians( latitude ) ) )
+//                     ),2)  AS distance", [1, 2, 1]);
     }
 }

@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\Validate;
 use App\Http\Controllers\Controller;
 use App\Models\User\UserAddress;
+use App\Traits\Location;
 use Illuminate\Http\Request;
 
 class UserAddressController extends Controller
 {
+    use Location;
     public function showUserAddresses()
     {
         $addresses = auth('sanctum')->user()->addresses;

@@ -6,10 +6,12 @@ use App\Helpers\Validate;
 use App\Http\Controllers\Controller;
 use App\Models\Clinic\Clinic;
 use App\Models\Clinic\Favorite;
+use App\Traits\Location;
 use Illuminate\Http\Request;
 
 class FavoriteController extends Controller
 {
+    use Location;
     public function showUserFavorites()
     {
         if (auth('sanctum')->user()->id == 1 or auth('sanctum')->user()->id == 2)

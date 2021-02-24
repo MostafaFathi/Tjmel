@@ -6,10 +6,12 @@ use App\Helpers\Validate;
 use App\Http\Controllers\Controller;
 use App\Models\Clinic\Clinic;
 use App\Models\Service\Offer;
+use App\Traits\Location;
 use Illuminate\Http\Request;
 
 class OfferController extends Controller
 {
+    use Location;
     public function showOffer($id)
     {
         $offer = Offer::find($id);

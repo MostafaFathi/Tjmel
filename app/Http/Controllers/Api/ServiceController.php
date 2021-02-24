@@ -6,10 +6,12 @@ use App\Helpers\Validate;
 use App\Http\Controllers\Controller;
 use App\Models\Clinic\Clinic;
 use App\Models\Service\Service;
+use App\Traits\Location;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
+    use Location;
     public function showService($id)
     {
         $service = Service::find($id);

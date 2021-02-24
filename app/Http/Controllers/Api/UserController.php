@@ -8,6 +8,7 @@ use App\Jobs\SendEmail;
 use App\Models\User\AppUser;
 use App\Models\User\User;
 use App\Models\User\UserAddress;
+use App\Traits\Location;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -17,6 +18,7 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+    use Location;
     public function showUserProfile()
     {
         $user = auth('sanctum')->user();
