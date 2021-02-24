@@ -42,7 +42,7 @@
                 <!-- Main -->
 
                 <li class="nav-item">
-                    <a href="{{route('dashboard')}}" class="nav-link ">
+                    <a href="{{route('admin.dashboard')}}" class="nav-link ">
                         <i class="icon-home4"></i>
                         <span>الرئيسية</span>
                     </a>

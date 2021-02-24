@@ -76,7 +76,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     /* End Dashboard management routes */
 
     /* Start Dashboard general routes */
-    Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
+    Route::get('/home', [HomeController::class, 'index'])->name('admin.dashboard');
     Route::get('/telescope_view', [HomeController::class, 'telescope'])->name('telescope_view');
     Route::get('/logout', [HomeController::class, 'logout'])->name('log_out');
     Route::get('/profile', [UserController::class, 'showProfile'])->name('profile.show');
