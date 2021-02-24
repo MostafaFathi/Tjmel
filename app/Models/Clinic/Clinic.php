@@ -134,10 +134,10 @@ class Clinic extends Model
          if (explode('.',request()->route()->action['as'])[0] == 'api'){
 
              $location = $this->getLocationLongAlt();
-            $latitude = $location['latitude'] ?? '';
-            $longitude = $location['longitude'] ?? '';
-            $latFrom = deg2rad($this->latitude);
-            $lonFrom = deg2rad($this->longitude);
+            $latitude =(float) $location['latitude'] ?? '';
+            $longitude = (float)$location['longitude'] ?? '';
+            $latFrom = deg2rad((float) $this->latitude);
+            $lonFrom = deg2rad((float) $this->longitude);
             $latTo = deg2rad($latitude);
             $lonTo = deg2rad($longitude);
 
