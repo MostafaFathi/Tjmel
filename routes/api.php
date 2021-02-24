@@ -54,6 +54,7 @@ Route::group(['middleware' => ['localization', 'auth:sanctum', 'throttle:api'], 
         Route::get('/location', [ClinicController::class, 'showClinicsByLocation'])->name('location.order');
         Route::get('/search', [ClinicController::class, 'searchClinics'])->name('search');
         Route::get('/{id}', [ClinicController::class, 'showClinic'])->name('show');
+        Route::post('/{id}/rate', [ClinicController::class, 'rateClinic'])->name('rate');
         Route::post('/{id}/service/{service_id}/reserve', [ClinicController::class, 'reserveClinicService'])->name('reserve');
     });
     Route::group(['prefix' => 'offer', 'as' => 'offer.'], function () {

@@ -6,6 +6,7 @@ use App\Helpers\Validate;
 use App\Http\Controllers\Controller;
 use App\Models\Clinic\Clinic;
 use App\Models\Clinic\ClinicRequest;
+use App\Models\Clinic\Rate;
 use App\Models\Service\Appointment;
 use App\Models\Service\Reserve;
 use App\Traits\Location;
@@ -167,6 +168,26 @@ class ClinicController extends Controller
         $clinicRequest->phone = $request->phone;
         $clinicRequest->save();
         return response()->json(['clinic_application' => $clinicRequest, 'status' => true], 200);
+
+
+    }
+    public function rateClinic(Request $request,$id)
+    {
+        $rules = [
+            'comment' => 'required',
+            'value' => 'required|numeric|min:1|max:5',
+        ];
+        $validator = Validate::validateRequest($request, $rules);
+        if ($validator != 'valid') return $validator;
+
+        $rate = new Rate();
+        $rate->clinic_id = $id;
+        $rate->app_user_id = auth('sanctum')->user()->id;
+        $rate->comment = $request->comment;
+        $rate->rate = $request->value;
+        $rate->save();
+        $clinic = Clinic::find($id);
+        return response()->json(['clinic' => $clinic, 'status' => true], 200);
 
 
     }
