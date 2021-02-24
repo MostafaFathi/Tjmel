@@ -180,6 +180,10 @@ class ClinicController extends Controller
         $validator = Validate::validateRequest($request, $rules);
         if ($validator != 'valid') return $validator;
 
+        $isUserRatedClinicPreviously = Rate::where('clinic_id',$id)->where('app_user_id', auth('sanctum')->user()->id)->first();
+        if ($isUserRatedClinicPreviously)
+            return response()->json(['message' => 'قمت بتقييم هذه العيادة مسبقاً'], 422);
+
         $rate = new Rate();
         $rate->clinic_id = $id;
         $rate->app_user_id = auth('sanctum')->user()->id;
