@@ -68,7 +68,16 @@ class ClinicController extends Controller
         $clinics = $this->findNearestClinics($latitude, $longitude,$city_name, $perPage);
         return response()->json(['data' => $clinics->makeHidden('rates')], 200);
     }
+    public function searchClinics()
+    {
+       $searchValue = request()->get('q') ?? '';
+        $location = $this->getLocationLongAlt();
 
+        $city_name = $location['city_name'] ?? '';
+        $clinics = Clinic::where('city_name','like','%'.$city_name.'%')
+            ->where('name_ar','like','%'.$searchValue.'%')->get();
+        return response()->json(['data' => $clinics->makeHidden('rates')], 200);
+    }
     public function showClinic($id)
     {
         $clinic = Clinic::with(['rates', 'services' => function ($service) {

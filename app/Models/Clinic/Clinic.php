@@ -150,12 +150,5 @@ class Clinic extends Model
             return (float) $distance;
         }
 
-//        return $this->selectRaw("*,
-//                    truncate(( 6371 * acos( cos( radians(?) ) *
-//                       cos( radians( latitude ) )
-//                       * cos( radians( longitude ) - radians(?)
-//                       ) + sin( radians(?) ) *
-//                       sin( radians( latitude ) ) )
-//                     ),2)  AS distance", [1, 2, 1]);
     }
 }
