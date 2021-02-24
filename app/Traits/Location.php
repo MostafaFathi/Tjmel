@@ -7,6 +7,7 @@ trait Location
     {
         if ($this->isGust()) {
             if (request()->has('location') and request()->get('location') != '') {
+                dd(request()->get('location'));
                 return $this->getExplodeLocation(request()->get('location'),request()->get('city_name'));
             }
         } else {
