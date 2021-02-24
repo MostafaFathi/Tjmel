@@ -17,11 +17,12 @@ use Illuminate\Support\Str;
 class ClinicController extends Controller
 {
     use Location;
+
     public function showClinicsByRating()
     {
         $rules = [
             'city_name' => 'required',
-         ];
+        ];
         $messages = [
             'city_name.required' => 'حقل اسم المدينة مطلوب',
         ];
@@ -31,10 +32,10 @@ class ClinicController extends Controller
         $perPage = request('per_page') ?? 10;
 
         $location = $this->getLocationLongAlt();
-        $city_name = '%'.$location['city_name'].'%' ?? '';
+        $city_name = '%' . $location['city_name'] . '%' ?? '';
 //        $latitude = $location['latitude'] ?? '';
 //        $longitude = $location['longitude'] ?? '';
-        $clinics = Clinic::where('city_name','LIKE',$city_name)
+        $clinics = Clinic::where('city_name', 'LIKE', $city_name)
             ->orderBy('rating', 'desc')
 //            ->selectRaw("*,
 //                     truncate(( 6371 * acos( cos( radians(?) ) *
@@ -66,19 +67,21 @@ class ClinicController extends Controller
 
         $latitude = $location['latitude'] ?? '';
         $longitude = $location['longitude'] ?? '';
-        $clinics = $this->findNearestClinics($latitude, $longitude,$city_name, $perPage);
+        $clinics = $this->findNearestClinics($latitude, $longitude, $city_name, $perPage);
         return response()->json(['data' => $clinics->makeHidden('rates')], 200);
     }
+
     public function searchClinics()
     {
-       $searchValue = request()->get('q') ?? '';
+        $searchValue = request()->get('q') ?? '';
         $location = $this->getLocationLongAlt();
 
         $city_name = $location['city_name'] ?? '';
-        $clinics = Clinic::where('city_name','like','%'.$city_name.'%')
-            ->where('name_ar','like','%'.$searchValue.'%')->get();
+        $clinics = Clinic::where('city_name', 'like', '%' . $city_name . '%')
+            ->where('name_ar', 'like', '%' . $searchValue . '%')->get();
         return response()->json(['data' => $clinics->makeHidden('rates')], 200);
     }
+
     public function showClinic($id)
     {
         $clinic = Clinic::with(['rates', 'services' => function ($service) {
@@ -138,9 +141,9 @@ class ClinicController extends Controller
         return response()->json(['data' => $reservation->makeHidden('clinic', 'service')], 200);
     }
 
-    private function findNearestClinics($latitude, $longitude,$city_name, $perPage)
+    private function findNearestClinics($latitude, $longitude, $city_name, $perPage)
     {
-        $clinics = Clinic::where('city_name','like','%'.$city_name.'%')->selectRaw("*,
+        $clinics = Clinic::where('city_name', 'like', '%' . $city_name . '%')->selectRaw("*,
                     truncate(( 6371 * acos( cos( radians(?) ) *
                        cos( radians( latitude ) )
                        * cos( radians( longitude ) - radians(?)
@@ -171,8 +174,12 @@ class ClinicController extends Controller
 
 
     }
-    public function rateClinic(Request $request,$id)
+
+    public function rateClinic(Request $request, $id)
     {
+        if ($this->isGust())
+            return response()->json(['message' => 'لا يمكن للزوار تقييم العيادات'], 422);
+
         $rules = [
             'comment' => 'required',
             'value' => 'required|numeric|min:1|max:5',
@@ -180,7 +187,8 @@ class ClinicController extends Controller
         $validator = Validate::validateRequest($request, $rules);
         if ($validator != 'valid') return $validator;
 
-        $isUserRatedClinicPreviously = Rate::where('clinic_id',$id)->where('app_user_id', auth('sanctum')->user()->id)->first();
+
+        $isUserRatedClinicPreviously = Rate::where('clinic_id', $id)->where('app_user_id', auth('sanctum')->user()->id)->first();
         if ($isUserRatedClinicPreviously)
             return response()->json(['message' => 'قمت بتقييم هذه العيادة مسبقاً'], 422);
 
