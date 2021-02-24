@@ -127,6 +127,13 @@
                     </a>
                 </li>
                 <li class="nav-item ">
+                    <a href="{{route('applications.index')}}"
+                       class="nav-link  {{request()->routeIs('applications.*')?'active' :'' }}">
+                        <i class="icon-touch"></i>
+                        <span>طلبات العيادات</span>
+                    </a>
+                </li>
+                <li class="nav-item ">
                     <a href="{{route('telescope_view')}}"
                        class="nav-link  {{request()->routeIs('telescope_view*')?'active' :'' }}">
                         <i class="icon-eye"></i>

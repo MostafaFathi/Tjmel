@@ -59,6 +59,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         /* one route calls */
         Route::get('/city/districts/{id}', [SettingController::class, 'cityDistricts'])->name('city.districts');
         Route::post('/clinics/image/delete/{id}', [ClinicController::class, 'destroyClinicImage'])->name('products.image.destroy');
+        Route::get('/applications', [ClinicController::class, 'clinicRequestsIndex'])->name('applications.index');
 
         //start admin services and offers
         Route::get('/services/acceptance', [ServiceOfferController::class, 'services'])->name('services.acceptance');

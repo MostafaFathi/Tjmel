@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Clinic\Clinic;
+use App\Models\Clinic\ClinicRequest;
 use App\Models\Data\City;
 use App\Models\Data\Setting;
 use App\Models\User\User;
@@ -212,5 +213,11 @@ class ClinicController extends Controller
 
         }
         return true;
+    }
+
+    public function clinicRequestsIndex()
+    {
+        $clinicRequests = ClinicRequest::orderBy('id','desc')->paginate(15);
+        return view('admin.settings.applications.index',compact('clinicRequests'));
     }
 }
