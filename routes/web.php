@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AgreementController;
 use App\Http\Controllers\Admin\ClinicController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\ServiceOfferController;
+use App\Http\Controllers\Admin\TipController;
 use Illuminate\Support\Facades\Route;
 use \Illuminate\Support\Facades\Auth;
 use \App\Http\Controllers\Admin\UserController;
@@ -55,6 +56,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         Route::resources(['settings' => SettingController::class]);
         Route::resources(['clinics' => ClinicController::class]);
         Route::resources(['sections' => SectionController::class]);
+        Route::resources(['tips' => TipController::class]);
 
         /* one route calls */
         Route::get('/city/districts/{id}', [SettingController::class, 'cityDistricts'])->name('city.districts');
@@ -66,6 +68,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         Route::get('/services/show/{id}', [ServiceOfferController::class, 'showService'])->name('admin.services.show');
         Route::get('/offers/acceptance', [ServiceOfferController::class, 'offers'])->name('offers.acceptance');
         Route::get('/offers/show/{id}', [ServiceOfferController::class, 'showOffer'])->name('admin.offers.show');
+        Route::put('/offers/update/{id}', [ServiceOfferController::class, 'updateOffer'])->name('admin.offers.update');
         Route::post('/clinics/services/approve/{id}', [ServiceOfferController::class, 'changeServiceStatus']);
         Route::post('/clinics/offers/approve/{id}', [ServiceOfferController::class, 'changeOfferStatus']);
         Route::delete('/clinics/rates/delete/{id}', [ServiceOfferController::class, 'deleteRate']);

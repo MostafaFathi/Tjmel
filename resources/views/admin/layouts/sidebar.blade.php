@@ -56,6 +56,13 @@
                     </a>
                 </li>
                 <li class="nav-item ">
+                    <a href="{{route('tips.index')}}"
+                       class="nav-link  {{request()->routeIs('tips.*')?'active' :'' }}">
+                        <i class="icon-image2"></i>
+                        <span>إدارة التلميحات</span>
+                    </a>
+                </li>
+                <li class="nav-item ">
                     <a href="{{route('clinics.index')}}"
                        class="nav-link  {{request()->routeIs('clinics.*')?'active' :'' }}">
                         <i class="icon-office"></i>

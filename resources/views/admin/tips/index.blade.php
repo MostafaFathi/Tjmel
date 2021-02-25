@@ -6,7 +6,10 @@
     <div class="page-header page-header-light">
         <div class="page-header-content header-elements-md-inline">
             <div class="page-title d-flex">
-                <h4><span class="font-weight-semibold">العروض</span></h4>
+                <h4><span class="font-weight-semibold">التلميحات</span></h4>
+            </div>
+            <div class="header-elements">
+                <a type="button" class="btn btn-primary" href="{{route('tips.create')}}">جديد</a>
             </div>
 
         </div>
@@ -15,7 +18,7 @@
             <div class="d-flex">
                 <div class="breadcrumb">
                     <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> الرئيسية</a>
-                    <a href="{{route('offers.acceptance')}}" class="breadcrumb-item">العروض</a>
+                    <a href="{{route('tips.index')}}" class="breadcrumb-item">الإعلانات</a>
 
                 </div>
 
@@ -38,13 +41,11 @@
 
                     <tr>
 
-                        <th class="numeric">#</th>
-                        <th class="">عنوان العرض</th>
-                        <th class="">العيادة</th>
-                        <th class="">القسم</th>
-                        <th class="">السعر</th>
+                        <th class="numeric" style="width: 10%">#</th>
+
+                        <th class="">صورة التلميح</th>
                         <th class="">الحالة</th>
-                        <th class="">التحكم</th>
+                        <th class="" style="width: 20%">التحكم</th>
 
                     </tr>
 
@@ -53,33 +54,45 @@
                     <tbody>
 
 
-                    @foreach($offers as $offer)
+                    @foreach($tips as $tip)
 
-                        <tr @if(session('id') === $offer->id)class="bg-green" @endif>
-                            <td>{{$offer->id}}</td>
-                            <td>{{$offer->name_ar}}</td>
-                            <td>{{$offer->clinic->name_ar ?? '--'}}</td>
-                            <td>{{$offer->section->title_ar ?? '--'}}</td>
+                        <tr @if(session('id') === $tip->id)class="bg-green" @endif>
+                            <td>{{$loop->index + 1 }}</td>
                             <td>
-                            <div style="text-decoration: line-through;color: #9E9E9E;">قبل الخصم:{{$offer->price_before ?? '--'}}</div>
-                            <div class="font-weight-bold">بعد الخصم:{{$offer->price_after ?? '--'}}</div>
-
+                                @if($tip->image)
+                                    <img src="{{FileStorage::getUrl($tip->image)}}" alt="img"
+                                         style="width: 40px;border-radius: 5px;">
+                                @else
+                                    --
+                                @endif
                             </td>
-                            <td><span class="badge badge-{{$offer->status_color}}">{{$offer->status_name}}</span></td>
                             <td>
-                                <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown">اتخذ اجراء</a>
+                                @if(count($tips)-1 == $loop->index)
+                                    <span class="badge bg-success">فعال</span>
+                                @else
+                                    <span class="badge bg-secondary">معطل</span>
+                                @endif
+                            </td>
+
+
+                            <td>
+                                <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown">إتخذ
+                                    اجراء</a>
 
                                 <div class="dropdown-menu dropdown-menu-lg">
-                                <a class="dropdown-item " data-placement="top" title="Show"
-                                   href="{{route('admin.offers.show',$offer->id)}}"
-                                  ><i class="icon-eye"></i>عرض تفاصيل العرض وتحديث الصورة</a>
+                                    <a class="dropdown-item " data-placement="top" title="Show"
+                                       href="{{route('tips.show',$tip->id)}}"
+                                    ><i class="icon-eye"></i>عرض</a>
 
-                                <a class="dropdown-item" data-placement="top" title="{{$offer->status == 0 or $offer->status == 2 ? 'موافقة ونشر' : 'رفض واخفاء'}}" href="javascript:void(0)"
-                                   onclick="approve_item('{{$offer->id}}','{{$offer->name}}')" data-toggle="modal"
-                                   data-target="#delete_item_modal"><i class="{{$offer->status == 0 || $offer->status == 2 ? 'icon-check2' : 'icon-cross3'}} "></i>{{$offer->status == 0 || $offer->status == 2 ? 'موافقة ونشر' : 'رفض واخفاء'}}</a>
+                                    <a class="dropdown-item" data-placement="top" title="Delete"
+                                       href="javascript:void(0)"
+                                       onclick="delete_item('{{$tip->id}}','{{$tip->name}}')" data-toggle="modal"
+                                       data-target="#delete_item_modal"><i class="icon-cross3"></i>حذف</a>
+
+                                    <a class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Edit"
+                                       href="{{route('tips.edit',$tip->id)}}"><i class="icon-pencil7"></i>تعديل</a>
 
                                 </div>
-
 
 
                             </td>
@@ -87,11 +100,7 @@
                         </tr>
 
                     @endforeach
-                    <tr>
-                        <td colspan="7" class="text-center">
-                            {{ $offers->links() }}
-                        </td>
-                    </tr>
+
 
                     </tbody>
                 </table>
@@ -105,20 +114,22 @@
                 <div class="modal-content">
                     <form id="delete_form" method="post" action="">
                         @csrf
+                        {{ method_field('DELETE') }}
                         <input name="id" id="item_id" class="form-control" type="hidden">
+                        <input name="_method" type="hidden" value="DELETE">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel">موافقة/رفض العرض <span id="del_label_title"></span>
+                            <h4 class="modal-title" id="myModalLabel">حذف إعلان <span id="del_label_title"></span>
                             </h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         </div>
                         <div class="modal-body">
-                            <h4>تأكيد الموافقة/الرفض للعرض</h4>
+                            <h4>تأكيد حذف الاعلان</h4>
                             <p id="grup_title"></p>
 
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">اغلاق</button>
-                            <button type="submit" class="btn btn-success waves-effect" id="delete_url">حفظ الحالة الجديدة</button>
+                            <button type="submit" class="btn btn-danger waves-effect" id="delete_url">حذف</button>
                         </div>
                     </form>
                 </div>
@@ -127,12 +138,7 @@
             <!-- /.modal-dialog -->
 
 
-
         </div>
-
-
-        <!-- /.modal-dialog -->
-
 
 
     </div>
@@ -145,9 +151,9 @@
 
     <script>
 
-        function approve_item(id, title) {
+        function delete_item(id, title) {
             $('#item_id').val(id);
-            var url = "{{url('admin/clinics/offers/approve')}}/" + id;
+            var url = "{{url('admin/tips')}}/" + id;
             $('#delete_form').attr('action', url);
             $('#grup_title').text(title);
             $('#del_label_title').html(title);

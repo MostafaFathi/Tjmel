@@ -35,6 +35,21 @@ class ServiceOfferController extends Controller
         return view('admin.offers.show', compact('offer'));
     }
 
+    public function updateOffer(Request $request, $id)
+    {
+
+        $offer = Offer::find($id);
+        if ($request->has('image') and $request->image != null) {
+            $imageName = $request->image->store('public/offers');
+            $offer->image = $imageName;
+        }
+        if ($request->save_type == 'save_and_accept')
+            $offer->status = 1;
+        $offer->save();
+        return redirect()->route('offers.acceptance')->with('success', 'success')->with('id', $offer->id);
+
+    }
+
     public function changeServiceStatus($id)
     {
         $service = Service::find($id);
@@ -65,6 +80,7 @@ class ServiceOfferController extends Controller
         $offer->save();
         return back();
     }
+
     public function deleteRate($id)
     {
         Rate::destroy($id);

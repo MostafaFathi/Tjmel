@@ -2,6 +2,7 @@
 
 namespace App\Models\Service;
 
+use App\Helpers\File;
 use App\Models\Clinic\Clinic;
 use App\Models\Data\Setting;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +12,7 @@ class Offer extends Model
 {
     use HasFactory;
 
-    protected $appends = ['status_name', 'status_color','clinic_logo', 'section_name', 'section_logo','advanced_payment',];
+    protected $appends = ['status_name', 'status_color','clinic_logo', 'section_name', 'section_logo','advanced_payment','image_url'];
     protected $hidden = ['created_at','updated_at','clinic', 'section'];
 
     public function clinic()
@@ -50,5 +51,12 @@ class Offer extends Model
     public function getAdvancedPaymentAttribute()
     {
         return Setting::getValue('advance_payment');
+    }
+    public function getImageUrlAttribute()
+    {
+        if ($this->image)
+            return File::getUrl($this->image);
+        else
+            return null;
     }
 }

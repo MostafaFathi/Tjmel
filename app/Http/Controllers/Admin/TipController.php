@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Clinic;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Service\Reserve;
-use Carbon\Carbon;
+use App\Models\Data\Tip;
 use Illuminate\Http\Request;
 
-class ReservationController extends Controller
+class TipController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +15,8 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $todayReservations = auth()->user()->clinic->reservations->where('status',0)->where('appointment_date',Carbon::today()->format('d-m-Y'));
-        $nowReservations = Reserve::where('clinic_id',auth()->user()->clinic->id)->where('appointment_date',Carbon::today()->format('d-m-Y'))
-            ->whereBetween('appointment_time',[Carbon::now()->subMinutes(30),Carbon::now()])->get();
-        $completedReservations = auth()->user()->clinic->reservations->where('status',1);
-        $unCompletedReservations = auth()->user()->clinic->reservations->whereIn('status',[2,3,4]);
-        return view('clinic.reservations.index',compact('todayReservations','nowReservations','completedReservations','unCompletedReservations'));
+        $tips = Tip::get();
+        return view('admin.tips.index', compact('tips'));
     }
 
     /**
@@ -31,7 +26,7 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.tips.create');
     }
 
     /**
@@ -42,7 +37,18 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'image' => 'required',
+        ]);
+
+        $tip = new Tip();
+        if($request->has('image') and $request->image != null){
+            $imageName = $request->image->store('public/tips');
+            $tip->image = $imageName;
+        }
+        $tip->save();
+
+        return redirect()->route('tips.index')->with('success', 'success')->with('id', $tip->id);
     }
 
     /**
@@ -53,7 +59,8 @@ class ReservationController extends Controller
      */
     public function show($id)
     {
-        //
+        $tip = Tip::find($id);
+        return view('admin.tips.show', compact('tip'));
     }
 
     /**
@@ -64,7 +71,8 @@ class ReservationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tip = Tip::find($id);
+        return view('admin.tips.edit', compact('tip'));
     }
 
     /**
@@ -76,7 +84,18 @@ class ReservationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'image' => 'required',
+        ]);
+
+        $tip =  Tip::find($id);
+        if($request->has('image') and $request->image != null){
+            $imageName = $request->image->store('public/tips');
+            $tip->image = $imageName;
+        }
+        $tip->save();
+
+        return redirect()->route('tips.index')->with('success', 'success')->with('id', $tip->id);
     }
 
     /**
@@ -87,15 +106,7 @@ class ReservationController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
-
-    public function changeStatus(Request $request,$id,$status)
-    {
-        $reservation = Reserve::find($id);
-        $reservation->status = $status;
-        $reservation->reason = $request->comment;
-        $reservation->save();
-        return back();
+        Tip::destroy($id);
+        return back()->with('success', 'success');
     }
 }
