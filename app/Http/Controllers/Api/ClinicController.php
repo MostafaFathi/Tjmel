@@ -119,6 +119,22 @@ class ClinicController extends Controller
         if (!$appointment)
             return response()->json(['message' => 'الموعد غير موجود'], 422);
 
+        $appointmentTimes = $appointment->times;
+        $isFoundTime = false;
+        foreach ($appointment->times as $key => $time) {
+            if (isset($time['time']) and $time['time'] == $request->time){
+                $isFoundTime = true;
+                $appointmentTimes[$key]['status'] = 'reserved';
+                break;
+            }
+
+        }
+        if (!$isFoundTime)
+            return response()->json(['message' => 'الموعد خلال هذه الساعة غير موجود'], 422);
+
+        $appointment->times = $appointmentTimes;
+        $appointment->save();
+
         $reservation = new Reserve();
         $reservation->app_user_id = auth('sanctum')->user()->id;
         $reservation->display_id = mt_rand(100000, 999999) . '-' . Carbon::today()->format('m-Y');
@@ -130,14 +146,7 @@ class ClinicController extends Controller
         $reservation->status = 0;
         $reservation->save();
 
-        $appointmentTimes = $appointment->times;
-        foreach ($appointment->times as $key => $time) {
-            if ($time['time'] ?? '' == $request->time)
-                $appointmentTimes[$key]['status'] = 'reserved';
 
-        }
-        $appointment->times = $appointmentTimes;
-        $appointment->save();
 
         return response()->json(['data' => $reservation->makeHidden('clinic', 'service')], 200);
     }
@@ -166,6 +175,22 @@ class ClinicController extends Controller
         if (!$appointment)
             return response()->json(['message' => 'الموعد غير موجود'], 422);
 
+        $appointmentTimes = $appointment->times;
+        $isFoundTime = false;
+        foreach ($appointment->times as $key => $time) {
+            if (isset($time['time']) and $time['time'] == $request->time){
+                $isFoundTime = true;
+                $appointmentTimes[$key]['status'] = 'reserved';
+                break;
+            }
+
+        }
+        if (!$isFoundTime)
+            return response()->json(['message' => 'الموعد خلال هذه الساعة غير موجود'], 422);
+
+        $appointment->times = $appointmentTimes;
+        $appointment->save();
+
         $reservation = new Reserve();
         $reservation->app_user_id = auth('sanctum')->user()->id;
         $reservation->display_id = mt_rand(100000, 999999) . '-' . Carbon::today()->format('m-Y');
@@ -177,15 +202,7 @@ class ClinicController extends Controller
         $reservation->status = 0;
         $reservation->save();
 
-        $appointmentTimes = $appointment->times;
-        foreach ($appointment->times as $key => $time) {
-//            dd($time['time'],$request->time,$appointment->times);
-            if (isset($time['time']) and $time['time'] == $request->time)
-                $appointmentTimes[$key]['status'] = 'reserved';
 
-        }
-        $appointment->times = $appointmentTimes;
-        $appointment->save();
 
         return response()->json(['data' => $reservation->makeHidden('clinic', 'service')], 200);
     }
