@@ -21,7 +21,7 @@ class OfferController extends Controller
     {
         $perPage = request('per_page') ?? 10;
         $offers = Offer::where('status',1)->orderBy('price_after','asc')->paginate($perPage);
-        return response()->json(['data' => $offers], 200);
+        return response()->json(['data' => $offers->makeHidden('clinic')], 200);
     }
     public function showOffersByLocation()
     {
@@ -42,7 +42,7 @@ class OfferController extends Controller
         $latitude = $location['latitude'] ?? '';
         $longitude = $location['longitude'] ?? '';
         $offers = $this->findNearestOffers( $latitude,$longitude,$city_name,$perPage);
-        return response()->json(['data' => $offers], 200);
+        return response()->json(['data' => $offers->makeHidden('clinic')], 200);
     }
     private function findNearestOffers($latitude, $longitude,$city_name, $perPage)
     {

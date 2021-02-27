@@ -47,9 +47,15 @@
                                 <select name="service_id" required id="service_id"  class="form-control col-3 service_id"
                                         style="background: white;float: right">
                                     <option value="">إختر</option>
-                                    @foreach($services as $service)
-                                        <option
-                                            value="{{$service->id}}" {{$service->id == old('service_id') ? 'selected' : ''}}>{{$service->name_ar}}</option>
+                                    <option value="" disabled style="    background: #a0a0a0;color: white">- الخدمات -</option>
+                                @foreach($services as $service)
+                                        <option style="    background: #b4e1ff;"
+                                            value="{{$service->id}}-service" {{$service->id == old('service_id') ? 'selected' : ''}}>{{$service->name_ar}} - خدمة </option>
+                                    @endforeach
+                                    <option value="" disabled style="    background: #a0a0a0;;color: white">- العروض -</option>
+                                    @foreach($offers as $offer)
+                                        <option style="    background: #96ffc5;"
+                                            value="{{$offer->id}}-offer" {{$offer->id == old('service_id') ? 'selected' : ''}}>{{$offer->name_ar}} - عرض</option>
                                     @endforeach
                                 </select>
 

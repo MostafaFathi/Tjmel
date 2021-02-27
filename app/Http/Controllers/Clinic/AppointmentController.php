@@ -18,6 +18,7 @@ class AppointmentController extends Controller
     public function index()
     {
         $services = auth()->user()->clinic->services;
+        $offers = auth()->user()->clinic->offers;
         Carbon::setLocale('ar');
         $date = Carbon::now();
         $days = $date->daysInMonth;
@@ -27,7 +28,7 @@ class AppointmentController extends Controller
         $prevMonth = $date->subMonths(2)->format('Y-m');
         $times = $this->generateTimeIntervals('7:00 am', '1:30 am');
 
-        return view('clinic.appointments.index', compact('services', 'days', 'times', 'currentMonthName', 'currentMonth', 'nextMonth', 'prevMonth'));
+        return view('clinic.appointments.index', compact('services', 'offers','days', 'times', 'currentMonthName', 'currentMonth', 'nextMonth', 'prevMonth'));
     }
 
     public function getDate($month, $id = null)
@@ -42,8 +43,10 @@ class AppointmentController extends Controller
         $selectedTimes = [];
         $appointments = [];
         if ($id) {
+            $serviceIdAndType = explode('-',$id);
             $appointments = Appointment::where('clinic_id', auth()->user()->clinic->id)
-                ->where('service_id', $id)
+                ->where('service_id', $serviceIdAndType[0])
+                ->where('service_type', $serviceIdAndType[1])
                 ->where('date', 'like', '%' . $month . '%')
                 ->get();
             $monthList = '<ul class="month-days">';
@@ -116,8 +119,10 @@ class AppointmentController extends Controller
             }
             $key++;
         }
+        $serviceIdAndType = explode('-',$request->service_id);
         $aa = Appointment::where('clinic_id', auth()->user()->clinic->id)
-            ->where('service_id', $request->service_id)
+            ->where('service_id', $serviceIdAndType[0])
+            ->where('service_type', $serviceIdAndType[1])
             ->where('date', 'like', '%' . $request->current_month . '%')
             ->pluck('id');
         Appointment::destroy($aa);
@@ -126,7 +131,8 @@ class AppointmentController extends Controller
 
                 $appointment = new Appointment();
                 $appointment->clinic_id = auth()->user()->clinic->id;
-                $appointment->service_id = $request->service_id;
+                $appointment->service_id = $serviceIdAndType[0];
+                $appointment->service_type = $serviceIdAndType[1];
                 $appointment->date = $date;
                 $appointment->times = $timesArray;
                 $appointment->save();

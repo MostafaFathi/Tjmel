@@ -55,7 +55,8 @@ Route::group(['middleware' => ['localization', 'auth:sanctum', 'throttle:api'], 
         Route::get('/search', [ClinicController::class, 'searchClinics'])->name('search');
         Route::get('/{id}', [ClinicController::class, 'showClinic'])->name('show');
         Route::post('/{id}/rate', [ClinicController::class, 'rateClinic'])->name('rate');
-        Route::post('/{id}/service/{service_id}/reserve', [ClinicController::class, 'reserveClinicService'])->name('reserve');
+        Route::post('/{id}/service/{service_id}/reserve', [ClinicController::class, 'reserveClinicService'])->name('service.reserve');
+        Route::post('/{id}/offer/{offer_id}/reserve', [ClinicController::class, 'reserveClinicOffer'])->name('offer.reserve');
     });
     Route::group(['prefix' => 'reserve', 'as' => 'reserve.'], function () {
         /* one route calls */

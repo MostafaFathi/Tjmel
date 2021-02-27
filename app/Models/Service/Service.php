@@ -28,7 +28,7 @@ class Service extends Model
 
     public function appointments()
     {
-        return $this->hasMany(Appointment::class)->where('date', '>=', Carbon::today())->orderBy('date', 'asc');
+        return $this->hasMany(Appointment::class)->where('service_type','service')->where('date', '>=', Carbon::today())->orderBy('date', 'asc');
     }
 
     public function reservations()

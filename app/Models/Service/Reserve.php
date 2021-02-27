@@ -13,8 +13,8 @@ class Reserve extends Model
 {
     use HasFactory;
 
-    protected $appends = ['clinic_name', 'service_name', 'service_price', 'status_name','tip_image'];
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $appends = ['clinic_name', 'service_name', 'service_price', 'offer_name', 'offer_price_before', 'offer_price_after', 'status_name','tip_image'];
+    protected $hidden = ['created_at', 'updated_at','service','offer'];
 
     public function app_user()
     {
@@ -23,7 +23,11 @@ class Reserve extends Model
 
     public function service()
     {
-        return $this->belongsTo(Service::class);
+        return $this->belongsTo(Service::class) ;
+    }
+    public function offer()
+    {
+        return $this->belongsTo(Offer::class,'service_id');
     }
 
     public function clinic()
@@ -48,12 +52,24 @@ class Reserve extends Model
 
     public function getServiceNameAttribute()
     {
-        return $this->service->name_ar ?? '';
+        return $this->service_type == 'service' ? $this->service->name_ar ?? '' : '';
+    }
+    public function getOfferNameAttribute()
+    {
+        return $this->service_type == 'offer' ? $this->offer->name_ar ?? '' : '';
     }
 
     public function getServicePriceAttribute()
     {
-        return $this->service->price ?? '';
+        return $this->service_type == 'service' ?  $this->service->price ?? '' : '';
+    }
+    public function getOfferPriceBeforeAttribute()
+    {
+        return $this->service_type == 'offer' ? $this->offer->price_before ?? '' : '';
+    }
+    public function getOfferPriceAfterAttribute()
+    {
+        return $this->service_type == 'offer' ? $this->offer->price_after ?? '' : '';
     }
 
     public function getClinicNameAttribute()

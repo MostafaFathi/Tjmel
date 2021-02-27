@@ -117,13 +117,61 @@ class ClinicController extends Controller
 
         $appointment = Appointment::find($request->appointment_id);
         if (!$appointment)
-            return response()->json(['message' => 'الحجز غير موجود'], 422);
+            return response()->json(['message' => 'الموعد غير موجود'], 422);
 
         $reservation = new Reserve();
         $reservation->app_user_id = auth('sanctum')->user()->id;
         $reservation->display_id = mt_rand(100000, 999999) . '-' . Carbon::today()->format('m-Y');
         $reservation->clinic_id = $id;
         $reservation->service_id = $request->service_id;
+        $reservation->service_type = 'service';
+        $reservation->appointment_date = $appointment->date;
+        $reservation->appointment_time = Carbon::parse($request->time);
+        $reservation->status = 0;
+        $reservation->save();
+
+        $appointmentTimes = $appointment->times;
+        foreach ($appointment->times as $key => $time) {
+            if ($time['time'] ?? '' == $request->time)
+                $appointmentTimes[$key]['status'] = 'reserved';
+
+        }
+        $appointment->times = $appointmentTimes;
+        $appointment->save();
+
+        return response()->json(['data' => $reservation->makeHidden('clinic', 'service')], 200);
+    }
+    public function reserveClinicOffer(Request $request, $id, $offer_id)
+    {
+        $rules = [
+            'appointment_id' => 'required',
+            'time' => 'required',
+        ];
+        $messages = [
+            'appointment_id.required' => 'حقل رقم الموعد مطلوب',
+            'time.required' => 'حقل الوقت مطلوب',
+        ];
+        $validator = Validate::validateRequest($request, $rules, $messages);
+        if ($validator !== 'valid') return $validator;
+
+        if (!$offer_id)
+            return response()->json(['message' => 'حقل رقم الخدمة مطلوب'], 422);
+
+        $clinic = Clinic::find($id);
+        if (!$clinic)
+            return response()->json(['message' => 'العيادة غير موجودة'], 422);
+
+
+        $appointment = Appointment::find($request->appointment_id);
+        if (!$appointment)
+            return response()->json(['message' => 'الموعد غير موجود'], 422);
+
+        $reservation = new Reserve();
+        $reservation->app_user_id = auth('sanctum')->user()->id;
+        $reservation->display_id = mt_rand(100000, 999999) . '-' . Carbon::today()->format('m-Y');
+        $reservation->clinic_id = $id;
+        $reservation->service_id = $request->offer_id;
+        $reservation->service_type = 'offer';
         $reservation->appointment_date = $appointment->date;
         $reservation->appointment_time = Carbon::parse($request->time);
         $reservation->status = 0;
