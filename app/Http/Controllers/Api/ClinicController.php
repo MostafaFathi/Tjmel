@@ -179,8 +179,8 @@ class ClinicController extends Controller
 
         $appointmentTimes = $appointment->times;
         foreach ($appointment->times as $key => $time) {
-            dd($time['time'],$request->time,$appointment->times);
-            if ($time['time'] ?? '' == $request->time)
+//            dd($time['time'],$request->time,$appointment->times);
+            if (isset($time['time']) and $time['time'] == $request->time)
                 $appointmentTimes[$key]['status'] = 'reserved';
 
         }
