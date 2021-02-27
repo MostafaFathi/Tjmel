@@ -115,7 +115,7 @@ class ClinicController extends Controller
             return response()->json(['message' => 'العيادة غير موجودة'], 422);
 
 
-        $appointment = Appointment::find($request->appointment_id);
+        $appointment = Appointment::where('id',$request->appointment_id)->where('service_type','service')->first();
         if (!$appointment)
             return response()->json(['message' => 'الموعد غير موجود'], 422);
 
@@ -171,7 +171,7 @@ class ClinicController extends Controller
             return response()->json(['message' => 'العيادة غير موجودة'], 422);
 
 
-        $appointment = Appointment::find($request->appointment_id);
+        $appointment = Appointment::where('id',$request->appointment_id)->where('service_type','offer')->first();
         if (!$appointment)
             return response()->json(['message' => 'الموعد غير موجود'], 422);
 
