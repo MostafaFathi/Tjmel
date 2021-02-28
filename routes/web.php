@@ -30,13 +30,16 @@ Route::get('/', function () {
     return view('welcome');
 })->name('landing.page');
 Route::get('/storage/link', function () {
-    \Illuminate\Support\Facades\Artisan::call('storage:link');
+    dd(\Illuminate\Support\Facades\Artisan::call('storage:link'));
 });
 Route::get('/migrate', function () {
-    \Illuminate\Support\Facades\Artisan::call('migrate');
+    dd(\Illuminate\Support\Facades\Artisan::call('migrate'));
 });
 Route::get('/seed', function () {
-    \Illuminate\Support\Facades\Artisan::call('db:seed');
+    dd(\Illuminate\Support\Facades\Artisan::call('db:seed'));
+});
+Route::get('/config/clear', function () {
+    dd(\Illuminate\Support\Facades\Artisan::call('config:clear'));
 });
 
 Auth::routes(['register' => false]);
