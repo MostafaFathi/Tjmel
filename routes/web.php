@@ -41,6 +41,9 @@ Route::get('/seed', function () {
 Route::get('/config/clear', function () {
     dd(\Illuminate\Support\Facades\Artisan::call('config:clear'));
 });
+Route::get('/time/now', function () {
+    dd(\Carbon\Carbon::now());
+});
 
 Auth::routes(['register' => false]);
 
