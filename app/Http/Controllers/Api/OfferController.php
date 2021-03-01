@@ -12,17 +12,25 @@ use Illuminate\Http\Request;
 class OfferController extends Controller
 {
     use Location;
+
     public function showOffer($id)
     {
         $offer = Offer::find($id);
         return response()->json(['data' => $offer], 200);
     }
+
     public function showOffersByPrice()
     {
         $perPage = request('per_page') ?? 10;
-        $offers = Offer::where('status',1)->orderBy('price_after','asc')->paginate($perPage);
+        $location = $this->getLocationLongAlt();
+        $city_name = '%' . $location['city_name'] . '%' ?? '';
+        $clinics = Clinic::where('city_name', 'LIKE', $city_name)->get()->pluck('id');
+//        dd($city_name);
+        $offers = Offer::where('status', 1)->wherein('clinic_id', $clinics)->orderBy('price_after', 'asc')->get();
+//            ->paginate($perPage);
         return response()->json(['data' => $offers->makeHidden('clinic')], 200);
     }
+
     public function showOffersByLocation()
     {
         $rules = [
@@ -41,25 +49,34 @@ class OfferController extends Controller
 
         $latitude = $location['latitude'] ?? '';
         $longitude = $location['longitude'] ?? '';
-        $offers = $this->findNearestOffers( $latitude,$longitude,$city_name,$perPage);
-        return response()->json(['data' => $offers->makeHidden('clinic')], 200);
+        $offers = $this->findNearestOffers($latitude, $longitude, $city_name, $perPage);
+
+        return response()->json(['data' => $offers], 200);
     }
-    private function findNearestOffers($latitude, $longitude,$city_name, $perPage)
+
+    private function findNearestOffers($latitude, $longitude, $city_name, $perPage)
     {
 
-        $offers = Clinic::where('city_name','like','%'.$city_name.'%')->selectRaw("*,
+        $clinics = Clinic::where('city_name', 'like', '%' . $city_name . '%')->selectRaw("*,
                      truncate(( 6371 * acos( cos( radians(?) ) *
                        cos( radians( latitude ) )
                        * cos( radians( longitude ) - radians(?)
                        ) + sin( radians(?) ) *
                        sin( radians( latitude ) ) )
                      ),2) AS distance", [$latitude, $longitude, $latitude])
-            ->orderBy("distance",'asc')
-            ->paginate($perPage);
+            ->orderBy("distance", 'asc')
+            ->get();
+//            ->paginate($perPage);
+        $array = [];
+        foreach ($clinics as $clinic) {
 
-        $offers->transform(function($item) {
-            return $item->offers->where('status',1);
-        });
-        return $offers;
+            if (isset($clinic->offers) and count($clinic->offers) > 0) {
+                foreach ($clinic->offers->where('status', 1) as $item) {
+                    array_push($array, $item->makeHidden('clinic'));
+                }
+
+            }
+        }
+        return $array;
     }
 }
