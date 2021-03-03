@@ -12,11 +12,11 @@ trait SmsSender
         $data = array(
             "user" => $user,
             "password" => $password,
-            "sid" => $sender,
             "msisdn" => $phoneNumber,
+            "sid" => $sender,
             "msg" => $message,
-            "fl" => '0',
-            "dc" => '8',
+            "fl" => 0,
+            "dc" => 8,
         );
         $post_data = json_encode($data);
         $crl = curl_init('https://apps.gateway.sa/vendorsms/pushsms.aspx');
