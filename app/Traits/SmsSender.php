@@ -14,7 +14,7 @@ trait SmsSender
             "password" => $password,
             "sid" => $sender,
             "msisdn" => $phoneNumber,
-            "msg" => $message,
+//            "msg" => $message,
             "fl" => '0',
             "dc" => '8',
         );
