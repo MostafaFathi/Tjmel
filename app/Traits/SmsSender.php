@@ -12,7 +12,7 @@ trait SmsSender
         $crl = curl_init('https://apps.gateway.sa/vendorsms/pushsms.aspx?user='.$user.'
         &password='.$password.'
         &msisdn='.$phoneNumber.'&sid='.$sender.'&msg='.$message.'&fl=0');
-        curl_setopt($crl, CURLOPT_RETURNTRANSFER, true);
+//        curl_setopt($crl, CURLOPT_RETURNTRANSFER, true);
 //        curl_setopt($crl, CURLINFO_HEADER_OUT, true);
 //        curl_setopt($crl, CURLOPT_POST, true);
 //        curl_setopt($crl, CURLOPT_POSTFIELDS, $post_data);
