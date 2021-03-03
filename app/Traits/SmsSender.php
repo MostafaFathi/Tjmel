@@ -20,7 +20,7 @@ trait SmsSender
         );
         list($header, $content) = PostRequest(
             "https://apps.gateway.sa/vendorsms/pushsms.aspx?user=abc&password=xyz&msisdn=966500xxxxxx&sid=SenderId&msg=test%20message&fl=0&gwid=2 " // the url to post to
-            , “”,
+            , "",
             $data
         );
 //        echo $content;
