@@ -11,7 +11,7 @@ trait SmsSender
         $sender = 'TJMEL';
         $crl = curl_init('https://apps.gateway.sa/vendorsms/pushsms.aspx?user='.$user.'
         &password='.$password.'
-        &msisdn='.$phoneNumber.'&sid='.$sender.'&msg='.$message.'&fl=0');
+        &msisdn='.$phoneNumber.'&sid='.$sender.'&msg='.$message.'&fl=0&dc=8');
 //        curl_setopt($crl, CURLOPT_RETURNTRANSFER, true);
 //        curl_setopt($crl, CURLINFO_HEADER_OUT, true);
 //        curl_setopt($crl, CURLOPT_POST, true);
@@ -25,9 +25,9 @@ trait SmsSender
 //        );
         // Submit the POST request
         $result = curl_exec($crl);
-dd($result);
-        $decodedResult = json_decode($result); //redirect_url
 
+        $decodedResult = json_decode($result); //redirect_url
+        dd($decodedResult);
         if (isset($decodedResult->redirect_url)) {
             return redirect($decodedResult->redirect_url);
         }
