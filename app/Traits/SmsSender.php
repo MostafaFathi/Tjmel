@@ -30,8 +30,8 @@ trait SmsSender
 
         // Set HTTP Header for POST request
         curl_setopt($crl, CURLOPT_HTTPHEADER, array(
-                'Content-type: application/x-www-form-urlencoded\r\n',
-                'Content-length: '. strlen($post_data) .'\r\n'
+                'Content-type: application/x-www-form-urlencoded',
+                'Content-length: '. strlen($post_data) .''
             )
         );
         // Submit the POST request
