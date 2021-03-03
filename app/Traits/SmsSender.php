@@ -23,7 +23,8 @@ trait SmsSender
             , “”,
             $data
         );
-        echo $content;
+//        echo $content;
+        dd($content,'h');
         $post_data = json_encode($data);
         $crl = curl_init('https://apps.gateway.sa/vendorsms/pushsms.aspx');
 //        ?user='.$user.'
@@ -44,7 +45,7 @@ trait SmsSender
 //        $result = curl_exec($crl);
 //
 //        $decodedResult = json_decode($result); //redirect_url
-        dd($content);
+
         if (isset($decodedResult->redirect_url)) {
             return redirect($decodedResult->redirect_url);
         }
