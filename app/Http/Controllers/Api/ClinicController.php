@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Clinic\Clinic;
 use App\Models\Clinic\ClinicRequest;
 use App\Models\Clinic\Rate;
+use App\Models\Data\Setting;
 use App\Models\Service\Appointment;
 use App\Models\Service\Reserve;
 use App\Traits\Location;
@@ -115,14 +116,14 @@ class ClinicController extends Controller
             return response()->json(['message' => 'العيادة غير موجودة'], 422);
 
 
-        $appointment = Appointment::where('id',$request->appointment_id)->where('service_type','service')->first();
+        $appointment = Appointment::where('id', $request->appointment_id)->where('service_type', 'service')->first();
         if (!$appointment)
             return response()->json(['message' => 'الموعد غير موجود'], 422);
 
         $appointmentTimes = $appointment->times;
         $isFoundTime = false;
         foreach ($appointment->times as $key => $time) {
-            if (isset($time['time']) and $time['time'] == $request->time){
+            if (isset($time['time']) and $time['time'] == $request->time) {
                 $isFoundTime = true;
                 $appointmentTimes[$key]['status'] = 'reserved';
                 break;
@@ -147,9 +148,11 @@ class ClinicController extends Controller
         $reservation->save();
 
 
-
-        return response()->json(['data' => $reservation->makeHidden('clinic', 'service')], 200);
+        return response()->json(['data' => $reservation->makeHidden('clinic', 'service'),
+            'clinic_location' => $clinic->location_on_map,
+            'advanced_payment' => Setting::getValue('advance_payment')], 200);
     }
+
     public function reserveClinicOffer(Request $request, $id, $offer_id)
     {
         $rules = [
@@ -171,14 +174,14 @@ class ClinicController extends Controller
             return response()->json(['message' => 'العيادة غير موجودة'], 422);
 
 
-        $appointment = Appointment::where('id',$request->appointment_id)->where('service_type','offer')->first();
+        $appointment = Appointment::where('id', $request->appointment_id)->where('service_type', 'offer')->first();
         if (!$appointment)
             return response()->json(['message' => 'الموعد غير موجود'], 422);
 
         $appointmentTimes = $appointment->times;
         $isFoundTime = false;
         foreach ($appointment->times as $key => $time) {
-            if (isset($time['time']) and $time['time'] == $request->time){
+            if (isset($time['time']) and $time['time'] == $request->time) {
                 $isFoundTime = true;
                 $appointmentTimes[$key]['status'] = 'reserved';
                 break;
@@ -203,8 +206,10 @@ class ClinicController extends Controller
         $reservation->save();
 
 
-
-        return response()->json(['data' => $reservation->makeHidden('clinic', 'service')], 200);
+        return response()->json(['data' => $reservation->makeHidden('clinic', 'service'),
+            'clinic_location' => $clinic->location_on_map,
+            'advanced_payment' => Setting::getValue('advance_payment')
+        ], 200);
     }
 
     private function findNearestClinics($latitude, $longitude, $city_name, $perPage)
