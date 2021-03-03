@@ -45,7 +45,7 @@ class ReservationController extends Controller
         if (!$reservation)
             return response()->json(['message' => 'لا يوجد حجز بهذا الرقم'], 422);
 
-        $phoneNumber = auth('sanctum')->user()->mobile;
+        $phoneNumber = intval(auth('sanctum')->user()->mobile);
         $message = 'تم تأكيد حجز رقم  ' . $reservation->display_id . ' بنجاح ';
         $send = false;
         if ($phoneNumber)
