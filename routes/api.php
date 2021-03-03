@@ -61,6 +61,7 @@ Route::group(['middleware' => ['localization', 'auth:sanctum', 'throttle:api'], 
     Route::group(['prefix' => 'reserve', 'as' => 'reserve.'], function () {
         /* one route calls */
         Route::post('/{id}/cancel', [ReservationController::class, 'cancelReserve'])->name('cancel');
+        Route::get('/{id}/send', [ReservationController::class, 'saveReserve'])->name('send');
     });
     Route::group(['prefix' => 'offer', 'as' => 'offer.'], function () {
         /* one route calls */

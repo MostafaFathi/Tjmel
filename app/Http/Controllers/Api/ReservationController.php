@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Service\Reserve;
 use App\Traits\Location;
+use App\Traits\SmsSender;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
-    use Location;
+    use Location,SmsSender;
     public function showUserReservations()
     {
         if (auth('sanctum')->user()->id == 1 or auth('sanctum')->user()->id == 2)
@@ -34,5 +35,11 @@ class ReservationController extends Controller
 
         $reservations = auth('sanctum')->user()->reservations;
         return response()->json(['data' => $reservations->makeHidden('clinic')], 200);
+    }
+
+    public function saveReserve($id)
+    {
+        $send = $this->send('972599542463','hello mostafa');
+        return response()->json(['data' => 'mobile message should be sent to user'], 200);
     }
 }
