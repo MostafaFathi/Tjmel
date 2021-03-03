@@ -19,10 +19,10 @@ trait SmsSender
             "dc" => '8',
         );
         $post_data = json_encode($data);
-        $crl = curl_init('https://apps.gateway.sa/vendorsms/pushsms.aspx?user='.$user.'
-    &password='.$password.'
-    &msisdn='.$phoneNumber.'&sid='.$sender.'&msg='.$message.'&fl=0&dc=8');
-
+        $crl = curl_init('https://apps.gateway.sa/vendorsms/pushsms.aspx');
+//        ?user='.$user.'
+//    &password='.$password.'
+//    &msisdn='.$phoneNumber.'&sid='.$sender.'&msg='.$message.'&fl=0&dc=8
         curl_setopt($crl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($crl, CURLINFO_HEADER_OUT, true);
         curl_setopt($crl, CURLOPT_POST, true);
@@ -31,6 +31,7 @@ trait SmsSender
         // Set HTTP Header for POST request
         curl_setopt($crl, CURLOPT_HTTPHEADER, array(
                 'Content-type: application/x-www-form-urlencoded\r\n',
+                'Content-length: '. strlen($post_data) .'\r\n'
             )
         );
         // Submit the POST request
