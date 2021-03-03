@@ -39,7 +39,7 @@ class ReservationController extends Controller
 
     public function saveReserve($id)
     {
-        $send = $this->send('972599542463','hello mostafa');
+        $send = $this->send('966920010406','hello mostafa');
         return response()->json(['data' => 'mobile message should be sent to user'], 200);
     }
 }
