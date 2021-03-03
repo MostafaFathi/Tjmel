@@ -8,6 +8,7 @@ use App\Models\Badge\BadgeTerm;
 use App\Models\Level\Level;
 use App\Models\Level\UserLevel;
 use App\Models\User\AppUser;
+use App\Traits\SmsSender;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -20,7 +21,7 @@ use Illuminate\Support\Str;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, SmsSender;
 
     /* Protected functions can be used in challenges, events and quizzes api controllers  */
     protected function verifyOtpCode(Request $request)
@@ -45,7 +46,7 @@ class Controller extends BaseController
     protected function phoneOtpCode($request)
     {
         $otpCode = mt_rand(100000, 999999);
-        if($request->has('name') and $request->name != ''){
+        if ($request->has('name') and $request->name != '') {
             $rules = [
                 'mobile' => 'required|unique:app_users,mobile',
             ];
@@ -56,13 +57,19 @@ class Controller extends BaseController
             $user->name = $request->name;
             $user->email = $otpCode;
             $user->password = Hash::make(123);
-        }else{
+        } else {
             $user = AppUser::where('mobile', $request->mobile)->first();
             if (!$user)
                 return response()->json(['message' => 'User not found', 'status' => false], 422);
         }
         $user->otp_code = $otpCode;
         $user->save();
+
+        $phoneNumber = intval($user->mobile);
+        $message = $otpCode . ' is your Tjmel verification code';
+        if ($phoneNumber)
+            $this->send('966' . $phoneNumber, $message);
+
         return response()->json(['otpCode' => $otpCode, 'status' => true], 200);
     }
 

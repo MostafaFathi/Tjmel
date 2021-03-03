@@ -9,7 +9,9 @@ use App\Models\Clinic\ClinicRequest;
 use App\Models\Clinic\Rate;
 use App\Models\Data\Setting;
 use App\Models\Service\Appointment;
+use App\Models\Service\Offer;
 use App\Models\Service\Reserve;
+use App\Models\Service\Service;
 use App\Traits\Location;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -115,6 +117,10 @@ class ClinicController extends Controller
         if (!$clinic)
             return response()->json(['message' => 'العيادة غير موجودة'], 422);
 
+        $service = Service::find($service_id);
+        if (!$service)
+            return response()->json(['message' => 'الخدمة غير موجودة'], 422);
+
 
         $appointment = Appointment::where('id', $request->appointment_id)->where('service_type', 'service')->first();
         if (!$appointment)
@@ -173,6 +179,9 @@ class ClinicController extends Controller
         if (!$clinic)
             return response()->json(['message' => 'العيادة غير موجودة'], 422);
 
+        $offer = Offer::find($offer_id);
+        if (!$offer)
+            return response()->json(['message' => 'العرض غير موجودة'], 422);
 
         $appointment = Appointment::where('id', $request->appointment_id)->where('service_type', 'offer')->first();
         if (!$appointment)
