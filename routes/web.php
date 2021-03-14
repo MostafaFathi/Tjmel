@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ClinicController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\ServiceOfferController;
 use App\Http\Controllers\Admin\TipController;
+use App\Http\Controllers\Payment\PaymentController;
 use Illuminate\Support\Facades\Route;
 use \Illuminate\Support\Facades\Auth;
 use \App\Http\Controllers\Admin\UserController;
@@ -105,4 +106,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         dd(shell_exec('cd .. && git pull origin main'));
     });
 
+});
+Route::group(['prefix' => 'payment', 'as'=>'payment.'], function () {
+    Route::get('/{userId}/{reserveId}', [PaymentController::class, 'index'])->name('index');
+    Route::get('/callback', [PaymentController::class, 'callback'])->name('callback');
+    Route::post('/callback/post', [PaymentController::class, 'postCallback'])->name('callback.post');
 });

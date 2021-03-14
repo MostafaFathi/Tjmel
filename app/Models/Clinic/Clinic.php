@@ -92,7 +92,7 @@ class Clinic extends Model
 
     public function getIsFavoriteAttribute()
     {
-        if (auth('sanctum')->user()->id == 10101010)
+        if (auth('sanctum')->user() and auth('sanctum')->user()->id == 10101010)
             return null;
 //        dd(auth('sanctum')->user()->favorites);
         $isFavorite = false;
