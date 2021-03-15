@@ -58,6 +58,33 @@ class PaymentController extends Controller
         return view('payment.callback', compact('status'));
     }
 
+    public function useWalletToReserve($reserveId)
+    {
+        $advance_payment = Setting::getValue('advance_payment');
+        $user = auth('sanctum')->user();
+
+        $reservation = Reserve::find($reserveId);
+        if (!$reservation) return response()->json(['message' => 'الحجز غير موجود'], 422);
+
+        if ($reservation->app_user_id != $user->id) return response()->json(['message' => 'الحجز غير موجود'], 422);
+
+        if ($user->wallet < $advance_payment) return response()->json(['message' => 'المحفظة فارغة او انها غير كافية للحجز'], 422);
+
+        if ($reservation->service_type == 'service')
+            $reservation->remained_value = $reservation->service_price - $advance_payment;
+
+        if ($reservation->service_type == 'offer')
+            $reservation->remained_value = $reservation->offer_price_after - $advance_payment;
+
+        $reservation->paid_value = $advance_payment;
+
+        $reservation->save();
+
+        $user->wallet = $user->wallet - $advance_payment;
+        $user->save();
+        return view('payment.callback', compact('status'));
+    }
+
     public function doPayment()
     {
 

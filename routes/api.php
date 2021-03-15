@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\OfferController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\UserAddressController;
+use App\Http\Controllers\Payment\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +63,7 @@ Route::group(['middleware' => ['localization', 'auth:sanctum', 'throttle:api'], 
         /* one route calls */
         Route::post('/{id}/cancel', [ReservationController::class, 'cancelReserve'])->name('cancel');
         Route::get('/{id}/save', [ReservationController::class, 'saveReserve'])->name('save');
+        Route::get('/{reserveId}/wallet/pay', [PaymentController::class, 'useWalletToReserve'])->name('wallet.pay');
     });
     Route::group(['prefix' => 'offer', 'as' => 'offer.'], function () {
         /* one route calls */
