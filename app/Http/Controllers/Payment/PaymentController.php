@@ -70,6 +70,8 @@ class PaymentController extends Controller
 
         if ($user->wallet < $advance_payment) return response()->json(['message' => 'المحفظة فارغة او انها غير كافية للحجز'], 422);
 
+        if ($reservation->paid_value > 0) return response()->json(['message' => 'قمت بالحجز مسبقا'], 422);
+
         if ($reservation->service_type == 'service')
             $reservation->remained_value = $reservation->service_price - $advance_payment;
 
@@ -82,7 +84,7 @@ class PaymentController extends Controller
 
         $user->wallet = $user->wallet - $advance_payment;
         $user->save();
-        return view('payment.callback', compact('status'));
+        return response()->json(['message' => 'تم الحجز بنجاح'], 200);
     }
 
     public function doPayment()
