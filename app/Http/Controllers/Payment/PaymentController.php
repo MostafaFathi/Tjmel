@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Payment;
 use App\Http\Controllers\Controller;
 use App\Models\Data\Setting;
 use App\Models\Service\Reserve;
+use App\Models\Transaction\Transaction;
 use App\Models\User\AppUser;
 use Illuminate\Http\Request;
 
@@ -54,6 +55,13 @@ class PaymentController extends Controller
             $reservation->paid_value = $amount;
 
             $reservation->save();
+            $transaction = new Transaction();
+            $transaction->app_user_id = $reservation->app_user_id;
+            $transaction->reserve_id = $reservation->id;
+            $transaction->clinic_id = $reservation->clinic_id;
+            $transaction->value = $amount;
+            $transaction->description = 'pay to reserve from tab payment';
+            $transaction->save();
         };
         return view('payment.callback', compact('status'));
     }
@@ -84,6 +92,15 @@ class PaymentController extends Controller
 
         $user->wallet = $user->wallet - $advance_payment;
         $user->save();
+
+        $transaction = new Transaction();
+        $transaction->app_user_id = $user->id;
+        $transaction->reserve_id = $reservation->id;
+        $transaction->clinic_id = $reservation->clinic_id;
+        $transaction->value = $advance_payment;
+        $transaction->description = 'pay to reserve from wallet';
+        $transaction->save();
+
         return response()->json(['message' => 'تم الحجز بنجاح'], 200);
     }
 

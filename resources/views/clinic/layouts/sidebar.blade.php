@@ -66,8 +66,8 @@
                         <span>عرض الحجوزات</span>
                     </a>
                 </li>
-                <li class="nav-item {{request()->routeIs('static.*')?'active' :'' }}">
-                    <a href="{{route('services.create')}}"
+                <li class="nav-item {{request()->routeIs('statics')?'active' :'' }}">
+                    <a href="{{route('statics')}}"
                        class="nav-link  ">
                         <span>الدعم والاحصائيات</span>
                     </a>

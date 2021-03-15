@@ -64,7 +64,7 @@
                 <div class="card card-body">
                     <div class="media">
                         <div class="media-body" style="">
-                            <h6 class="media-title font-weight-semibold">---</h6>
+                            <h6 class="media-title font-weight-semibold">عدد مستخدمين التطبيق</h6>
                             <h3><b>{{$appUsers}}</b></h3>
 
                         </div>
@@ -76,8 +76,8 @@
                 <div class="card card-body">
                     <div class="media">
                         <div class="media-body" style="">
-                            <h6 class="media-title font-weight-semibold">--</h6>
-                            <h3><b>{{$orders}}</b></h3>
+                            <h6 class="media-title font-weight-semibold">عدد العيادات</h6>
+                            <h3><b>{{$clinicCount}}</b></h3>
 
                         </div>
                     </div>
@@ -88,38 +88,15 @@
                 <div class="card card-body">
                     <div class="media">
                         <div class="media-body" style="">
-                            <h6 class="media-title font-weight-semibold">--</h6>
-                            <h3><b>{{$agents}}</b></h3>
+                            <h6 class="media-title font-weight-semibold">عدد طلبات العيادات</h6>
+                            <h3><b>{{$clinicRequestCount}}</b></h3>
 
                         </div>
                     </div>
                 </div>
             </div>
             @endhasanyrole
-            @hasanyrole('agent')
-            <div class="col-sm-6 col-xl-4">
-                <div class="card card-body">
-                    <div class="media">
-                        <div class="media-body" style="">
-                            <h6 class="media-title font-weight-semibold">--</h6>
-                            <h3><b>{{$approvedOrders}}</b></h3>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-xl-4">
-                <div class="card card-body">
-                    <div class="media">
-                        <div class="media-body" style="">
-                            <h6 class="media-title font-weight-semibold">--</h6>
-                            <h3><b>{{$canceledOrders}}</b></h3>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endhasanyrole
         </div>
 
         <div class="row">
@@ -127,8 +104,8 @@
                 <div class="card card-body bg-blue-400 has-bg-image">
                     <div class="media">
                         <div class="media-body">
-                            <h3 class="mb-0">{{$todayIncome}}</h3>
-                            <span class="text-uppercase font-size-xs font-weight-bold">--</span>
+                            <h3 class="mb-0">{{$dailyIncome??''}}</h3>
+                            <span class="text-uppercase font-size-xs font-weight-bold">الدخل اليومي</span>
                         </div>
 
                         <div class="ml-3 align-self-center">
@@ -141,8 +118,8 @@
                 <div class="card card-body bg-success-400 has-bg-image">
                     <div class="media">
                         <div class="media-body ">
-                            <h3 class="mb-0">{{$monthIncome}}</h3>
-                            <span class="text-uppercase font-size-xs font-weight-bold">--</span>
+                            <h3 class="mb-0">{{$monthlyIncome??''}}</h3>
+                            <span class="text-uppercase font-size-xs font-weight-bold">الدخل الشهري</span>
                         </div>
 
                         <div class="mr-3 align-self-center">
@@ -155,8 +132,8 @@
                 <div class="card card-body bg-danger-400 has-bg-image">
                     <div class="media">
                         <div class="media-body">
-                            <h3 class="mb-0">{{$yearIncome}}</h3>
-                            <span class="text-uppercase font-size-xs font-weight-bold">--</span>
+                            <h3 class="mb-0">{{$yearlyIncome??''}}</h3>
+                            <span class="text-uppercase font-size-xs font-weight-bold">الدخل السنوي</span>
                         </div>
 
                         <div class="ml-3 align-self-center">
@@ -171,34 +148,29 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>--</th>
-                            <th>--</th>
-                            <th>--</th>
-                            <th>--</th>
+                            <th>اسم العيادة</th>
+                            <th>الدخل اليومي</th>
+                            <th>الدخل الشهري</th>
+                            <th>الدخل السنوي</th>
+                            <th>حجوزات مكتملة</th>
+                            <th>حجوزات غير مكتملة</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($agentsOrders as $item)
-                            @if($item->hasRole('agent'))
-                                <tr>
-                                    <td>{{$item->name}}</td>
-                                    <td>
-                                        <span class="badge badge-danger">
-                                            {{$item->order->count()}}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-info">
-                                        {{$item->order->wherein('status',[0,1])->count()}}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-warning">
-                                        {{$item->order->where('status', 2)->sum('total_amount_with_fees')}}
-                                        </span>
-                                    </td>
-                                </tr>
-                            @endif
+                        @foreach($clinicIncomeArray ?? [] as $item)
+                            <tr>
+                                <td>
+                                    <a title="Show"
+                                       href="{{route('clinics.show',$item->clinic_id)}}">{{$item->clinic_name}}</a>
+                                </td>
+                                <td><span class="badge badge-info">{{$item->daily}} ر.س.</span></td>
+                                <td><span class="badge badge-info">{{$item->monthly}} ر.س.</span></td>
+                                <td><span class="badge badge-info">{{$item->yearly}} ر.س.</span></td>
+                                <td><span class="badge badge-success">{{$item->completedReservations}}</span></td>
+                                <td><span class="badge badge-warning">{{$item->unCompletedReservations}}</span></td>
+
+                            </tr>
+
                         @endforeach
                         </tbody>
                     </table>

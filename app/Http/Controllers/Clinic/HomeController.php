@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Clinic;
 
 use App\Http\Controllers\Controller;
+use App\Models\Service\Reserve;
+use App\Models\Transaction\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -83,5 +86,16 @@ class HomeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function statics()
+    {
+        $dailyIncome = Transaction::where('clinic_id',auth()->user()->clinic_id)->wheredate('created_at', Carbon::today())->sum('value');
+        $monthlyIncome = Transaction::where('clinic_id',auth()->user()->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subMonth())->sum('value');
+        $yearlyIncome = Transaction::where('clinic_id',auth()->user()->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subYear())->sum('value');
+        $completedReservations = Reserve::where('clinic_id', auth()->user()->clinic_id)->where('status',1)->count();
+        $unCompletedReservations = Reserve::where('clinic_id', auth()->user()->clinic_id)->where('status','!=',1)->count();
+        return view('clinic.statics.index',compact('dailyIncome','monthlyIncome','yearlyIncome','completedReservations','unCompletedReservations'));
+
     }
 }

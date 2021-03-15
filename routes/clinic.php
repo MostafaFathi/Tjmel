@@ -43,6 +43,7 @@ Route::group(['prefix' => 'clinic', 'middleware' => ['auth']], function () {
         Route::get('/appointments/date/{month}/{id?}', [AppointmentController::class, 'getDate'])->name('appointments.date');
         Route::post('/reservations/{id}/status/{status?}', [ReservationController::class, 'changeStatus'])->name('reservations.status');
         Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
+        Route::get('/statics', [HomeController::class, 'statics'])->name('statics');
     });
 
     /* End Dashboard management routes */
