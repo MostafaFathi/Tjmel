@@ -85,7 +85,7 @@
 
         <a class="btn-login" href="{{route('login')}}">تسجيل الدخول</a>
 
-        <a class="btn-continue" href="{{ Auth::check() ? route('dashboard') : route('landing.page')}}">إستمرار</a>
+        <a class="btn-continue" href="{{route('login')}}">إستمرار</a>
 
     </div>
 
