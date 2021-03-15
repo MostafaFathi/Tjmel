@@ -24,6 +24,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        if (!auth()->user()->hasRole('admin')) return redirect()->to('dashboard');
     }
 
     /**
@@ -33,6 +34,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         $appUsers = AppUser::count() - 1;
         $clinicCount = Clinic::count();
         $clinicRequestCount = ClinicRequest::count();
