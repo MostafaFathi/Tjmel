@@ -15,7 +15,7 @@ class Reserve extends Model
     use HasFactory;
 
     protected $appends = ['clinic_name', 'service_name', 'service_price', 'offer_name', 'offer_price_before', 'offer_price_after', 'status_name','tip_image','clinic_location','day_name'];
-    protected $hidden = ['created_at', 'updated_at','service','offer'];
+    protected $hidden = ['created_at', 'updated_at','service','offer','clinic'];
 
     public function app_user()
     {
