@@ -111,4 +111,6 @@ Route::group(['prefix' => 'payment', 'as'=>'payment.'], function () {
     Route::get('/{userId}/{reserveId}', [PaymentController::class, 'index'])->name('index');
     Route::get('/callback', [PaymentController::class, 'callback'])->name('callback');
     Route::post('/callback/post', [PaymentController::class, 'postCallback'])->name('callback.post');
+    Route::get('/success', [PaymentController::class, 'success'])->name('success');
+    Route::get('/fail', [PaymentController::class, 'fail'])->name('fail');
 });

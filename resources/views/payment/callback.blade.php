@@ -39,7 +39,13 @@
                 },
                 data : JSON.stringify(response),
                 contentType : 'application/json',
-                success: function (data) { },
+                success: function (data) {
+                    console.log(data.message,data)
+                    if(data.message == 'success')
+                        window.open('{{route('payment.success')}}',"_self")
+                    if(data.message == 'fail')
+                        window.open('{{route('payment.fail')}}',"_self")
+                },
                 error: function (data) { }
             })
 
