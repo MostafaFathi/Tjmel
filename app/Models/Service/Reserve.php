@@ -92,6 +92,7 @@ class Reserve extends Model
     }
     public function getDayNameAttribute()
     {
+        Carbon::setLocale('ar');
         return Carbon::parse($this->appointment_date)->getTranslatedDayName();
     }
 }
