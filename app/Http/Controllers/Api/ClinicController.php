@@ -126,14 +126,22 @@ class ClinicController extends Controller
         if (!$appointment)
             return response()->json(['message' => 'الموعد غير موجود'], 422);
 
+        $isReserved = false;
         $isFoundTime = false;
         foreach ($appointment->times as $key => $time) {
+            if (isset($time['time']) and $time['time'] == $request->time and $time['status'] == 'reserved') {
+                $isReserved = true;
+                break;
+            }
             if (isset($time['time']) and $time['time'] == $request->time) {
                 $isFoundTime = true;
                 break;
             }
 
         }
+        if ($isReserved)
+            return response()->json(['message' => 'الموعد محجوز لمستخدم آخر'], 422);
+
         if (!$isFoundTime)
             return response()->json(['message' => 'الموعد خلال هذه الساعة غير موجود'], 422);
 
@@ -183,14 +191,21 @@ class ClinicController extends Controller
         if (!$appointment)
             return response()->json(['message' => 'الموعد غير موجود'], 422);
 
+        $isReserved = false;
         $isFoundTime = false;
         foreach ($appointment->times as $key => $time) {
+            if (isset($time['time']) and $time['time'] == $request->time and $time['status'] == 'reserved') {
+                $isReserved = true;
+                break;
+            }
             if (isset($time['time']) and $time['time'] == $request->time) {
                 $isFoundTime = true;
                 break;
             }
 
         }
+        if ($isReserved)
+            return response()->json(['message' => 'الموعد محجوز لمستخدم آخر'], 422);
         if (!$isFoundTime)
             return response()->json(['message' => 'الموعد خلال هذه الساعة غير موجود'], 422);
 
