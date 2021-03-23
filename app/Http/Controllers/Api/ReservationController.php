@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Service\Appointment;
 use App\Models\Service\Reserve;
 use App\Traits\Location;
 use App\Traits\SmsSender;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -17,7 +19,7 @@ class ReservationController extends Controller
         if (auth('sanctum')->user()->id == 1 or auth('sanctum')->user()->id == 2)
             return response()->json(['message' => 'لا يمكن للزائر عرض الحجوزات'], 422);
 
-        $reservations = auth('sanctum')->user()->reservations->where('status','!=',0);
+        $reservations = auth('sanctum')->user()->reservations;
         return response()->json(['data' => $reservations->makeHidden('clinic')], 200);
     }
 
@@ -34,6 +36,8 @@ class ReservationController extends Controller
         $reservation->status = 4;
         $reservation->reason = 'تم الغاء الحجز';
         $reservation->save();
+
+        $appointment = $this->saveAppointment($reservation);
 
         $reservations = auth('sanctum')->user()->reservations;
         return response()->json(['data' => $reservations->makeHidden('clinic')], 200);
@@ -52,5 +56,20 @@ class ReservationController extends Controller
             $send = $this->send('972' . $phoneNumber, $message);
 
         return response()->json(['data' => 'mobile message should be sent to user', 'result' => ($send)], 200);
+    }
+    private function saveAppointment($reservation)
+    {
+        $appointment = Appointment::wheredate('date', Carbon::parse($reservation->appointment_date))->where('service_type', $reservation->service_type)->first();
+        $appointmentTimes = $appointment->times;
+        foreach ($appointment->times as $key => $time) {
+            if (isset($time['time']) and $time['time'] == Carbon::parse($reservation->appointment_time)->format('h:i a')) {
+                $appointmentTimes[$key]['status'] = null;
+                break;
+            }
+        }
+        $appointment->times = $appointmentTimes;
+        $appointment->save();
+
+        return $appointment;
     }
 }
