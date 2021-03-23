@@ -8,12 +8,13 @@ use App\Models\User\AppUser;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Reserve extends Model
 {
     use HasFactory;
 
-    protected $appends = ['clinic_name', 'service_name', 'service_price', 'offer_name', 'offer_price_before', 'offer_price_after', 'status_name','tip_image'];
+    protected $appends = ['clinic_name', 'service_name', 'service_price', 'offer_name', 'offer_price_before', 'offer_price_after', 'status_name','tip_image','clinic_location','day_name'];
     protected $hidden = ['created_at', 'updated_at','service','offer'];
 
     public function app_user()
@@ -76,11 +77,21 @@ class Reserve extends Model
     {
         return $this->clinic->name_ar ?? '';
     }
+    public function getClinicLocationAttribute()
+    {
+        $location = Str::replaceFirst('(', '', $this->clinic->location);
+        $location = Str::replaceLast(')', '', $location);
+        return $location;
+    }
 
     public function getTipImageAttribute()
     {
         $tip = Tip::orderBy('id', 'desc')->first();
         if (!$tip) return null;
         return $tip->image_url;
+    }
+    public function getDayNameAttribute()
+    {
+        return Carbon::parse($this->appointment_date)->getTranslatedDayName();
     }
 }
