@@ -37,7 +37,7 @@ class Reserve extends Model
 
     public function getStatusNameAttribute()
     {
-        return ['جديد', 'مكتمل', 'غير مكتمل عدم حضور العميل', 'إلغاء من العيادة', 'إلغاء من العميل'][$this->status];
+        return ['جديد', 'مكتمل', 'غير مكتمل عدم حضور العميل', 'إلغاء من العيادة', 'إلغاء من العميل','تم الحجز'][$this->status];
     }
 
     public function getAppointmentDateAttribute($value)

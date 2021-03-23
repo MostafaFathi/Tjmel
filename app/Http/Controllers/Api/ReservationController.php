@@ -17,7 +17,7 @@ class ReservationController extends Controller
         if (auth('sanctum')->user()->id == 1 or auth('sanctum')->user()->id == 2)
             return response()->json(['message' => 'لا يمكن للزائر عرض الحجوزات'], 422);
 
-        $reservations = auth('sanctum')->user()->reservations;
+        $reservations = auth('sanctum')->user()->reservations->where('status','!=',0);
         return response()->json(['data' => $reservations->makeHidden('clinic')], 200);
     }
 

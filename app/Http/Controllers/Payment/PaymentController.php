@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Payment;
 
 use App\Http\Controllers\Controller;
 use App\Models\Data\Setting;
+use App\Models\Service\Appointment;
 use App\Models\Service\Reserve;
 use App\Models\Transaction\Transaction;
 use App\Models\User\AppUser;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -53,18 +55,17 @@ class PaymentController extends Controller
                 $reservation->remained_value = $reservation->offer_price_after - $amount;
 
             $reservation->paid_value = $amount;
-
+            $reservation->status = 5;
             $reservation->save();
-            $transaction = new Transaction();
-            $transaction->app_user_id = $reservation->app_user_id;
-            $transaction->reserve_id = $reservation->id;
-            $transaction->clinic_id = $reservation->clinic_id;
-            $transaction->value = $amount;
-            $transaction->description = 'pay to reserve from tab payment';
-            $transaction->save();
-            return response()->json(['message'=>'success']);
-        }else{
-            return response()->json(['message'=>'fail']);
+
+            $appointment = $this->saveAppointment($reservation);
+
+            $transaction = $this->saveTransaction($reservation,$amount);
+
+
+            return response()->json(['message' => 'success']);
+        } else {
+            return response()->json(['message' => 'fail']);
         }
     }
 
@@ -92,6 +93,8 @@ class PaymentController extends Controller
 
         $reservation->save();
 
+        $appointment = $this->saveAppointment($reservation);
+
         $user->wallet = $user->wallet - $advance_payment;
         $user->save();
 
@@ -108,12 +111,41 @@ class PaymentController extends Controller
 
     public function success()
     {
+
         return view('payment.success');
     }
+
     public function fail()
     {
         return view('payment.fail');
     }
 
+    private function saveAppointment($reservation)
+    {
+        $appointment = Appointment::wheredate('date', Carbon::parse($reservation->appointment_date))->where('service_type', $reservation->service_type)->first();
+        $appointmentTimes = $appointment->times;
+        foreach ($appointment->times as $key => $time) {
+            if (isset($time['time']) and $time['time'] == Carbon::parse($reservation->appointment_time)->format('h:i a')) {
+                $appointmentTimes[$key]['status'] = 'reserved';
+                break;
+            }
+        }
+        $appointment->times = $appointmentTimes;
+        $appointment->save();
+
+        return $appointment;
+    }
+    private function saveTransaction($reservation,$amount)
+    {
+        $transaction = new Transaction();
+        $transaction->app_user_id = $reservation->app_user_id;
+        $transaction->reserve_id = $reservation->id;
+        $transaction->clinic_id = $reservation->clinic_id;
+        $transaction->value = $amount;
+        $transaction->description = 'pay to reserve from tab payment';
+        $transaction->save();
+
+        return $transaction;
+    }
 
 }

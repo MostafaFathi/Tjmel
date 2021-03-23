@@ -16,11 +16,11 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $todayReservations = auth()->user()->clinic->reservations->where('status',0)->where('appointment_date',Carbon::today()->format('d-m-Y'));
-        $nowReservations = Reserve::where('clinic_id',auth()->user()->clinic->id)->where('appointment_date',Carbon::today()->format('d-m-Y'))
+        $todayReservations = auth()->user()->clinic->reservations->where('status',5)->where('appointment_date',Carbon::today()->format('d-m-Y'));
+        $nowReservations = Reserve::where('clinic_id',auth()->user()->clinic->id)->where('status',5)->where('appointment_date',Carbon::today()->format('d-m-Y'))
             ->whereBetween('appointment_time',[Carbon::now()->subMinutes(30),Carbon::now()])->get();
         $completedReservations = auth()->user()->clinic->reservations->where('status',1);
-        $unCompletedReservations = auth()->user()->clinic->reservations->whereIn('status',[2,3,4]);
+        $unCompletedReservations = auth()->user()->clinic->reservations->whereIn('status',[2,3,4,5]);
         return view('clinic.reservations.index',compact('todayReservations','nowReservations','completedReservations','unCompletedReservations'));
     }
 

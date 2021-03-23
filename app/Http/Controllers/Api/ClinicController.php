@@ -126,12 +126,10 @@ class ClinicController extends Controller
         if (!$appointment)
             return response()->json(['message' => 'الموعد غير موجود'], 422);
 
-        $appointmentTimes = $appointment->times;
         $isFoundTime = false;
         foreach ($appointment->times as $key => $time) {
             if (isset($time['time']) and $time['time'] == $request->time) {
                 $isFoundTime = true;
-                $appointmentTimes[$key]['status'] = 'reserved';
                 break;
             }
 
@@ -139,8 +137,6 @@ class ClinicController extends Controller
         if (!$isFoundTime)
             return response()->json(['message' => 'الموعد خلال هذه الساعة غير موجود'], 422);
 
-        $appointment->times = $appointmentTimes;
-        $appointment->save();
 
         $reservation = new Reserve();
         $reservation->app_user_id = auth('sanctum')->user()->id;
@@ -187,21 +183,16 @@ class ClinicController extends Controller
         if (!$appointment)
             return response()->json(['message' => 'الموعد غير موجود'], 422);
 
-        $appointmentTimes = $appointment->times;
         $isFoundTime = false;
         foreach ($appointment->times as $key => $time) {
             if (isset($time['time']) and $time['time'] == $request->time) {
                 $isFoundTime = true;
-                $appointmentTimes[$key]['status'] = 'reserved';
                 break;
             }
 
         }
         if (!$isFoundTime)
             return response()->json(['message' => 'الموعد خلال هذه الساعة غير موجود'], 422);
-
-        $appointment->times = $appointmentTimes;
-        $appointment->save();
 
         $reservation = new Reserve();
         $reservation->app_user_id = auth('sanctum')->user()->id;
