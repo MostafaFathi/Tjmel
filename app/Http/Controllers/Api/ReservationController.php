@@ -9,6 +9,7 @@ use App\Traits\Location;
 use App\Traits\SmsSender;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class ReservationController extends Controller
 {
@@ -20,7 +21,7 @@ class ReservationController extends Controller
             return response()->json(['message' => 'لا يمكن للزائر عرض الحجوزات'], 422);
 
         $reservations = auth('sanctum')->user()->reservations->where('status', '!=', 0);
-        return response()->json(['data' => $reservations], 200);
+        return response()->json(['data' => Arr::flatten($reservations)], 200);
     }
 
     public function cancelReserve(Request $request, $id)
