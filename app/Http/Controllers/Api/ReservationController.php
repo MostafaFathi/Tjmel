@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Data\Tip;
 use App\Models\Service\Appointment;
 use App\Models\Service\Reserve;
 use App\Traits\Location;
@@ -21,7 +22,11 @@ class ReservationController extends Controller
             return response()->json(['message' => 'لا يمكن للزائر عرض الحجوزات'], 422);
 
         $reservations = auth('sanctum')->user()->reservations->where('status', '!=', 0);
-        return response()->json(['data' => Arr::flatten($reservations)], 200);
+
+        $tip = Tip::orderBy('id', 'desc')->first();
+        $tipImage = $tip->image_url ?? '';
+
+        return response()->json(['data' => Arr::flatten($reservations), 'tip_image' => $tipImage], 200);
     }
 
     public function cancelReserve(Request $request, $id)
