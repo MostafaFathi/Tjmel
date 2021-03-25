@@ -42,7 +42,7 @@
                     <li class="nav-item"><a href="#justified-right-icon-tab2"
                                             class="nav-link tab-link {{request()->get('page') == 'now' ? 'active' : ''}}"
                                             name="now" data-toggle="tab">حجوزات نشطة <span
-                                class="badge badge-primary mr-1 ml-1">{{count($nowReservations)}}</span></a></li>
+                                class="badge badge-primary mr-1 ml-1">{{count($comingReservations)}}</span></a></li>
                     <li class="nav-item"><a href="#justified-right-icon-tab3"
                                             class="nav-link tab-link {{request()->get('page') == 'completed' ? 'active' : ''}}"
                                             name="completed" data-toggle="tab">حجوزات مكتملة <span

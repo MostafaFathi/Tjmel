@@ -25,7 +25,7 @@
         <tbody>
 
 
-        @foreach($nowReservations as $reservation)
+        @foreach($comingReservations as $reservation)
 
             <tr @if(session('id') === $reservation->id)class="bg-green" @endif>
                 <td>{{$reservation->display_id}}</td>
@@ -67,7 +67,7 @@
             </tr>
 
         @endforeach
-        @if(count($nowReservations) == 0)
+        @if(count($comingReservations) == 0)
             <tr>
                 <td colspan="7" class="text-center">
                     لا يوجد بيانات

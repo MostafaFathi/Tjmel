@@ -23,7 +23,7 @@
                         </div>
                     </div>
                 @endif
-                    @if (session('success'))
+                @if (session('success'))
                     <div class="row">
                         <div class="col-4 " style="margin: 0 auto">
                             <div class="alert alert-success text-center">
@@ -32,81 +32,88 @@
                         </div>
                     </div>
                 @endif
+                <div class="row">
+                    <div class="col-8">
+                        <form class="rated" action="{{route('services.store')}}" method="post"
+                              enctype="multipart/form-data">
 
 
-                <form class="rated" action="{{route('services.store')}}" method="post"
-                      enctype="multipart/form-data">
+                            {{csrf_field()}}
+                            <div class="row">
+                                <div class="col-3 " style="margin: 0 auto">
+                                    <div class="form-group">
+                                        <label class="control-label" for="name">إختر القسم المناسب للخدمة</label>
+                                        <select name="section_id" required id="section_id" class="form-control"
+                                                style="background: #e6e6e6;">
+                                            <option value="">إختر</option>
+                                            @foreach($sections as $section)
+                                                <option
+                                                    value="{{$section->id}}" {{$section->id == old('section_id') ? 'selected' : ''}}>{{$section->title_ar}}</option>
+                                            @endforeach
+                                        </select>
 
-
-                    {{csrf_field()}}
-                    <div class="row">
-                        <div class="col-3 " style="margin: 0 auto">
-                            <div class="form-group">
-                                <label class="control-label" for="name">إختر القسم المناسب للخدمة</label>
-                                <select name="section_id" required id="section_id" class="form-control"
-                                        style="background: #e6e6e6;">
-                                    <option value="">إختر</option>
-                                    @foreach($sections as $section)
-                                        <option
-                                            value="{{$section->id}}" {{$section->id == old('section_id') ? 'selected' : ''}}>{{$section->title_ar}}</option>
-                                    @endforeach
-                                </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 " style="margin: 0 auto">
+                                    <div class="form-group">
+                                        <label class="control-label" for="name">أكتب اسم الخدمة</label>
+                                        <input type="text" class="form-control" required name="name_ar" id="name_ar"
+                                               value="{{old('name_ar')}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2"></div>
+                                <div class="col-4 " style="margin: 0 auto">
+                                    <div class="form-group">
+                                        <label class="control-label" for="name">أكتب تفاصيل الخدمة</label>
+                                        <textarea name="description_ar" class="form-control" id="description_ar"
+                                                  rows="5">{{old('description_ar')}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-4 " style="margin: 0 auto">
+                                    <div class="form-group">
+                                        <label class="control-label" for="name">أكتب تعليمات الخدمة</label>
+                                        <textarea name="instructions_ar" class="form-control" id="instructions_ar"
+                                                  rows="5">{{old('instructions_ar')}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-2"></div>
 
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6 " style="margin: 0 auto">
-                            <div class="form-group">
-                                <label class="control-label" for="name">أكتب اسم الخدمة</label>
-                                <input type="text" class="form-control" required name="name_ar" id="name_ar"
-                                       value="{{old('name_ar')}}">
+                            <div class="row">
+                                <div class="col-3 " style="margin: 0 auto">
+                                    <div class="form-group">
+                                        <label class="control-label" for="name">أكتب سعر الخدمة</label>
+                                        <input type="number" class="form-control" required id="price" name="price"
+                                               value="{{old('price')}}">
+                                    </div>
+                                </div>
+
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-2"></div>
-                        <div class="col-4 " style="margin: 0 auto">
-                            <div class="form-group">
-                                <label class="control-label" for="name">أكتب تفاصيل الخدمة</label>
-                                <textarea name="description_ar" class="form-control" id="description_ar"
-                                          rows="5">{{old('description_ar')}}</textarea>
+                            <div class="row">
+                                <div class="col-3 " style="margin: 0 auto">
+                                    <div class="form-group">
+                                        <button class="btn btn-outline-secondary">إضافة خدمة</button>
+                                    </div>
+                                </div>
+
                             </div>
-                        </div>
-                        <div class="col-4 " style="margin: 0 auto">
                             <div class="form-group">
-                                <label class="control-label" for="name">أكتب تعليمات الخدمة</label>
-                                <textarea name="instructions_ar" class="form-control" id="instructions_ar"
-                                          rows="5">{{old('instructions_ar')}}</textarea>
+
+
                             </div>
-                        </div>
-                        <div class="col-2"></div>
 
+                        </form>
                     </div>
-                    <div class="row">
-                        <div class="col-3 " style="margin: 0 auto">
-                            <div class="form-group">
-                                <label class="control-label" for="name">أكتب سعر الخدمة</label>
-                                <input type="number" class="form-control" required id="price" name="price"
-                                       value="{{old('price')}}">
-                            </div>
-                        </div>
-
+                    <div class="col-3">
+                        <img style="width: 350px;" src="{{asset('portal/assets/images/sample.jpg')}}" alt="">
                     </div>
-                    <div class="row">
-                        <div class="col-3 " style="margin: 0 auto">
-                            <div class="form-group">
-                                <button class="btn btn-outline-secondary">إضافة خدمة</button>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="form-group">
+                </div>
 
 
-                    </div>
-
-                </form>
             </div>
         </div>
 
