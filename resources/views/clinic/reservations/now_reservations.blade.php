@@ -35,7 +35,7 @@
                 <td>{{$reservation->service_type == 'service' ? $reservation->service->name_ar ?? '--' : $reservation->offer->name_ar ?? '--'}}</td>
                 <td>{{\Carbon\Carbon::parse($reservation->appointment_date)->translatedFormat('l').': '.$reservation->appointment_date.' '.$reservation->appointment_time }}</td>
                 <td>
-                    @if($reservation->status == 0)
+                    @if($reservation->status == 5)
                         <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown">اتخذ اجراء</a>
 
                         <div class="dropdown-menu dropdown-menu-lg">
