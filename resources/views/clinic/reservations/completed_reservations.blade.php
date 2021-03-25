@@ -13,7 +13,7 @@
             <th class="numeric">رقم الحجز</th>
             <th class="">اسم العميل</th>
             <th class="">رقم الجوال</th>
-            <th class="">المبلغ المتبقي</th>
+            <th class="">المبلغ المدفوع</th>
             <th class="">الخدمة</th>
             <th class="">وقت وتاريخ الموعد</th>
 
@@ -30,7 +30,7 @@
                 <td>{{$reservation->display_id}}</td>
                 <td>{{$reservation->app_user->name ?? '--'}}</td>
                 <td>{{$reservation->app_user->mobile ?? '--'}}</td>
-                <td>{{$reservation->remained_value ?? '--'}}</td>
+                <td>{{$reservation->paied_value ?? '--'}}</td>
                 <td>{{$reservation->service_type == 'service' ? $reservation->service->name_ar ?? '--' : $reservation->offer->name_ar ?? '--'}}</td>
                 <td>{{\Carbon\Carbon::parse($reservation->appointment_date)->translatedFormat('l').': '.$reservation->appointment_date.' '.$reservation->appointment_time }}</td>
 
