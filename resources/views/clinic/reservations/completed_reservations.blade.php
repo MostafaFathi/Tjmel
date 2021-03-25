@@ -30,7 +30,7 @@
                 <td>{{$reservation->display_id}}</td>
                 <td>{{$reservation->app_user->name ?? '--'}}</td>
                 <td>{{$reservation->app_user->mobile ?? '--'}}</td>
-                <td>{{$reservation->paied_value ?? '--'}}</td>
+                <td>{{$reservation->paid_value ?? '--'}}</td>
                 <td>{{$reservation->service_type == 'service' ? $reservation->service->name_ar ?? '--' : $reservation->offer->name_ar ?? '--'}}</td>
                 <td>{{\Carbon\Carbon::parse($reservation->appointment_date)->translatedFormat('l').': '.$reservation->appointment_date.' '.$reservation->appointment_time }}</td>
 
