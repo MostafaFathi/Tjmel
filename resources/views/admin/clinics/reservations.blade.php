@@ -6,12 +6,12 @@
                     <tr>
 
                         <th class="numeric" scope="col">رقم الحجز</th>
-                        <th class="" scope="col">اسم العميل</th>
+                        <th class="" style="max-width: 250px" scope="col">اسم العميل</th>
                         <th class="" scope="col">رقم الجوال</th>
-                        <th class="" scope="col">الخدمة</th>
+                        <th class="" style="max-width: 250px" scope="col">الخدمة</th>
                         <th class="" scope="col">وقت وتاريخ الموعد</th>
                         <th class="" scope="col">حالة الحجز</th>
-                        <th class="" scope="col" >سبب الالغاء</th>
+                        <th class="" style="max-width: 250px" scope="col" >سبب الالغاء</th>
                         <th class="" scope="col">التحكم</th>
 
                     </tr>
