@@ -52,10 +52,10 @@
 
                     <tbody>
 
-
+                    @php($counter = $pageCount * request('page') ?? 0)
                     @foreach($appUsers as $appUser)
                         <tr @if(session('id') === $appUser->id)class="bg-green" @endif>
-                            <td>{{$loop->index + 1}}</td>
+                            <td>{{$counter++}}</td>
                             <td>{{$appUser->name ?? '--'}}</td>
                             <td>{{$appUser->mobile ?? '--'}}</td>
                             <td>{{$appUser->wallet ?? '--'}}</td>
