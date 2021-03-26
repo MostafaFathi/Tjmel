@@ -36,7 +36,7 @@ class ClinicController extends Controller
         $clinic = new Clinic();
         $cities = City::all();
         $location = Setting::getValue('location');
-        return view('admin.clinics.create', compact('clinic','cities','location'));
+        return view('admin.clinics.create', compact('clinic', 'cities', 'location'));
     }
 
     /**
@@ -58,12 +58,12 @@ class ClinicController extends Controller
         $clinic->phone = $request->phone;
         $clinic->full_address_ar = $request->full_address_ar;
         $clinic->location = $request->location;
-        $clinic->longitude = Str::replaceFirst('(','',explode(', ',$request->location)[0]);
-        $clinic->latitude= Str::replaceLast(')','',explode(', ',$request->location)[1]);
+        $clinic->longitude = Str::replaceFirst('(', '', explode(', ', $request->location)[0]);
+        $clinic->latitude = Str::replaceLast(')', '', explode(', ', $request->location)[1]);
         $clinic->city_id = $request->city_id ?? '1';
         $clinic->district_id = $request->district_id ?? '5';
         $clinic->city_district = $request->city_district ?? '';
-        $clinic->city_name =  trim(explode('-',$request->city_district ?? '')[0] ?? '');
+        $clinic->city_name = trim(explode('-', $request->city_district ?? '')[0] ?? '');
 
         if ($request->has('logo') and $request->logo != null) {
             $imageName = $request->logo->store('public/clinic/logo');
@@ -76,7 +76,7 @@ class ClinicController extends Controller
         $user = $this->addNewUser($request);
         $clinic->user_id = $user->id;
         $clinic->save();
-        $this->updateClinicUser($clinic->user_id,$request,$clinic->id);
+        $this->updateClinicUser($clinic->user_id, $request, $clinic->id);
 
         return redirect()->route('clinics.index')->with('success', 'success')->with('id', $clinic->id);
     }
@@ -104,7 +104,7 @@ class ClinicController extends Controller
         $clinic = Clinic::find($id);
         $cities = City::all();
         $location = Setting::getValue('location');
-        return view('admin.clinics.edit', compact('clinic','cities','location'));
+        return view('admin.clinics.edit', compact('clinic', 'cities', 'location'));
     }
 
     /**
@@ -127,12 +127,12 @@ class ClinicController extends Controller
         $clinic->phone = $request->phone;
         $clinic->full_address_ar = $request->full_address_ar;
         $clinic->location = $request->location;
-        $clinic->longitude = Str::replaceFirst('(','',explode(', ',$request->location)[0]);
-        $clinic->latitude= Str::replaceLast(')','',explode(', ',$request->location)[1]);
+        $clinic->longitude = Str::replaceFirst('(', '', explode(', ', $request->location)[0]);
+        $clinic->latitude = Str::replaceLast(')', '', explode(', ', $request->location)[1]);
         $clinic->city_id = $request->city_id ?? '1';
         $clinic->district_id = $request->district_id ?? '5';
         $clinic->city_district = $request->city_district ?? '';
-        $clinic->city_name =  trim(explode('-',$request->city_district ?? '')[0] ?? '');
+        $clinic->city_name = trim(explode('-', $request->city_district ?? '')[0] ?? '');
         if ($request->has('logo') and $request->logo != null) {
             $imageName = $request->logo->store('public/clinic/logo');
             $clinic->logo = $imageName;
@@ -143,7 +143,7 @@ class ClinicController extends Controller
         }
         $clinic->save();
 
-        $this->updateClinicUser($clinic->user_id,$request,$clinic->id);
+        $this->updateClinicUser($clinic->user_id, $request, $clinic->id);
 
         return redirect()->route('clinics.index')->with('success', 'success')->with('id', $clinic->id);
     }
@@ -185,7 +185,7 @@ class ClinicController extends Controller
         return $imageNames;
     }
 
-    private function updateClinicUser($user_id,$request,$clinic_id)
+    private function updateClinicUser($user_id, $request, $clinic_id)
     {
         $user = User::find($user_id);
         $user->clinic_id = $clinic_id;
@@ -197,6 +197,7 @@ class ClinicController extends Controller
         }
         $user->save();
     }
+
     public function destroyClinicImage(Request $request, $clinic_id)
     {
         $clinic = Clinic::find($clinic_id);
@@ -217,7 +218,13 @@ class ClinicController extends Controller
 
     public function clinicRequestsIndex()
     {
-        $clinicRequests = ClinicRequest::orderBy('id','desc')->paginate(15);
-        return view('admin.settings.applications.index',compact('clinicRequests'));
+        $clinicRequests = ClinicRequest::orderBy('id', 'desc')->paginate(15);
+        return view('admin.settings.applications.index', compact('clinicRequests'));
+    }
+
+    public function clinicRequestDestroy($id)
+    {
+        ClinicRequest::destroy($id);
+        return back();
     }
 }

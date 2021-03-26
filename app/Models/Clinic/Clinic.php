@@ -57,7 +57,7 @@ class Clinic extends Model
 
     public function reservations()
     {
-        return $this->hasMany(Reserve::class);
+        return $this->hasMany(Reserve::class)->where('status','!=', 0);
     }
 
     public function rejectedReservationsByClinic()

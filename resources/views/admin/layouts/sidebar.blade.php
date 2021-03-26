@@ -90,6 +90,20 @@
                         <span>إدارة العروض</span>
                     </a>
                 </li>
+                <li class="nav-item ">
+                    <a href="{{route('admin.reservations.index')}}"
+                       class="nav-link  {{request()->routeIs('reservations.*')?'active' :'' }}">
+                        <i class="icon-reminder"></i>
+                        <span>إدارة الحجوزات</span>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a href="{{route('app_users.index')}}"
+                       class="nav-link  {{request()->routeIs('app_users.*')?'active' :'' }}">
+                        <i class="icon-users4"></i>
+                        <span>إدارة مستخدمي التطبيق</span>
+                    </a>
+                </li>
                 @endhasanyrole
                 @hasanyrole('admin')
                 <li class="nav-item ">

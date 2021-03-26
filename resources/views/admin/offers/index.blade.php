@@ -57,7 +57,11 @@
 
                         <tr @if(session('id') === $offer->id)class="bg-green" @endif>
                             <td>{{$offer->id}}</td>
-                            <td>{{$offer->name_ar}}</td>
+                            <td>
+                                <a title="عرض"
+                                   href="{{route('admin.offers.show',$offer->id)}}"
+                                >{{$offer->name_ar}}</a>
+                                </td>
                             <td>{{$offer->clinic->name_ar ?? '--'}}</td>
                             <td>{{$offer->section->title_ar ?? '--'}}</td>
                             <td>
@@ -73,6 +77,9 @@
                                 <a class="dropdown-item " data-placement="top" title="Show"
                                    href="{{route('admin.offers.show',$offer->id)}}"
                                   ><i class="icon-eye"></i>عرض تفاصيل العرض وتحديث الصورة</a>
+                                <a class="dropdown-item " data-placement="top" title="تعديل"
+                                   href="{{route('admin.offers.edit',$offer->id)}}"
+                                  ><i class="icon-pencil7"></i>تعديل</a>
 
                                 <a class="dropdown-item" data-placement="top" title="{{$offer->status == 0 or $offer->status == 2 ? 'موافقة ونشر' : 'رفض واخفاء'}}" href="javascript:void(0)"
                                    onclick="approve_item('{{$offer->id}}','{{$offer->name}}')" data-toggle="modal"

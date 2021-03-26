@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\AgreementController;
+use App\Http\Controllers\Admin\AppUserController;
 use App\Http\Controllers\Admin\ClinicController;
+use App\Http\Controllers\Admin\ReservationController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\ServiceOfferController;
 use App\Http\Controllers\Admin\TipController;
@@ -64,21 +66,33 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         Route::resources(['clinics' => ClinicController::class]);
         Route::resources(['sections' => SectionController::class]);
         Route::resources(['tips' => TipController::class]);
-
+        Route::resources(['app_users' => AppUserController::class]);
+        Route::group(['as' => 'admin.'], function () {
+            Route::resources(['reservations' => ReservationController::class]);
+        });
         /* one route calls */
         Route::get('/city/districts/{id}', [SettingController::class, 'cityDistricts'])->name('city.districts');
         Route::post('/clinics/image/delete/{id}', [ClinicController::class, 'destroyClinicImage'])->name('products.image.destroy');
         Route::get('/applications', [ClinicController::class, 'clinicRequestsIndex'])->name('applications.index');
+        Route::get('/applications/{id}/destroy', [ClinicController::class, 'clinicRequestDestroy'])->name('applications.destroy');
 
         //start admin services and offers
         Route::get('/services/acceptance', [ServiceOfferController::class, 'services'])->name('services.acceptance');
         Route::get('/services/show/{id}', [ServiceOfferController::class, 'showService'])->name('admin.services.show');
+        Route::get('/services/edit/{id}', [ServiceOfferController::class, 'editService'])->name('admin.services.edit');
+        Route::put('/services/update/{id}', [ServiceOfferController::class, 'updateService'])->name('admin.services.update');
         Route::get('/offers/acceptance', [ServiceOfferController::class, 'offers'])->name('offers.acceptance');
         Route::get('/offers/show/{id}', [ServiceOfferController::class, 'showOffer'])->name('admin.offers.show');
+        Route::get('/offers/edit/{id}', [ServiceOfferController::class, 'editOffer'])->name('admin.offers.edit');
         Route::put('/offers/update/{id}', [ServiceOfferController::class, 'updateOffer'])->name('admin.offers.update');
         Route::post('/clinics/services/approve/{id}', [ServiceOfferController::class, 'changeServiceStatus']);
         Route::post('/clinics/offers/approve/{id}', [ServiceOfferController::class, 'changeOfferStatus']);
         Route::delete('/clinics/rates/delete/{id}', [ServiceOfferController::class, 'deleteRate']);
+        Route::get('/app_users/status/{id}/change', [AppUserController::class, 'changeStatus'])->name('app_users.status.change');
+        Route::post('/app_users/{id}/wallet', [AppUserController::class, 'changeWallet'])->name('app_users.wallet.change');
+
+        Route::post('/reservations/{id}/status/{status?}', [ReservationController::class, 'changeStatus'])->name('reservations.status');
+
         //end admin services and offers
 
     });

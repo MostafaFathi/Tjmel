@@ -90,12 +90,14 @@ class HomeController extends Controller
 
     public function statics()
     {
-        $dailyIncome = Transaction::where('clinic_id',auth()->user()->clinic_id)->wheredate('created_at', Carbon::today())->sum('value');
-        $monthlyIncome = Transaction::where('clinic_id',auth()->user()->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subMonth())->sum('value');
-        $yearlyIncome = Transaction::where('clinic_id',auth()->user()->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subYear())->sum('value');
+        $dailyIncome = Reserve::where('clinic_id', auth()->user()->clinic_id)->wheredate('created_at', Carbon::today())->whereIn('status',[1,5])->sum('remained_value');//Transaction::where('clinic_id',auth()->user()->clinic_id)->wheredate('created_at', Carbon::today())->sum('value');
+        $monthlyIncome = Reserve::where('clinic_id', auth()->user()->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subMonth())->whereIn('status',[1,5])->sum('remained_value');//Transaction::where('clinic_id',auth()->user()->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subMonth())->sum('value');
+        $yearlyIncome = Reserve::where('clinic_id', auth()->user()->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subYear())->whereIn('status',[1,5])->sum('remained_value');//Transaction::where('clinic_id',auth()->user()->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subYear())->sum('value');
+        $totalReservations = Reserve::where('clinic_id', auth()->user()->clinic_id)->where('status','!=',0)->count();
+        $comingReservations = Reserve::where('clinic_id', auth()->user()->clinic_id)->where('status',5)->count();
         $completedReservations = Reserve::where('clinic_id', auth()->user()->clinic_id)->where('status',1)->count();
-        $unCompletedReservations = Reserve::where('clinic_id', auth()->user()->clinic_id)->where('status','!=',1)->count();
-        return view('clinic.statics.index',compact('dailyIncome','monthlyIncome','yearlyIncome','completedReservations','unCompletedReservations'));
+        $unCompletedReservations = Reserve::where('clinic_id', auth()->user()->clinic_id)->whereIn('status',[2,3,4])->count();
+        return view('clinic.statics.index',compact('dailyIncome','monthlyIncome','yearlyIncome','totalReservations','comingReservations','completedReservations','unCompletedReservations'));
 
     }
 }

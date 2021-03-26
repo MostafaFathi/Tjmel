@@ -20,7 +20,7 @@
     }
     body{
         font-family: 'Droid Arabic Kufi', serif !important;
-        background: #CFDE40 url('{{asset('portal/assets/images/background.jpg')}}') no-repeat;
+        background: #ffffff url('{{asset('portal/assets/images/background.jpg')}}') no-repeat;
         background-size: cover;
         background-position: center;
         text-align: center;
@@ -83,9 +83,9 @@
 
     <div class="links">
 
-        <a class="btn-login" href="{{route('login')}}">تسجيل الدخول</a>
+        <a class="btn-continue" style="   color: #593b6b;    margin-bottom: 10px; background: #fca87e; border: 1px solid #fca87e;" href="{{route('login')}}">تسجيل الدخول</a>
 
-        <a class="btn-continue" href="{{route('login')}}">إستمرار</a>
+        <a class="btn-continue" target="_blank" href="https://api.whatsapp.com/send?phone=966569670978">الدعم الفني</a>
 
     </div>
 

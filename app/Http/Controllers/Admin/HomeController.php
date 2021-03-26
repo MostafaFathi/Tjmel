@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Clinic\Clinic;
 use App\Models\Clinic\ClinicRequest;
 use App\Models\Order\Order;
+use App\Models\Service\Offer;
 use App\Models\Service\Reserve;
+use App\Models\Service\Service;
 use App\Models\Transaction\Transaction;
 use App\Models\User\AppUser;
 use App\Models\User\User;
@@ -38,6 +40,13 @@ class HomeController extends Controller
         $appUsers = AppUser::count() - 1;
         $clinicCount = Clinic::count();
         $clinicRequestCount = ClinicRequest::count();
+        $services = Service::count();
+        $offers = Offer::count();
+        $totalReservations = Reserve::where('status','!=',0)->count();
+        $totalCompletedReservations = Reserve::where('status',1)->count();
+        $totalComingReservations = Reserve::where('status',5)->count();
+        $totalUnCompletedReservations = Reserve::whereIn('status',[2,3,4])->count();
+        $usersWallet = AppUser::sum('wallet');
         $dailyIncome = Transaction::wheredate('created_at', Carbon::today())->sum('value');
         $monthlyIncome = Transaction::wheredate('created_at', '>=', Carbon::today()->subMonth())->sum('value');
         $yearlyIncome = Transaction::wheredate('created_at', '>=', Carbon::today()->subYear())->sum('value');
@@ -52,8 +61,10 @@ class HomeController extends Controller
                 $itemArray['daily'] = $income->where('clinic_id', $income->clinic_id)->wheredate('created_at', Carbon::today())->sum('value');
                 $itemArray['monthly'] = $income->where('clinic_id', $income->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subMonth())->sum('value');
                 $itemArray['yearly'] = $income->where('clinic_id', $income->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subYear())->sum('value');
+                $itemArray['totalReservations'] = Reserve::where('clinic_id', $income->clinic_id)->where('status','!=',0)->count();
+                $itemArray['totalComingReservations'] = Reserve::where('clinic_id', $income->clinic_id)->where('status',5)->count();
                 $itemArray['completedReservations'] = Reserve::where('clinic_id', $income->clinic_id)->where('status',1)->count();
-                $itemArray['unCompletedReservations'] = Reserve::where('clinic_id', $income->clinic_id)->where('status','!=',1)->count();
+                $itemArray['unCompletedReservations'] = Reserve::where('clinic_id', $income->clinic_id)->whereIn('status',[2,3,4])->count();
                 break;
             }
             array_push($clinicIncomeArray, (object) $itemArray);
@@ -61,7 +72,7 @@ class HomeController extends Controller
         }
         $clinicIncomeArray = (object)($clinicIncomeArray);
 
-        return view('admin.main.home', compact('appUsers','clinicCount','clinicRequestCount', 'dailyIncome','monthlyIncome','yearlyIncome','clinicIncomeArray'));
+        return view('admin.main.home', compact('appUsers','services','offers','totalReservations','totalCompletedReservations','totalUnCompletedReservations','totalComingReservations','usersWallet','clinicCount','clinicRequestCount', 'dailyIncome','monthlyIncome','yearlyIncome','clinicIncomeArray'));
     }
 
     public function telescope()

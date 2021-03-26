@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Clinic\Clinic;
 use App\Models\Clinic\Rate;
 use App\Models\Service\Offer;
+use App\Models\Service\Section;
 use App\Models\Service\Service;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class ServiceOfferController extends Controller
 {
     public function services()
     {
-        $services = Service::paginate(15);
+        $services = Service::orderBy('id','desc')->paginate(15);
         return view('admin.services.index', compact('services'));
     }
 
@@ -22,10 +23,16 @@ class ServiceOfferController extends Controller
         $service = Service::find($id);
         return view('admin.services.show', compact('service'));
     }
+    public function editService($id)
+    {
+        $sections = Section::all();
+        $service = Service::find($id);
+        return view('admin.services.edit', compact('service','sections'));
+    }
 
     public function offers()
     {
-        $offers = Offer::paginate(15);
+        $offers = Offer::orderBy('id','desc')->paginate(15);
         return view('admin.offers.index', compact('offers'));
     }
 
@@ -34,11 +41,58 @@ class ServiceOfferController extends Controller
         $offer = Offer::find($id);
         return view('admin.offers.show', compact('offer'));
     }
+    public function editOffer($id)
+    {
+        $sections = Section::all();
+        $offer = Offer::find($id);
+        return view('admin.offers.edit', compact('offer','sections'));
+    }
+
+    public function updateService(Request $request, $id)
+    {
+
+         $request->validate([
+            'name_ar' => 'required',
+            'section_id' => 'required',
+            'price' => 'required',
+        ],[
+            'name_ar.required' => 'حقل اسم الخدمة مطلوب',
+            'section_id.required' => 'حقل القسم مطلوب',
+            'price.required' => 'حقل السعر مطلوب',
+        ]);
+        $service =Service::find($id);
+        $service->section_id = $request->section_id;
+        $service->name_ar = $request->name_ar;
+        $service->description_ar = $request->description_ar;
+        $service->instructions_ar = $request->instructions_ar;
+        $service->price = $request->price;
+        $service->save();
+        return redirect()->route('services.acceptance')->with('success', 'success')->with('id', $service->id);
+
+    }
 
     public function updateOffer(Request $request, $id)
     {
+        $request->validate([
+            'name_ar' => 'required',
+            'section_id' => 'required',
+            'price_before' => 'required',
+            'price_after' => 'required',
+        ],[
+            'name_ar.required' => 'حقل اسم العرض مطلوب',
+            'section_id.required' => 'حقل القسم مطلوب',
+            'price_before.required' => 'حقل السعر قبل مطلوب',
+            'price_after.required' => 'حقل السعر بعد مطلوب',
+        ]);
 
-        $offer = Offer::find($id);
+        $offer =  Offer::find($id);
+        $offer->section_id = $request->section_id;
+        $offer->name_ar = $request->name_ar;
+        $offer->description_ar = $request->description_ar;
+        $offer->instructions_ar = $request->instructions_ar;
+        $offer->price_before = $request->price_before;
+        $offer->price_after = $request->price_after;
+
         if ($request->has('image') and $request->image != null) {
             $imageName = $request->image->store('public/offers');
             $offer->image = $imageName;

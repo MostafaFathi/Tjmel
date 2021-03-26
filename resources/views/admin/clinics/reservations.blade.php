@@ -10,6 +10,7 @@
                         <th class="">رقم الجوال</th>
                         <th class="">الخدمة</th>
                         <th class="">وقت وتاريخ الموعد</th>
+                        <th class="">حالة الحجز</th>
                         <th class="">سبب الالغاء</th>
                         <th class="">التحكم</th>
 
@@ -20,7 +21,7 @@
                     <tbody>
 
 
-                    @foreach($clinic->rejectedReservationsByClinic as $reservation)
+                    @foreach($clinic->reservations as $reservation)
                         <tr @if(session('id') === $reservation->id)class="bg-green" @endif>
                             <td>{{$reservation->display_id}}</td>
                             <td>{{$reservation->app_user->name ?? '--'}}</td>
@@ -29,15 +30,31 @@
                             <td>{{\Carbon\Carbon::parse($reservation->appointment_date)->translatedFormat('l').': '.$reservation->appointment_date.' '.$reservation->appointment_time }}</td>
 
                             <td>
-                                {{$reservation->reason ?? '--'}}
+                                {{$reservation->status_name ?? ""}}
+                            </td>
+                            <td>
+                                {{$reservation->reason ?? "--"}}
                             </td>
                             <td>
                                 <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown">اتخذ اجراء</a>
 
                                 <div class="dropdown-menu dropdown-menu-lg">
-                                    <a class="dropdown-item " data-placement="top" title="#"
-                                       href="#"
-                                    ><i class="icon-eye"></i>#</a>
+                                    <a class="dropdown-item" data-placement="top" title="مكتمل" href="javascript:void(0)"
+                                       onclick="approve_item_reservation('{{$reservation->id}}',1,'إكتمال الحجز','تغيير حالة الحجز لمكتمل')"
+                                       data-toggle="modal"
+                                       data-target="#change_status_item_modal"><i class="icon-task"></i>مكتمل</a>
+
+                                    <a class="dropdown-item" data-placement="top" title="غير مكتمل - عدم حضور العميل"
+                                       href="javascript:void(0)"
+                                       onclick="approve_item_reservation('{{$reservation->id}}',2,'حجز غير مكتمل','تغيير حالة الحجز لغير مكتمل')"
+                                       data-toggle="modal"
+                                       data-target="#change_status_item_modal"><i class="icon-alignment-aligned-to"></i>غير مكتمل -
+                                        عدم حضور العميل</a>
+
+                                    <a class="dropdown-item" data-placement="top" title="إلغاء الحجز" href="javascript:void(0)"
+                                       onclick="approve_item_reservation('{{$reservation->id}}',3,'إلغاء الحجز','إلغاء الحجز سيظهر انه تم الغاءه من العيادة')"
+                                       data-toggle="modal"
+                                       data-target="#change_status_item_modal"><i class="icon-user-cancel"></i>إلغاء الحجز</a>
 
 
                                 </div>
@@ -49,7 +66,7 @@
 
 
                     @endforeach
-                    @if(count($clinic->rejectedReservationsByClinic) == 0)
+                    @if(count($clinic->reservations) == 0)
                         <tr>
                             <td colspan="6" class="text-center">
                                 لا يوجد بيانات

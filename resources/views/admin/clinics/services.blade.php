@@ -34,7 +34,9 @@
                                 <a class="dropdown-item " data-placement="top" title="عرض"
                                    href="{{route('admin.services.show',$service->id)}}"
                                   ><i class="icon-eye"></i>عرض</a>
-
+                                    <a class="dropdown-item " data-placement="top" title="تعديل"
+                                       href="{{route('admin.services.edit',$service->id)}}"
+                                    ><i class="icon-pencil7"></i>تعديل</a>
                                 <a class="dropdown-item" data-placement="top" title="{{$service->status == 0 || $service->status == 2 ? 'موافقة ونشر' : 'رفض واخفاء'}}" href="javascript:void(0)"
                                    onclick="approve_item('{{$service->id}}','{{$service->name}}')" data-toggle="modal"
                                    data-target="#delete_item_modal"><i class="{{$service->status == 0 || $service->status == 2 ? 'icon-check2' : 'icon-cross3'}} "></i>{{$service->status == 0 || $service->status == 2 ? 'موافقة ونشر' : 'رفض واخفاء'}}</a>

@@ -95,12 +95,78 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-6 col-xl-4">
+                <div class="card card-body">
+                    <div class="media">
+                        <div class="media-body" style="">
+                            <h6 class="media-title font-weight-semibold">إجمالي الخدمات</h6>
+                            <h3><b>{{$services}}</b></h3>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-4">
+                <div class="card card-body">
+                    <div class="media">
+                        <div class="media-body" style="">
+                            <h6 class="media-title font-weight-semibold">إجمالي العروض</h6>
+                            <h3><b>{{$offers}}</b></h3>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-4">
+                <div class="card card-body">
+                    <div class="media">
+                        <div class="media-body" style="">
+                            <h6 class="media-title font-weight-semibold">إجمالي الحجوزات</h6>
+                            <h3><b>{{$totalReservations}}</b></h3>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-4">
+                <div class="card card-body">
+                    <div class="media">
+                        <div class="media-body" style="">
+                            <h6 class="media-title font-weight-semibold">إجمالي الحجوزات النشطة</h6>
+                            <h3><b>{{$totalComingReservations}}</b></h3>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-4">
+                <div class="card card-body">
+                    <div class="media">
+                        <div class="media-body" style="">
+                            <h6 class="media-title font-weight-semibold">إجمالي الحجوزات المكتملة</h6>
+                            <h3><b>{{$totalCompletedReservations}}</b></h3>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-4">
+                <div class="card card-body">
+                    <div class="media">
+                        <div class="media-body" style="">
+                            <h6 class="media-title font-weight-semibold">إجمالي الحجوزات الغير المكتملة</h6>
+                            <h3><b>{{$totalUnCompletedReservations}}</b></h3>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
             @endhasanyrole
 
         </div>
 
         <div class="row">
-            <div class="col-sm-6 col-xl-4">
+            <div class="col-sm-6 col-xl-3">
                 <div class="card card-body bg-blue-400 has-bg-image">
                     <div class="media">
                         <div class="media-body">
@@ -114,7 +180,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-xl-4">
+            <div class="col-sm-6 col-xl-3">
                 <div class="card card-body bg-success-400 has-bg-image">
                     <div class="media">
                         <div class="media-body ">
@@ -128,12 +194,26 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-xl-4">
+            <div class="col-sm-6 col-xl-3">
                 <div class="card card-body bg-danger-400 has-bg-image">
                     <div class="media">
                         <div class="media-body">
                             <h3 class="mb-0">{{$yearlyIncome??''}}</h3>
                             <span class="text-uppercase font-size-xs font-weight-bold">الدخل السنوي</span>
+                        </div>
+
+                        <div class="ml-3 align-self-center">
+                            <i class="icon-cash icon-3x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+                <div class="card card-body  has-bg-image" style="background: #38d038">
+                    <div class="media">
+                        <div class="media-body">
+                            <h3 class="mb-0">{{$usersWallet??''}}</h3>
+                            <span class="text-uppercase font-size-xs font-weight-bold">المبالغ المدفوعة</span>
                         </div>
 
                         <div class="ml-3 align-self-center">
@@ -152,6 +232,8 @@
                             <th>الدخل اليومي</th>
                             <th>الدخل الشهري</th>
                             <th>الدخل السنوي</th>
+                            <th>إجمالي الحجوزات</th>
+                            <th> حجوزات نشطة</th>
                             <th>حجوزات مكتملة</th>
                             <th>حجوزات غير مكتملة</th>
                         </tr>
@@ -166,6 +248,8 @@
                                 <td><span class="badge badge-info">{{$item->daily}} ر.س.</span></td>
                                 <td><span class="badge badge-info">{{$item->monthly}} ر.س.</span></td>
                                 <td><span class="badge badge-info">{{$item->yearly}} ر.س.</span></td>
+                                <td><span class="badge badge-danger">{{$item->totalReservations}}</span></td>
+                                <td><span class="badge badge-secondary">{{$item->totalComingReservations}}</span></td>
                                 <td><span class="badge badge-success">{{$item->completedReservations}}</span></td>
                                 <td><span class="badge badge-warning">{{$item->unCompletedReservations}}</span></td>
 

@@ -72,7 +72,7 @@
 
                                 <div class="col-md-8 offset-md-4">
                                     <button type="submit" class="btn btn-success"
-                                            style="background: #593b6b;border: 0px">
+                                            style=" color: #593b6b;    margin-bottom: 10px; background: #fca87e; border: 1px solid #fca87e;border: 0px">
                                         {{ __('تسجيل الخول') }}
                                     </button>
 

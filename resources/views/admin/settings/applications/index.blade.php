@@ -41,6 +41,7 @@
                         <th class="">الاسم</th>
                         <th class="">رقم الجوال</th>
                         <th class="">التاريخ</th>
+                        <th class="">التحكم</th>
 
                     </tr>
 
@@ -56,6 +57,22 @@
                             <td >{{$clinicRequest->name_ar}}</td>
                             <td >{{$clinicRequest->phone}}</td>
                             <td >{{$clinicRequest->created_at}}</td>
+                            <td >
+                                <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown">اتخذ
+                                    اجراء</a>
+
+                                <div class="dropdown-menu dropdown-menu-lg">
+                                        <a class="dropdown-item" data-placement="top" title="حذف"
+                                           href="{{route('applications.destroy',$clinicRequest->id)}}"
+                                        ><i class="icon-cross3"></i>حذف</a>
+
+
+
+
+
+
+                                </div>
+                            </td>
                         </tr>
                     @endforeach
                     <tr>

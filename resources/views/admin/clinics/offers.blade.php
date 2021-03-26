@@ -38,7 +38,9 @@
                                 <a class="dropdown-item " data-placement="top" title="عرض"
                                    href="{{route('admin.offers.show',$offer->id)}}"
                                   ><i class="icon-eye"></i>عرض</a>
-
+                                    <a class="dropdown-item " data-placement="top" title="تعديل"
+                                       href="{{route('admin.offers.edit',$offer->id)}}"
+                                    ><i class="icon-pencil7"></i>تعديل</a>
                                 <a class="dropdown-item" data-placement="top" title="{{$offer->status == 0 or $offer->status == 2 ? 'موافقة ونشر' : 'رفض وإخفاء'}}" href="javascript:void(0)"
                                    onclick="approve_item_offer('{{$offer->id}}','{{$offer->name}}')" data-toggle="modal"
                                    data-target="#delete_item_modal_offer"><i class="{{$offer->status == 0 || $offer->status == 2 ? 'icon-check2' : 'icon-cross3'}} "></i>{{$offer->status == 0 || $offer->status == 2 ? 'موافقة ونشر' : 'رفض وإخفاء'}}</a>

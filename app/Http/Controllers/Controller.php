@@ -34,6 +34,10 @@ class Controller extends BaseController
         if ($validator != 'valid') return $validator;
 
         $user = AppUser::where('mobile', $request->mobile)->where('otp_code', $request->otp_code)->first();
+
+        if ($user->status === 1)
+            return response()->json(['message' => 'تم حظر رقم الجوال', 'status' => false], 422);
+
         $token = null;
         if ($user) {
             $token = $user->createToken('Tjmel Login token')->plainTextToken;
@@ -61,6 +65,9 @@ class Controller extends BaseController
             $user = AppUser::where('mobile', $request->mobile)->first();
             if (!$user)
                 return response()->json(['message' => 'User not found', 'status' => false], 422);
+
+            if ($user->status === 1)
+                return response()->json(['message' => 'تم حظر رقم الجوال', 'status' => false], 422);
         }
         $user->otp_code = $otpCode;
         $user->save();

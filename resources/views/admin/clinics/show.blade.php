@@ -37,7 +37,7 @@
     <div class="content">
         <div class="card">
             <div class="card-header header-elements-inline">
-                <h6 class="card-title">تفاصيل العيادة</h6>
+                <h6 class="card-title">تفاصيل العيادة - <span style="    color: #fda97f;font-weight: bold">{{$clinic->name_ar}}</span></h6>
             </div>
 
             <div class="card-body">
@@ -46,7 +46,7 @@
                     <li class="nav-item"><a href="#justified-right-icon-tab2" class="nav-link tab-link {{request()->get('page') == 'services' ? 'active' : ''}}" name="services" data-toggle="tab"><i class="icon-yin-yang mr-2"></i>الخدمات <span class="badge badge-warning mr-1 ml-1">{{count($clinic->services)}}</span></a></li>
                     <li class="nav-item"><a href="#justified-right-icon-tab3" class="nav-link tab-link {{request()->get('page') == 'offers' ? 'active' : ''}}" name="offers" data-toggle="tab"><i class="icon-price-tag2 mr-2"></i>العروض <span class="badge badge-success mr-1 ml-1">{{count($clinic->offers)}}</span></a></li>
                     <li class="nav-item"><a href="#justified-right-icon-tab4" class="nav-link tab-link {{request()->get('page') == 'rating' ? 'active' : ''}}" name="rating" data-toggle="tab"><i class="icon-star-full2 mr-2"></i>التقييم <span class="badge badge-primary mr-1 ml-1">{{count($clinic->rates)}}</span></a></li>
-                    <li class="nav-item"><a href="#justified-right-icon-tab5" class="nav-link tab-link {{request()->get('page') == 'reservations' ? 'active' : ''}}" name="reservations" data-toggle="tab"><i class="icon-cross3 mr-2"></i>حجوزات ملغية <span class="badge badge-danger mr-1 ml-1">{{count($clinic->rejectedReservationsByClinic)}}</span></a></li>
+                    <li class="nav-item"><a href="#justified-right-icon-tab5" class="nav-link tab-link {{request()->get('page') == 'reservations' ? 'active' : ''}}" name="reservations" data-toggle="tab"><i class="icon-cross3 mr-2"></i>الحجوزات <span class="badge badge-danger mr-1 ml-1">{{count($clinic->reservations)}}</span></a></li>
 
                 </ul>
 
@@ -145,8 +145,36 @@
                 </div>
             </div>
         </div>
-
-
+        {{----}}
+        <div id="change_status_item_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="reservation_form" method="post" action="">
+                        @csrf
+                        <input name="id" id="item_id1" class="form-control" type="hidden">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">
+                            </h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <h4 id="modalDescription">تأكيد الموافقة/الرفض للخدمة</h4>
+                            <div class="form-group">
+                                <label class="control-labell" for="">تعليق</label>
+                                <textarea name="comment" id="comment"  rows="3" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">اغلاق</button>
+                            <button type="submit" class="btn btn-success waves-effect" id="delete_url">حفظ الحالة الجديدة</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
     </div>
 @endsection
 @section('js_assets')
@@ -156,6 +184,16 @@
 @endsection
 @section('js_code')
     <script>
+
+        function approve_item_reservation(id, status, title, description) {
+            $('#item_id1').val(id);
+            var url = "{{url('admin/reservations/')}}/" + id + "/status/" + status;
+            $('#reservation_form').attr('action', url);
+            $('#myModalLabel').text(title);
+            $('#modalDescription').html(description);
+        }
+
+
         function approve_item(id, title) {
             $('#item_id').val(id);
             var url = "{{url('admin/clinics/services/approve')}}/" + id;

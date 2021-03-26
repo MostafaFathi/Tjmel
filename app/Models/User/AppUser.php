@@ -32,7 +32,7 @@ class AppUser extends Authenticatable
         'otp_code',
         'email'
     ];
-    protected $appends = ['current_address'];
+    protected $appends = ['current_address','status_name'];
     protected $with = ['addresses'];
 
     public function favorites()
@@ -60,6 +60,9 @@ class AppUser extends Authenticatable
     {
         return $this->addresses->where('is_current',true)->first();
     }
-
+    public function getStatusNameAttribute()
+    {
+        return ['فعال','محظور'][$this->status];
+    }
 
 }

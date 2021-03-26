@@ -61,9 +61,9 @@
                         <tr @if(session('id') === $clinic->id)class="bg-green" @endif>
                             <td>{{$clinic->id}}</td>
                             <td><img src="{{$clinic->logo}}" alt="" style="width: 60px;border-radius: 8px"></td>
-                            <td>{{$clinic->name_ar}}  @if(session('id') === $clinic->id) | updated @endif</td>
+                            <td><a title="Show" href="{{route('clinics.show',$clinic->id)}}">{{$clinic->name_ar}}</a>
+                                  @if(session('id') === $clinic->id) | updated @endif</td>
                             <td>{{$clinic->city_district ?? '--'}}</td>
-{{--                            <td>{{$clinic->district->name_ar ?? '--'}}</td>--}}
                             <td>{{$clinic->user->name_ar ?? '--'}}</td>
                             <td>
                                 <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown">إتخذ اجراء</a>

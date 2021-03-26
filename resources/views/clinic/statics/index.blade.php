@@ -85,12 +85,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-xl-6">
-                            <div class="card card-body  has-bg-image" style="min-height: 150px;background-color: #b1d095;">
+                        <div class="col-sm-12 col-xl-12">
+                            <div class="card card-body bg-danger-400 has-bg-image" style="background: #bebebe;min-height: 150px;">
                                 <div class="media">
                                     <div class="media-body">
-                                        <h3 class="mb-0 text-size-28">{{$completedReservations??'0'}}</h3>
-                                        <span class="text-uppercase font-size-xs font-weight-bold text-size-18">عدد الحجوزات المكتملة</span>
+                                        <h3 class="mb-0 text-size-28">{{$totalReservations}} </h3>
+                                        <span class="text-uppercase font-size-xs font-weight-bold text-size-18">إجمالي عدد الحجوزات</span>
+                                    </div>
+
+                                    <div class="ml-3 align-self-center">
+                                        <i class="icon-sigma icon-3x opacity-75"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-xl-4">
+                            <div class="card card-body  has-bg-image" style="min-height: 150px;background-color: #88d9e3;">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h3 class="mb-0 text-size-28">{{$comingReservations??'0'}}</h3>
+                                        <span class="text-uppercase font-size-xs font-weight-bold text-size-18">عدد الحجوزات النشطة</span>
                                     </div>
 
                                     <div class="ml-3 align-self-center">
@@ -99,7 +113,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-xl-6">
+                        <div class="col-sm-4 col-xl-4">
+                            <div class="card card-body  has-bg-image" style="min-height: 150px;background-color: #b1d095;">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h3 class="mb-0 text-size-28">{{$completedReservations??'0'}}</h3>
+                                        <span class="text-uppercase font-size-xs font-weight-bold text-size-18">عدد الحجوزات المكتملة</span>
+                                    </div>
+
+                                    <div class="ml-3 align-self-center">
+                                        <i class="icon-checkmark-circle2 icon-3x opacity-75"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-xl-4">
                             <div class="card card-body  has-bg-image" style="min-height: 150px;    background-color: #bd8c98;">
                                 <div class="media">
                                     <div class="media-body">

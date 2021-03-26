@@ -25,7 +25,7 @@ use App\Http\Controllers\Api\Auth\LoginController;
 |--------------------------------------------------------------------------
 */
 
-Route::group(['middleware' => ['localization', 'auth:sanctum', 'throttle:api'], 'as' => 'api.'], function () {
+Route::group(['middleware' => ['localization', 'auth:sanctum','blocked','throttle:api'], 'as' => 'api.'], function () {
 
 
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
