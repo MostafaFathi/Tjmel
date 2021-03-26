@@ -15,7 +15,7 @@ class AppUserController extends Controller
      */
     public function index()
     {
-        $appUsers = AppUser::paginate(15);
+        $appUsers = AppUser::where('id','!=','10101010')->paginate(15);
         return view('admin.app_users.index',compact('appUsers'));
 
     }
