@@ -1,18 +1,18 @@
 
             <div class="table-responsive">
-                <table class="table">
+                <table class="table"  id="reservation_tb" style="width: max-content;">
                     <thead>
 
                     <tr>
 
-                        <th class="numeric">رقم الحجز</th>
-                        <th class="">اسم العميل</th>
-                        <th class="">رقم الجوال</th>
-                        <th class="">الخدمة</th>
-                        <th class="">وقت وتاريخ الموعد</th>
-                        <th class="">حالة الحجز</th>
-                        <th class="">سبب الالغاء</th>
-                        <th class="">التحكم</th>
+                        <th class="numeric" scope="col">رقم الحجز</th>
+                        <th class="" scope="col">اسم العميل</th>
+                        <th class="" scope="col">رقم الجوال</th>
+                        <th class="" scope="col">الخدمة</th>
+                        <th class="" scope="col">وقت وتاريخ الموعد</th>
+                        <th class="" scope="col">حالة الحجز</th>
+                        <th class="" scope="col" >سبب الالغاء</th>
+                        <th class="" scope="col">التحكم</th>
 
                     </tr>
 
