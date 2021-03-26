@@ -33,19 +33,19 @@
         <!-- Basic table -->
         <div class="card">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table" id="reservation_tb" style="width: max-content;">
                     <thead>
 
                     <tr>
 
                         <th class="numeric">رقم الحجز</th>
-                        <th class="">اسم العميل</th>
+                        <th class="" style="max-width: 250px">اسم العميل</th>
                         <th class="">رقم الجوال</th>
-                        <th class="">العيادة</th>
-                        <th class="">الخدمة</th>
+                        <th class="" style="max-width: 250px">العيادة</th>
+                        <th class="" style="max-width: 250px">الخدمة</th>
                         <th class="">وقت وتاريخ الحجز</th>
                         <th class="">حالة الحجز</th>
-                        <th class="">سبب الالغاء</th>
+                        <th class="" style="max-width: 250px">سبب الالغاء</th>
                         <th class="">التحكم</th>
 
                     </tr>
@@ -58,16 +58,16 @@
                     @foreach($reservations as $reservation)
                         <tr @if(session('id') === $reservation->id)class="bg-green" @endif>
                             <td>{{$reservation->display_id}}</td>
-                            <td>{{$reservation->app_user->name ?? '--'}}</td>
+                            <td style="max-width: 250px">{{$reservation->app_user->name ?? '--'}}</td>
                             <td>{{$reservation->app_user->mobile ?? '--'}}</td>
-                            <td>{{$reservation->clinic->name_ar ?? '--'}}</td>
-                            <td>{{$reservation->service->name_ar ?? '--'}}</td>
+                            <td style="max-width: 250px">{{$reservation->clinic->name_ar ?? '--'}}</td>
+                            <td style="max-width: 250px">{{$reservation->service->name_ar ?? '--'}}</td>
                             <td>{{\Carbon\Carbon::parse($reservation->created_at)}}</td>
 
                             <td>
                                 {{$reservation->status_name ?? ""}}
                             </td>
-                            <td>
+                            <td style="max-width: 250px">
                                 {{$reservation->reason ?? "--"}}
                             </td>
                             <td>
@@ -163,7 +163,13 @@
 @section('js_code')
 
     <script>
-
+        $(document).on('mousemove','#reservation_tb tr td',function () {
+            if ($(this).index() >= 4){
+                $(".table-responsive").scrollLeft(-10000);
+            }else{
+                $(".table-responsive").scrollLeft(0);
+            }
+        });
         function approve_item_reservation(id, status, title, description) {
             $('#item_id1').val(id);
             var url = "{{url('admin/reservations/')}}/" + id + "/status/" + status;
