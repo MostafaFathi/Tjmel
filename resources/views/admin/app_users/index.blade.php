@@ -52,7 +52,7 @@
 
                     <tbody>
 
-                    @php($counter = $pageCount * request('page') ?? 0)
+                    @php($counter = request('page') == 1 || !request()->has('page') ? 1 : $pageCount * request('page') ?? 0)
                     @foreach($appUsers as $appUser)
                         <tr @if(session('id') === $appUser->id)class="bg-green" @endif>
                             <td>{{$counter++}}</td>
