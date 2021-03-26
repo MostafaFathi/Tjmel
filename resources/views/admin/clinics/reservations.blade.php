@@ -24,15 +24,15 @@
                     @foreach($clinic->reservations as $reservation)
                         <tr @if(session('id') === $reservation->id)class="bg-green" @endif>
                             <td>{{$reservation->display_id}}</td>
-                            <td>{{$reservation->app_user->name ?? '--'}}</td>
+                            <td style="max-width: 250px">{{$reservation->app_user->name ?? '--'}}</td>
                             <td>{{$reservation->app_user->mobile ?? '--'}}</td>
-                            <td>{{$reservation->service->name_ar ?? '--'}}</td>
+                            <td style="max-width: 250px">{{$reservation->service->name_ar ?? '--'}}</td>
                             <td>{{\Carbon\Carbon::parse($reservation->appointment_date)->translatedFormat('l').': '.$reservation->appointment_date.' '.$reservation->appointment_time }}</td>
 
                             <td>
                                 {{$reservation->status_name ?? ""}}
                             </td>
-                            <td>
+                            <td style="max-width: 250px">
                                 {{$reservation->reason ?? "--"}}
                             </td>
                             <td>
