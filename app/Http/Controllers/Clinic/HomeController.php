@@ -90,9 +90,9 @@ class HomeController extends Controller
 
     public function statics()
     {
-        $dailyIncome = Reserve::where('clinic_id', auth()->user()->clinic_id)->wheredate('created_at', Carbon::today())->whereIn('status',[1,5])->sum('remained_value');//Transaction::where('clinic_id',auth()->user()->clinic_id)->wheredate('created_at', Carbon::today())->sum('value');
-        $monthlyIncome = Reserve::where('clinic_id', auth()->user()->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subMonth())->whereIn('status',[1,5])->sum('remained_value');//Transaction::where('clinic_id',auth()->user()->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subMonth())->sum('value');
-        $yearlyIncome = Reserve::where('clinic_id', auth()->user()->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subYear())->whereIn('status',[1,5])->sum('remained_value');//Transaction::where('clinic_id',auth()->user()->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subYear())->sum('value');
+        $dailyIncome = Reserve::where('clinic_id', auth()->user()->clinic_id)->wheredate('created_at', Carbon::today())->where('status',1)->sum('remained_value');//Transaction::where('clinic_id',auth()->user()->clinic_id)->wheredate('created_at', Carbon::today())->sum('value');
+        $monthlyIncome = Reserve::where('clinic_id', auth()->user()->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subMonth())->where('status',1)->sum('remained_value');//Transaction::where('clinic_id',auth()->user()->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subMonth())->sum('value');
+        $yearlyIncome = Reserve::where('clinic_id', auth()->user()->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subYear())->where('status',1)->sum('remained_value');//Transaction::where('clinic_id',auth()->user()->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subYear())->sum('value');
         $totalReservations = Reserve::where('clinic_id', auth()->user()->clinic_id)->where('status','!=',0)->count();
         $comingReservations = Reserve::where('clinic_id', auth()->user()->clinic_id)->where('status',5)->count();
         $completedReservations = Reserve::where('clinic_id', auth()->user()->clinic_id)->where('status',1)->count();
