@@ -69,7 +69,7 @@
 
         .sidebar-dark .nav-sidebar .nav-link, .sidebar-light .card[class*=bg-]:not(.bg-light):not(.bg-white):not(.bg-transparent) .nav-sidebar .nav-link {
             color: #969696 !important;
-            font-size: 15px;
+            font-size: 13px;
             font-weight: bold;
             padding: 15px 20px;
         }
