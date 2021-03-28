@@ -27,7 +27,7 @@
 
         @foreach($comingReservations as $reservation)
 
-            <tr @if($reservation->appointment_date  < \Carbon\Carbon::today())) style="background: #ffc2c2" @endif>
+            <tr @if($reservation->appointment_date  < \Carbon\Carbon::today()) style="background: #ffc2c2" @endif>
                 <td>{{$reservation->display_id}}</td>
                 <td>{{$reservation->app_user->name ?? '--'}}</td>
                 <td>{{$reservation->app_user->mobile ?? '--'}}</td>
