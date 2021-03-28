@@ -48,7 +48,7 @@ class Reserve extends Model
 
     public function getAppointmentTimeAttribute($value)
     {
-        return Carbon::parse($value)->format('H:i a');
+        return Carbon::parse($value)->format('h:i a');
     }
 
     public function getServiceNameAttribute()
