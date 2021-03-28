@@ -73,7 +73,7 @@
                                 <div class="col-md-8 offset-md-4">
                                     <button type="submit" class="btn btn-success"
                                             style=" color: #593b6b;    margin-bottom: 10px; background: #fca87e; border: 1px solid #fca87e;border: 0px">
-                                        {{ __('تسجيل الخول') }}
+                                        {{ __('تسجيل الدخول') }}
                                     </button>
 
                                     @if (Route::has('password.request'))
