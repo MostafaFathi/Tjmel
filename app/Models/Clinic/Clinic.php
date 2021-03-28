@@ -57,12 +57,12 @@ class Clinic extends Model
 
     public function reservations()
     {
-        return $this->hasMany(Reserve::class)->where('status','!=', 0);
+        return $this->hasMany(Reserve::class)->where('status','!=', 0)->orderBy('id','desc');
     }
 
     public function rejectedReservationsByClinic()
     {
-        return $this->hasMany(Reserve::class)->where('status', 3);
+        return $this->hasMany(Reserve::class)->where('status', 3)->orderBy('id','desc');
     }
 
     public function getLogoAttribute($logo)
