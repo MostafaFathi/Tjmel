@@ -19,7 +19,7 @@ class ReservationController extends Controller
         $todayReservations = auth()->user()->clinic->reservations->where('status',5)->where('appointment_date',Carbon::today()->format('d-m-Y'));
 //        $nowReservations = Reserve::where('clinic_id',auth()->user()->clinic->id)->where('status',5)->where('appointment_date',Carbon::today()->format('d-m-Y'))
 //            ->whereBetween('appointment_time',[Carbon::now()->subMinutes(30),Carbon::now()])->get();
-        $comingReservations = Reserve::where('clinic_id',auth()->user()->clinic->id)->where('status',5)->wheredate('appointment_date','>',Carbon::today())->get();
+        $comingReservations = Reserve::where('clinic_id',auth()->user()->clinic->id)->where('status',5)->get();//->wheredate('appointment_date','>',Carbon::today())
         $completedReservations = auth()->user()->clinic->reservations->where('status',1);
         $unCompletedReservations = auth()->user()->clinic->reservations->whereIn('status',[2,3,4]);
         return view('clinic.reservations.index',compact('todayReservations','comingReservations','completedReservations','unCompletedReservations'));
