@@ -17,7 +17,7 @@
 	<link href="{{asset('portal/assets/css/layout.min.css')}}" rel="stylesheet" type="text/css">
 	<link href="{{asset('portal/assets/css/components.min.css')}}" rel="stylesheet" type="text/css">
 	<link href="{{asset('portal/assets/css/colors.min.css')}}" rel="stylesheet" type="text/css">
-	<link href="{{asset('portal/assets/css/custom.css')}}" rel="stylesheet" type="text/css">
+	<link href="{{asset('portal/assets/css/custom.css?v=1')}}" rel="stylesheet" type="text/css">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.13/css/tableexport.css" rel="stylesheet" type="text/css">
 	<!-- /global stylesheets -->
 

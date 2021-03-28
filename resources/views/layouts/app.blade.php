@@ -21,7 +21,7 @@
     <style>
         @font-face {
             font-family: 'Droid Arabic Kufi';
-            src: url({{ asset('portal/assets/font/DroidKufi-Regular.woff2') }}),url({{ asset('portal/assets/font/DroidKufi-Bold.woff2') }});
+            src: url({{ asset('portal/assets/font/rb_regular.ttf') }}),url({{ asset('portal/assets/font/rb_bold.ttf') }});
         }
     </style>
 <style type="text/css">

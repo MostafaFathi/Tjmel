@@ -19,7 +19,7 @@
     <link href="{{asset('portal/assets/css/layout.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('portal/assets/css/components.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('portal/assets/css/colors.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('portal/assets/css/custom.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('portal/assets/css/custom.css?v=1')}}" rel="stylesheet" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.13/css/tableexport.css" rel="stylesheet"
           type="text/css">
     <!-- /global stylesheets -->
@@ -69,7 +69,7 @@
 
         .sidebar-dark .nav-sidebar .nav-link, .sidebar-light .card[class*=bg-]:not(.bg-light):not(.bg-white):not(.bg-transparent) .nav-sidebar .nav-link {
             color: #969696 !important;
-            font-size: 12px;
+            font-size: 15px;
             font-weight: bold;
             padding: 15px 20px;
         }

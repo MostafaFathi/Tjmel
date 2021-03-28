@@ -33,9 +33,9 @@
 
         <div class="row" style="padding: 100px;">
            <div class="col-md-12 text-center">
-               <h1 style="    font-size: 100px;font-weight: bold;color: #583b6b">نُورت</h1>
-               <p class="font-weight-bold mb-0" style="color: #707070">عیادتك عیادتنا ، وھدفنا نصیر جزء من نجاحكم</p>
-               <p class="font-weight-bold mb-0" style="color: #707070">أختر من القائمة الیمنى المھمة المطلوبة</p>
+               <h1 style="    font-size: 130px;font-weight: bold;color: #583b6b">نُورت</h1>
+               <p class="font-weight-bold mb-0" style="color: #707070;font-size: 18px">عيـادتك عیـادتنا ، وھـدفنا نصـیـر جزء من نجاحكم</p>
+               <p class="font-weight-bold mb-0" style="color: #707070;font-size: 18px">أختر من القائمة اليـمنى المھمة المطلوبة</p>
            </div>
         </div>
     </div>
