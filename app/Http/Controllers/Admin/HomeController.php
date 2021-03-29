@@ -96,7 +96,7 @@ class HomeController extends Controller
         foreach ($appointment->times as $key => $time) {
             if (isset($time['time']) and $time['time'] == Carbon::parse($reservation->appointment_time)->format('h:i a')) {
                 $appointmentTimes[$key]['status'] = 'reserved';
-                dd( $time['time']);
+//                dd( $time['time']);
                 break;
             }
         }
