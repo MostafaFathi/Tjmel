@@ -122,7 +122,10 @@ class PaymentController extends Controller
 
     private function saveAppointment($reservation)
     {
-        $appointment = Appointment::wheredate('date', Carbon::parse($reservation->appointment_date))->where('service_type', $reservation->service_type)->first();
+        $appointment = Appointment::wheredate('date', Carbon::parse($reservation->appointment_date))
+            ->where('clinic_id', $reservation->clinic_id)
+            ->where('service_id', $reservation->service_id)
+            ->where('service_type', $reservation->service_type)->first();
         $appointmentTimes = $appointment->times;
         foreach ($appointment->times as $key => $time) {
             if (isset($time['time']) and $time['time'] == Carbon::parse($reservation->appointment_time)->format('h:i a')) {
