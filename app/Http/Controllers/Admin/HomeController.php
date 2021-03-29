@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Clinic\Clinic;
 use App\Models\Clinic\ClinicRequest;
 use App\Models\Order\Order;
+use App\Models\Service\Appointment;
 use App\Models\Service\Offer;
 use App\Models\Service\Reserve;
 use App\Models\Service\Service;
@@ -85,5 +86,21 @@ class HomeController extends Controller
     {
         Auth::logout();
         return redirect('login/');
+    }
+
+    public function test($id)
+    {
+        $reservation = Reserve::find($id);
+        $appointment = Appointment::wheredate('date', Carbon::parse($reservation->appointment_date))->where('service_type', $reservation->service_type)->first();
+        $appointmentTimes = $appointment->times;
+        foreach ($appointment->times as $key => $time) {
+            if (isset($time['time']) and $time['time'] == Carbon::parse($reservation->appointment_time)->format('h:i a')) {
+                $appointmentTimes[$key]['status'] = 'reserved';
+                dd( $time['time']);
+                break;
+            }
+        }
+        dd($appointmentTimes);
+        $appointment->times = $appointmentTimes;
     }
 }

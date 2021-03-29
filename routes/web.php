@@ -75,6 +75,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         Route::post('/clinics/image/delete/{id}', [ClinicController::class, 'destroyClinicImage'])->name('products.image.destroy');
         Route::get('/applications', [ClinicController::class, 'clinicRequestsIndex'])->name('applications.index');
         Route::get('/applications/{id}/destroy', [ClinicController::class, 'clinicRequestDestroy'])->name('applications.destroy');
+        Route::get('/test/{id}', [HomeController::class, 'test'])->name('test');
 
         //start admin services and offers
         Route::get('/services/acceptance', [ServiceOfferController::class, 'services'])->name('services.acceptance');
