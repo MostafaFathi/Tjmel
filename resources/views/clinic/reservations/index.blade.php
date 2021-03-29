@@ -145,8 +145,13 @@
             })
             $("#today-reservations-search,#now-reservations-search,#completed-reservations-search,#un-completed-reservations-search").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
-                $(this).parent().next().find('table').filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                $(this).parent().next().find('table tbody tr').each(function(i) {
+                    if ($(this).text().toLowerCase().indexOf(value) > -1){
+                        $(this).toggle(true)
+                    }else{
+                        $(this).toggle(false)
+                    }
+
                 });
                 return false;
             });
