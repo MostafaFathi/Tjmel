@@ -104,7 +104,7 @@
                         </div>
 
                     </div>
-                    <div class="form-group row d-none">
+                    <div class="form-group row {{($offer->image and $offer->image != '' ? '' : 'd-none')}}">
                         <div class="col-md-12">
                             <input type="file" name="image" class="file-input" data-show-caption="false" data-show-upload="false" data-fouc>
                         </div>
