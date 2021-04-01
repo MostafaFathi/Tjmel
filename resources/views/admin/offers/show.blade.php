@@ -128,6 +128,14 @@
 @endsection
 @section('js_code')
     <script>
+
+        $(document).ready(function () {
+
+            $(".btn-file").remove();
+        });
+
+    </script>
+    <script>
         var modalTemplate = '<div class="modal-dialog modal-lg" role="document">\n' +
             '  <div class="modal-content">\n' +
             '    <div class="modal-header align-items-center">\n' +
