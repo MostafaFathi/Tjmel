@@ -104,12 +104,12 @@
                         </div>
 
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row d-none">
                         <div class="col-md-12">
                             <input type="file" name="image" class="file-input" data-show-caption="false" data-show-upload="false" data-fouc>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group d-none">
 
                         <button class="btn btn-primary"  style="background-color: #2196f3;" name="save_type" value="save_only">حفظ </button>
                         <button class="btn btn-success" style="background-color: #4caf50;" name="save_type" value="save_and_accept">حفظ وموافقة</button>

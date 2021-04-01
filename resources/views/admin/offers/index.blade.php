@@ -76,7 +76,7 @@
                                 <div class="dropdown-menu dropdown-menu-lg">
                                 <a class="dropdown-item " data-placement="top" title="Show"
                                    href="{{route('admin.offers.show',$offer->id)}}"
-                                  ><i class="icon-eye"></i>عرض تفاصيل العرض وتحديث الصورة</a>
+                                  ><i class="icon-eye"></i>عرض تفاصيل العرض </a>
                                 <a class="dropdown-item " data-placement="top" title="تعديل"
                                    href="{{route('admin.offers.edit',$offer->id)}}"
                                   ><i class="icon-pencil7"></i>تعديل</a>
