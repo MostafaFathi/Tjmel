@@ -78,6 +78,16 @@
             margin-right: 10px;
             margin-top: 4px;
         }
+        .sidebar-mobile-main-toggle {
+            color: #583b6b !important;
+        }
+        .sidebar-mobile-toggler {
+            background-color: #583b6b !important;
+            color: rgb(252 169 128) !important;
+        }
+        .sidebar-mobile-toggler a{
+            color: rgb(252 169 128) !important;
+        }
 
         .sidebar-dark .nav-sidebar .nav-item-header, .sidebar-light .card[class*=bg-]:not(.bg-light):not(.bg-white):not(.bg-transparent) .nav-sidebar .nav-item-header {
             color: #707070 !important;
@@ -113,17 +123,17 @@
         }
 
         .navbar-expand-md .navbar-brand {
-            min-width: 16.9rem !important;
+            min-width: 15.9rem !important;
             border-bottom: 0;
         }
 
         .sidebar:not(.sidebar-component) .sidebar-content {
             padding-top: 40px;
             position: inherit !important;
-            top: auto !important;
-            bottom: auto !important;
+            /*top: unset  !important;*/
+            /*bottom: unset  !important;*/
             width: inherit !important;
-            overflow-y: hidden !important;
+            overflow-y: auto !important;
         }
 
         .nav-sidebar .nav-item:not(.nav-item-divider) {

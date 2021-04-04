@@ -34,14 +34,14 @@
                 @endif
 
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-lg-8 col-md-8 col-sm-12">
                         <form class="rated" action="{{route('offers.store')}}" method="post"
                               enctype="multipart/form-data">
 
 
                             {{csrf_field()}}
                             <div class="row">
-                                <div class="col-3 " style="margin: 0 auto">
+                                <div class="col-lg-3 col-md-3 col-sm-12 " style="margin: 0 auto">
                                     <div class="form-group">
                                         <label class="control-label" for="name">إختر القسم المناسب للعرض</label>
                                         <select name="section_id" required id="section_id" class="form-control"
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6 " style="margin: 0 auto">
+                                <div class="col-lg-6 col-md-6 col-sm-12 " style="margin: 0 auto">
                                     <div class="form-group">
                                         <label class="control-label" for="name">أكتب اسم العرض</label>
                                         <input type="text" class="form-control" required name="name_ar" id="name_ar"
@@ -66,26 +66,26 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-2"></div>
-                                <div class="col-4 " style="margin: 0 auto">
+                                <div class="col-lg-2 col-md-2 col-sm-1"></div>
+                                <div class="col-lg-4 col-md-4 col-sm-5 " style="margin: 0 auto">
                                     <div class="form-group">
                                         <label class="control-label" for="name">أكتب تفاصيل العرض</label>
                                         <textarea name="description_ar" class="form-control" id="description_ar"
                                                   rows="5">{{old('description_ar')}}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-4 " style="margin: 0 auto">
+                                <div class="col-lg-4 col-md-4 col-sm-5 " style="margin: 0 auto">
                                     <div class="form-group">
                                         <label class="control-label" for="name">أكتب تعليمات العرض</label>
                                         <textarea name="instructions_ar" class="form-control" id="instructions_ar"
                                                   rows="5">{{old('instructions_ar')}}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-2"></div>
+                                <div class="col-lg-2 col-md-2 col-sm-1"></div>
 
                             </div>
                             <div class="row">
-                                <div class="col-3 " style="margin: 0 auto">
+                                <div class="col-lg-3 col-md-3 col-sm-12 " style="margin: 0 auto">
                                     <div class="form-group">
                                         <label class="control-label" for="name">أكتب سعر العرض قبل</label>
                                         <input type="number" class="form-control" required id="price_before"
@@ -96,7 +96,7 @@
 
                             </div>
                             <div class="row">
-                                <div class="col-3 " style="margin: 0 auto">
+                                <div class="col-lg-3 col-md-3 col-sm-12 " style="margin: 0 auto">
                                     <div class="form-group">
                                         <label class="control-label" for="name">أكتب سعر العرض بعد</label>
                                         <input type="number" class="form-control" required id="price_after"
@@ -107,7 +107,7 @@
 
                             </div>
                             <div class="row">
-                                <div class="col-3 " style="margin: 0 auto">
+                                <div class="col-lg-3 col-md-3 col-sm-12 " style="margin: 0 auto">
                                     <div class="form-group">
                                         <button class="btn btn-outline-secondary">إضافة عرض</button>
                                     </div>
@@ -121,7 +121,7 @@
 
                         </form>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 col-md-3 col-sm-12">
                         <img style="width: 350px;" src="{{asset('portal/assets/images/sample.jpg')}}" alt="">
                     </div>
                 </div>

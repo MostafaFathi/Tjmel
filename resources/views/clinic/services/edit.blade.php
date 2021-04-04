@@ -34,14 +34,14 @@
                 @endif
 
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-lg-8 col-md-8 col-sm-12">
                         <form class="form-update" action="{{route('services.update',0)}}" method="post"
                               enctype="multipart/form-data">
                             @method('put')
 
                             {{csrf_field()}}
                             <div class="row">
-                                <div class="col-3 " style="margin: 0 auto">
+                                <div class="col-lg-3 col-md-3 col-sm-12 " style="margin: 0 auto">
                                     <div class="form-group">
                                         <label class="control-label" for="name">إختر الخدمة</label>
                                         <select name="service_id" required id="service_id"
@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-3 " style="margin: 0 auto">
+                                <div class="col-lg-3 col-md-3 col-sm-12 " style="margin: 0 auto">
                                     <div class="form-group">
                                         <label class="control-label" for="name">عدل قسم الخدمة</label>
                                         <select name="section_id" required id="section_id" class="form-control"
@@ -76,7 +76,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6 " style="margin: 0 auto">
+                                <div class="col-lg-6 col-md-6 col-sm-12 " style="margin: 0 auto">
                                     <div class="form-group">
                                         <label class="control-label" for="name">عدل اسم الخدمة</label>
                                         <input type="text" class="form-control" required name="name_ar" id="name_ar"
@@ -85,26 +85,26 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-2"></div>
-                                <div class="col-4 " style="margin: 0 auto">
+                                <div class="col-lg-2 col-md-2 col-sm-1"></div>
+                                <div class="col-lg-4 col-md-4 col-sm-5 " style="margin: 0 auto">
                                     <div class="form-group">
                                         <label class="control-label" for="name">عدل تفاصيل الخدمة</label>
                                         <textarea name="description_ar" class="form-control" id="description_ar"
                                                   rows="5">{{old('description_ar')}}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-4 " style="margin: 0 auto">
+                                <div class="col-lg-4 col-md-4 col-sm-5 " style="margin: 0 auto">
                                     <div class="form-group">
                                         <label class="control-label" for="name">عدل تعليمات الخدمة</label>
                                         <textarea name="instructions_ar" class="form-control" id="instructions_ar"
                                                   rows="5">{{old('instructions_ar')}}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-2"></div>
+                                <div class="col-lg-2 col-md-2 col-sm-1"></div>
 
                             </div>
                             <div class="row">
-                                <div class="col-3 " style="margin: 0 auto">
+                                <div class="col-lg-3 col-md-3 col-sm-12 " style="margin: 0 auto">
                                     <div class="form-group">
                                         <label class="control-label" for="name">عدل سعر الخدمة</label>
                                         <input type="number" class="form-control" required id="price" name="price"
@@ -114,7 +114,7 @@
 
                             </div>
                             <div class="row">
-                                <div class="col-3 " style="margin: 0 auto">
+                                <div class="col-lg-3 col-md-3 col-sm-12 " style="margin: 0 auto">
                                     <div class="form-group">
                                         <button class="btn btn-outline-secondary">حفظ</button>
                                     </div>
@@ -128,7 +128,7 @@
 
                         </form>
                     </div>
-                    <div class="col-3">
+                    <div class="col-lg-3 col-md-3 col-sm-12">
                         <img style="width: 350px;" src="{{asset('portal/assets/images/sample.jpg')}}" alt="">
                     </div>
                 </div>

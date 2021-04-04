@@ -67,16 +67,16 @@
                     </div>
                     <div class="row" style="    background: white;border-radius: 30px;border: 1px solid #c1c1c1;">
                         <div class="row" style="padding: 18px;">
-                            <div class="col-1"></div>
-                            <div class="col-11 " >
+                            <div class="col-lg-1 col-md-1 col-sm-12"></div>
+                            <div class="col-lg-11 col-md-11 col-sm-12 " >
                                 <div class="row" style="margin: 0 auto;height: 70px">
-                                    <div class="col-3" style="    height: inherit;"></div>
-                                    <ul class="month-header  col-5">
+                                    <div class="col-lg-3 col-md-3 col-sm-1" style="    height: inherit;"></div>
+                                    <ul class="month-header col-lg-5 col-md-5 col-sm-10">
                                         <li><a href="#" class="click-month next" month="{{$nextMonth}}"><i style="font-size: 28px;color: #71758e;" class="icon-arrow-left5"></i></a> </li>
                                         <li class="current-month" month="{{$currentMonth}}"> {{$currentMonthName}} </li>
                                         <li><a href="#" class="click-month prev" month="{{$prevMonth}}"><i style="font-size: 28px;color: #71758e;" class="icon-arrow-right5"></i></a> </li>
                                     </ul>
-                                    <div class="col-3"  style="    height: inherit;"></div>
+                                    <div class="col-lg-3 col-md-3 col-sm-1"  style="    height: inherit;"></div>
                                 </div>
                                 <input type="hidden" name="current_month" class="current-month-input" value="{{$currentMonth}}">
                                 <div class="row monthList">
@@ -105,7 +105,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-3 " style="margin: 0 auto">
+                            <div class="col-lg-3 col-md-3 col-sm-12 " style="margin: 0 auto">
                                 <div class="form-group">
                                     <button class="btn btn-orange" style="">حفظ</button>
                                 </div>
