@@ -13,7 +13,7 @@ class AddWalletFromAdminToAppUsers extends Migration
      */
     public function up()
     {
-        Schema::table('admin_to_app_users', function (Blueprint $table) {
+        Schema::table('app_users', function (Blueprint $table) {
             $table->float('wallet_from_admin')->default(0);
 
         });
