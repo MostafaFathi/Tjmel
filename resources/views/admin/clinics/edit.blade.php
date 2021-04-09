@@ -278,7 +278,7 @@
             '{{$clinic->logo}}',
         ];
         options2['initialPreviewConfig'] =  [
-            {caption: 'Image',  key: 1, url: '{{$clinic->logo}}', showDrag: false},
+            {caption: 'Image',  key: 1, url: '{{url('admin/clinics/logo/delete').'/'.$clinic->id}}', showDrag: false},
         ];
         @endisset
         $('.file-input-logo').fileinput(options2);

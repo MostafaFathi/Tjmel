@@ -215,6 +215,17 @@ class ClinicController extends Controller
         }
         return true;
     }
+    public function destroyClinicLogo(Request $request, $clinic_id)
+    {
+        $clinic = Clinic::find($clinic_id);
+        if ($clinic->logo) {
+            $clinic->logo = null;
+            Storage::delete($clinic->logo);
+            $clinic->save();
+
+        }
+        return true;
+    }
 
     public function clinicRequestsIndex()
     {

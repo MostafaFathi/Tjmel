@@ -15,6 +15,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'admin/clinics/image/delete/*',
+        'admin/clinics/logo/delete/*',
         'order/callback'
     ];
 }

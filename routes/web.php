@@ -93,6 +93,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         Route::post('/app_users/{id}/wallet', [AppUserController::class, 'changeWallet'])->name('app_users.wallet.change');
 
         Route::post('/reservations/{id}/status/{status?}', [ReservationController::class, 'changeStatus'])->name('reservations.status');
+        Route::post('/clinics/logo/delete/{id}', [ClinicController::class,'destroyClinicLogo'])->name('clinic.logo.destroy');
 
         //end admin services and offers
 
