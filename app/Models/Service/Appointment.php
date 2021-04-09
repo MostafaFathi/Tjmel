@@ -23,4 +23,17 @@ class Appointment extends Model
     {
         return Carbon::parse($this->date)->getTranslatedDayName();
     }
+
+    public function getTimesAttribute($value)
+    {
+        $value = json_decode($value,true);
+        $newArray = [];
+        if ($value != null and !empty($value)){
+            foreach ($value  as $key => $item) {
+                if ($item['status'] != "reserved")
+                    array_push($newArray,$item);
+            }
+        }
+        return $newArray;
+    }
 }

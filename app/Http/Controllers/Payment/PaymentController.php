@@ -90,7 +90,7 @@ class PaymentController extends Controller
             $reservation->remained_value = $reservation->offer_price_after - $advance_payment;
 
         $reservation->paid_value = $advance_payment;
-
+        $reservation->status = 5;
         $reservation->save();
 
         $appointment = $this->saveAppointment($reservation);

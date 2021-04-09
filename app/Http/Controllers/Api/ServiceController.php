@@ -19,7 +19,7 @@ class ServiceController extends Controller
     }
     public function showServicesByPrice()
     {
-        $perPage = request('per_page') ?? 10;
+        $perPage = request('per_page') ?? 1000;
         $services = Service::where('status',1)->orderBy('price','asc')->paginate($perPage);
         return response()->json(['data' => $services], 200);
     }
@@ -34,7 +34,7 @@ class ServiceController extends Controller
         $validator = Validate::validateRequest(request(), $rules, $messages);
         if ($validator !== 'valid') return $validator;
 
-        $perPage = request('per_page') ?? 10;
+        $perPage = request('per_page') ?? 1000;
         $location = $this->getLocationLongAlt();
 
         $city_name = $location['city_name'] ?? '';

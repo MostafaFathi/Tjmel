@@ -32,7 +32,7 @@ class ClinicController extends Controller
         $validator = Validate::validateRequest(request(), $rules, $messages);
         if ($validator !== 'valid') return $validator;
 
-        $perPage = request('per_page') ?? 10;
+        $perPage = request('per_page') ?? 1000;
 
         $location = $this->getLocationLongAlt();
         $city_name = '%' . $location['city_name'] . '%' ?? '';
@@ -63,7 +63,7 @@ class ClinicController extends Controller
         if ($validator !== 'valid') return $validator;
 
 
-        $perPage = request('per_page') ?? 10;
+        $perPage = request('per_page') ?? 1000;
         $location = $this->getLocationLongAlt();
 
         $city_name = $location['city_name'] ?? '';
