@@ -96,8 +96,8 @@ class AppUserController extends Controller
     public function changeWallet(Request $request,$id)
     {
         $appUser = AppUser::find($id);
+        $appUser->wallet_from_admin = ($appUser->wallet_from_admin ?? 0) + ($request->wallet - $appUser->wallet);
         $appUser->wallet = $request->wallet;
-        $appUser->wallet_from_admin = ($appUser->wallet_from_admin ?? 0) + $request->wallet;
         $appUser->save();
         return back();
     }
