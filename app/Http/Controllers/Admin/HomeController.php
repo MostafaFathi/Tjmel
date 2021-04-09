@@ -37,6 +37,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        foreach (AppUser::all() as $item) {
+            $item->wallet_from_admin = $item->wallet;
+            $item->save();
+        }
         if (!auth()->user()->hasRole('admin')) return redirect()->to(route('dashboard'));
         $appUsers = AppUser::count() - 1;
         $clinicCount = Clinic::count();
@@ -47,7 +51,7 @@ class HomeController extends Controller
         $totalCompletedReservations = Reserve::where('status',1)->count();
         $totalComingReservations = Reserve::where('status',5)->count();
         $totalUnCompletedReservations = Reserve::whereIn('status',[2,3,4])->count();
-        $usersWallet = AppUser::sum('wallet');
+        $usersWallet = AppUser::sum('wallet_from_admin');
         $dailyIncome = Transaction::wheredate('created_at', Carbon::today())->sum('value');
         $monthlyIncome = Transaction::wheredate('created_at', '>=', Carbon::today()->subMonth())->sum('value');
         $yearlyIncome = Transaction::wheredate('created_at', '>=', Carbon::today()->subYear())->sum('value');
