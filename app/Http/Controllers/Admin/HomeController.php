@@ -37,10 +37,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        foreach (AppUser::all() as $item) {
-            $item->wallet_from_admin = $item->wallet;
-            $item->save();
-        }
+
         if (!auth()->user()->hasRole('admin')) return redirect()->to(route('dashboard'));
         $appUsers = AppUser::count() - 1;
         $clinicCount = Clinic::count();
