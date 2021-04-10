@@ -10,7 +10,7 @@
             @for($i = 0;$i < (5 - round($clinic->rating));$i++)
                 <i class="icon-star-empty3" style="color: #cdcdcd;font-size: 22px"></i>
             @endfor
-            <span class="font-weight-bold">{{ ($clinic->rating / 5) * 100 }} %</span>
+            <span class="font-weight-bold">{{ number_format(($clinic->rating / 5) * 100,2) }} %</span>
 
             <div></div>
         </div>

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Validate;
 use App\Http\Controllers\Controller;
 use App\Models\Clinic\Clinic;
 use App\Models\Clinic\ClinicRequest;
-use App\Models\Order\Order;
+use App\Models\Clinic\Rate;
+use App\Models\Clinic\RateCode;
 use App\Models\Service\Appointment;
 use App\Models\Service\Offer;
 use App\Models\Service\Reserve;
@@ -26,7 +28,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
 
     }
 
@@ -44,10 +46,10 @@ class HomeController extends Controller
         $clinicRequestCount = ClinicRequest::count();
         $services = Service::count();
         $offers = Offer::count();
-        $totalReservations = Reserve::where('status','!=',0)->count();
-        $totalCompletedReservations = Reserve::where('status',1)->count();
-        $totalComingReservations = Reserve::where('status',5)->count();
-        $totalUnCompletedReservations = Reserve::whereIn('status',[2,3,4])->count();
+        $totalReservations = Reserve::where('status', '!=', 0)->count();
+        $totalCompletedReservations = Reserve::where('status', 1)->count();
+        $totalComingReservations = Reserve::where('status', 5)->count();
+        $totalUnCompletedReservations = Reserve::whereIn('status', [2, 3, 4])->count();
         $usersWallet = AppUser::sum('wallet_from_admin');
         $dailyIncome = Transaction::wheredate('created_at', Carbon::today())->sum('value');
         $monthlyIncome = Transaction::wheredate('created_at', '>=', Carbon::today()->subMonth())->sum('value');
@@ -63,18 +65,19 @@ class HomeController extends Controller
                 $itemArray['daily'] = $income->where('clinic_id', $income->clinic_id)->wheredate('created_at', Carbon::today())->sum('value');
                 $itemArray['monthly'] = $income->where('clinic_id', $income->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subMonth())->sum('value');
                 $itemArray['yearly'] = $income->where('clinic_id', $income->clinic_id)->wheredate('created_at', '>=', Carbon::today()->subYear())->sum('value');
-                $itemArray['totalReservations'] = Reserve::where('clinic_id', $income->clinic_id)->where('status','!=',0)->count();
-                $itemArray['totalComingReservations'] = Reserve::where('clinic_id', $income->clinic_id)->where('status',5)->count();
-                $itemArray['completedReservations'] = Reserve::where('clinic_id', $income->clinic_id)->where('status',1)->count();
-                $itemArray['unCompletedReservations'] = Reserve::where('clinic_id', $income->clinic_id)->whereIn('status',[2,3,4])->count();
+                $itemArray['totalReservations'] = Reserve::where('clinic_id', $income->clinic_id)->where('status', '!=', 0)->count();
+                $itemArray['totalComingReservations'] = Reserve::where('clinic_id', $income->clinic_id)->where('status', 5)->count();
+                $itemArray['completedReservations'] = Reserve::where('clinic_id', $income->clinic_id)->where('status', 1)->count();
+                $itemArray['unCompletedReservations'] = Reserve::where('clinic_id', $income->clinic_id)->whereIn('status', [2, 3, 4])->count();
                 break;
             }
-            array_push($clinicIncomeArray, (object) $itemArray);
+            array_push($clinicIncomeArray, (object)$itemArray);
 
         }
         $clinicIncomeArray = (object)($clinicIncomeArray);
 
-        return view('admin.main.home', compact('appUsers','services','offers','totalReservations','totalCompletedReservations','totalUnCompletedReservations','totalComingReservations','usersWallet','clinicCount','clinicRequestCount', 'dailyIncome','monthlyIncome','yearlyIncome','clinicIncomeArray'));
+        $canceledReservation = Reserve::where('status',3)->where('advance_payment_status',0)->get();
+        return view('admin.main.home', compact('appUsers','canceledReservation', 'services', 'offers', 'totalReservations', 'totalCompletedReservations', 'totalUnCompletedReservations', 'totalComingReservations', 'usersWallet', 'clinicCount', 'clinicRequestCount', 'dailyIncome', 'monthlyIncome', 'yearlyIncome', 'clinicIncomeArray'));
     }
 
     public function telescope()
@@ -87,6 +90,49 @@ class HomeController extends Controller
     {
         Auth::logout();
         return redirect('login/');
+    }
+
+    public function rate()
+    {
+        $code = request('hash') ?? '';
+        $rateCode = RateCode::where('hash_code', $code)->first();
+        if (!$rateCode) return 'Code not found';
+
+        return view('rate', compact('rateCode'));
+    }
+    public function successRate()
+    {
+        return view('success_rate');
+    }
+
+    public function storeRate(Request $request)
+    {
+
+
+        $rules = [
+            'hash_code' => 'required',
+            'comment' => 'required',
+            'rate' => 'required|numeric|min:1|max:5',
+        ];
+        $validator = Validate::validateRequest($request, $rules);
+        if ($validator != 'valid') return $validator;
+
+
+        $rateCode = RateCode::where('hash_code', $request->hash_code)->first();
+        if (!$rateCode) return "Code not found";
+
+        $rate = new Rate();
+        $rate->clinic_id = $rateCode->clinic_id;
+        $rate->app_user_id = $rateCode->app_user_id;
+        $rate->comment = $request->comment;
+        $rate->rate = $request->rate;
+        $rate->save();
+
+        RateCode::destroy($rateCode->id);
+
+        return redirect(route('rate.success'));
+
+
     }
 
     public function test($id)

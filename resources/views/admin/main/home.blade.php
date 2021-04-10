@@ -260,6 +260,78 @@
                     </table>
                 </div>
             </div>
+ <div class="col-sm-12 col-xl-12">
+                <div class="card card-body  has-bg-image">
+                    <div class="table-responsive">
+                        <table class="table"  id="reservation_tb" style="">
+                            <thead>
+                            <tr>
+                                <th colspan="8">
+                                    حجوزات ملغية من العيادة
+                                </th>
+                            </tr>
+                            <tr>
+
+                                <th class="numeric" scope="col">رقم الحجز</th>
+                                <th class="" style="max-width: 250px" scope="col">اسم العميل</th>
+                                <th class="" scope="col">رقم الجوال</th>
+                                <th class="" style="max-width: 250px" scope="col">الخدمة</th>
+                                <th class="" scope="col">وقت وتاريخ الموعد</th>
+                                <th class="" scope="col">حالة الحجز</th>
+                                <th class="" style="max-width: 250px" scope="col" >سبب الالغاء</th>
+                                <th class="" scope="col">التحكم</th>
+
+                            </tr>
+
+                            </thead>
+
+                            <tbody>
+
+
+                            @foreach($canceledReservation as $reservation)
+                                <tr @if(session('id') === $reservation->id)class="bg-green" @endif>
+                                    <td>{{$reservation->display_id}}</td>
+                                    <td style="max-width: 250px">{{$reservation->app_user->name ?? '--'}}</td>
+                                    <td>{{$reservation->app_user->mobile ?? '--'}}</td>
+                                    <td style="max-width: 250px">{{$reservation->service->name_ar ?? '--'}}</td>
+                                    <td>{{\Carbon\Carbon::parse($reservation->appointment_date)->translatedFormat('l').': '.$reservation->appointment_date.' '.$reservation->appointment_time }}</td>
+
+                                    <td>
+                                        {{$reservation->status_name ?? ""}}
+                                    </td>
+                                    <td style="max-width: 250px">
+                                        {{$reservation->reason ?? "--"}}
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown">اتخذ اجراء</a>
+
+                                        <div class="dropdown-menu dropdown-menu-lg">
+                                            <a class="dropdown-item" data-placement="top" title="إرجاع العربون" href="{{route('reservations.advance_payment.status',['id'=>$reservation->id,'status'=>1])}}"
+                                              ><i class="icon-check2"></i>إرجاع العربون</a>
+                                            <a class="dropdown-item" data-placement="top" title="عدم إرجاع العربون" href="{{route('reservations.advance_payment.status',['id'=>$reservation->id,'status'=>2])}}"
+                                              ><i class="icon-cross3"></i>عدم إرجاع العربون</a>
+
+                                        </div>
+
+
+
+                                    </td>
+                                </tr>
+
+
+                            @endforeach
+                            @if(count($canceledReservation) == 0)
+                                <tr>
+                                    <td colspan="8" class="text-center">
+                                        لا يوجد بيانات
+                                    </td>
+                                </tr>
+                            @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
             @endhasanyrole
         </div>

@@ -93,6 +93,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         Route::post('/app_users/{id}/wallet', [AppUserController::class, 'changeWallet'])->name('app_users.wallet.change');
 
         Route::post('/reservations/{id}/status/{status?}', [ReservationController::class, 'changeStatus'])->name('reservations.status');
+        Route::get('/reservations/{id}/advance_payment/status/{status}', [ReservationController::class, 'advancePaymentReturnStatus'])->name('reservations.advance_payment.status');
         Route::post('/clinics/logo/delete/{id}', [ClinicController::class,'destroyClinicLogo'])->name('clinic.logo.destroy');
 
         //end admin services and offers
@@ -130,3 +131,6 @@ Route::group(['prefix' => 'payment', 'as'=>'payment.'], function () {
     Route::get('/success', [PaymentController::class, 'success'])->name('success');
     Route::get('/fail', [PaymentController::class, 'fail'])->name('fail');
 });
+Route::get('/rate', [HomeController::class, 'rate'])->name('rate');
+Route::get('/rate/success', [HomeController::class, 'successRate'])->name('rate.success');
+Route::post('/rate', [HomeController::class, 'storeRate'])->name('rate.store');
