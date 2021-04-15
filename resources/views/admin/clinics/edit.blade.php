@@ -77,7 +77,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="name">المدينة - الحي</label>
-                                <input name="city_district" id="city" readonly value="{{$clinic->city_district}}" class="city form-control" placeholder="يتم تحديدها عن طريق الخريطة بالاسفل" required>
+                                <input name="city_district" id="city"  value="{{$clinic->city_district}}" class="city form-control" placeholder="يتم تحديدها عن طريق الخريطة بالاسفل" required>
                             </div>
                             <div class="form-group d-none">
                                 <label class="control-label" for="name">الحي</label>

@@ -74,7 +74,7 @@ class Service extends Model
                 if (!$time['status']) {
                     $myTime = Carbon::createFromFormat('Y-m-d H:i a', $appointment->date->format('Y-m-d') . ' ' . $time['time']);
                     if ((Carbon::today()->format('Y-m-d') == $appointment->date->format('Y-m-d'))) {
-                        if ($myTime > Carbon::now()) {
+                        if ($myTime > Carbon::now()->addHour()) {
                             Carbon::setLocale('ar');
                             return Str::replaceFirst('من الآن','',$myTime->diffForHumans());
                         }
