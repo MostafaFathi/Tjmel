@@ -111,11 +111,9 @@ class ReservationController extends Controller
             $message = route('rate').'?hash='.$hashCode." لتقييم ".$clinic->name_ar." الرجاء الدخول لهذا الرابط ";
             if ($phoneNumber)
                 $this->send('966' . $phoneNumber, $message);
-
-            dd($message);
         }
 
-        return back()->with('message',$message);
+        return back();
     }
 
     public function advancePaymentReturnStatus(Request $request,$id,$status)
