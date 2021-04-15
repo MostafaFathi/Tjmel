@@ -31,6 +31,7 @@
 
                             <td>
                                 {{$reservation->status_name ?? ""}}
+                                <span style="display: none">{{request('message') ?? ''}}</span>
                             </td>
                             <td style="max-width: 250px">
                                 {{$reservation->reason ?? "--"}}
