@@ -113,7 +113,7 @@ class ReservationController extends Controller
                 $this->send('966' . $phoneNumber, $message);
         }
 
-        return back();
+        return back()->with('message',$message);
     }
 
     public function advancePaymentReturnStatus(Request $request,$id,$status)
