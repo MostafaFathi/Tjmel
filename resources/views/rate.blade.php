@@ -122,6 +122,15 @@
     </div>
 
     <div class="links">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         @if(isset($message) and $message == 'success')
             شكرا لتقييم العيادة
         @else
