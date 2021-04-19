@@ -109,13 +109,13 @@ class HomeController extends Controller
     {
 
 
-        $rules = [
+        $request->validate([
             'hash_code' => 'required',
             'comment' => 'required',
             'rate' => 'required|numeric|min:1|max:5',
-        ];
-        $validator = Validate::validateRequest($request, $rules);
-        if ($validator != 'valid') return $validator;
+        ]);
+//        $validator = Validate::validateRequest($request, $rules);
+//        if ($validator != 'valid') return $validator;
 
 
         $rateCode = RateCode::where('hash_code', $request->hash_code)->first();
