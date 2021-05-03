@@ -35,30 +35,11 @@
 
                 <div class="row">
                     <div class="col-lg-8 col-md-8 col-sm-12">
-                        <form class="form-update" action="{{route('services.update',0)}}" method="post"
+                        <form class="form-update" action="{{route('offers.update',$offer->id)}}" method="post"
                               enctype="multipart/form-data">
                             @method('put')
 
                             {{csrf_field()}}
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-12 " style="margin: 0 auto">
-                                    <div class="form-group">
-                                        <label class="control-label" for="name">إختر العرض</label>
-                                        <select name="offer_id" required id="offer_id" class="form-control offer_id"
-                                                style="background: #e6e6e6;">
-                                            <option value="">إختر</option>
-                                            @foreach($offers as $offer)
-                                                <option
-                                                    value="{{$offer->id}}" {{$offer->id == old('offer_id') ? 'selected' : ''}}>{{$offer->name_ar}}</option>
-                                            @endforeach
-                                        </select>
-
-                                    </div>
-                                    <div class="form-group">
-                                        <i class="icon-spinner9 spinner loader d-none"></i>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-12 " style="margin: 0 auto">
                                     <div class="form-group">
@@ -68,7 +49,7 @@
                                             <option value="">إختر</option>
                                             @foreach($sections as $section)
                                                 <option
-                                                    value="{{$section->id}}" {{$section->id == old('section_id') ? 'selected' : ''}}>{{$section->title_ar}}</option>
+                                                    value="{{$section->id}}" {{$section->id == $offer->section_id ? 'selected' : ''}}>{{$section->title_ar}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -79,7 +60,7 @@
                                     <div class="form-group">
                                         <label class="control-label" for="name">عدل اسم العرض</label>
                                         <input type="text" class="form-control" required name="name_ar" id="name_ar"
-                                               value="{{old('name_ar')}}">
+                                               value="{{$offer->name_ar}}">
                                     </div>
                                 </div>
                             </div>
@@ -89,14 +70,14 @@
                                     <div class="form-group">
                                         <label class="control-label" for="name">عدل تفاصيل العرض</label>
                                         <textarea name="description_ar" class="form-control" id="description_ar"
-                                                  rows="5">{{old('description_ar')}}</textarea>
+                                                  rows="5">{{$offer->description_ar}}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-5 " style="margin: 0 auto">
                                     <div class="form-group">
                                         <label class="control-label" for="name">عدل تعليمات العرض</label>
                                         <textarea name="instructions_ar" class="form-control" id="instructions_ar"
-                                                  rows="5">{{old('instructions_ar')}}</textarea>
+                                                  rows="5">{{$offer->instructions_ar}}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-1"></div>
@@ -108,7 +89,7 @@
                                         <label class="control-label" for="name">عدل سعر العرض قبل</label>
                                         <input type="number" class="form-control" required id="price_before"
                                                name="price_before"
-                                               value="{{old('price_before')}}">
+                                               value="{{$offer->price_before}}">
                                     </div>
                                 </div>
 
@@ -119,7 +100,7 @@
                                         <label class="control-label" for="name">عدل سعر العرض بعد</label>
                                         <input type="number" class="form-control" required id="price_after"
                                                name="price_after"
-                                               value="{{old('price_after')}}">
+                                               value="{{$offer->price_after}}">
                                     </div>
                                 </div>
 

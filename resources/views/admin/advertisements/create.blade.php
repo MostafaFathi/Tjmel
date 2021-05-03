@@ -56,41 +56,18 @@
 
 
                     {{csrf_field()}}
-                    <div class="row d-none">
+                    <div class="row ">
 
                         <div class="col-6 ">
 
                             <div class="form-group">
-                                <label class="control-label" for="name">Title (AR)</label>
-                                <input type="text" class="form-control" id="title_ar" name="title_ar" value="">
+                                <label class="control-label" for="clinic_id">العيادة</label>
+                                <select class="form-control selectpicker" id="clinic_id" name="clinic_id">
+                                    @foreach($clinics as $clinic)
+                                        <option value="{{$clinic->id}}">{{$clinic->name_ar}}</option>
+                                    @endforeach
+                                </select>
                             </div>
-
-
-                            <div class="form-group">
-                                <label class="control-label" for="name">Description (AR)</label>
-                                <textarea rows="2" class="form-control" name="description_ar"></textarea>
-                            </div>
-
-
-
-
-                        </div>
-                        <div class="col-6 ">
-
-
-
-                            <div class="form-group">
-                                <label class="control-label" for="name">Title (EN)</label>
-                                <input type="text" class="form-control" id="title_en" name="title_en" value="">
-                            </div>
-
-
-                            <div class="form-group">
-                                <label class="control-label" for="name">Description (EN)</label>
-                                <textarea rows="2" class="form-control" name="description_en"></textarea>
-                            </div>
-
-
 
                         </div>
 
@@ -98,7 +75,8 @@
 
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <input type="file" name="image" class="file-input" data-show-caption="false" data-show-upload="false" data-fouc>
+                            <input type="file" name="image" class="file-input" data-show-caption="false"
+                                   data-show-upload="false" data-fouc>
                         </div>
                     </div>
 
@@ -120,6 +98,7 @@
 @endsection
 @section('js_code')
     <script>
+        $('.selectpicker').select2();
         var modalTemplate = '<div class="modal-dialog modal-lg" role="document">\n' +
             '  <div class="modal-content">\n' +
             '    <div class="modal-header align-items-center">\n' +

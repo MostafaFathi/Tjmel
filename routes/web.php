@@ -82,10 +82,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         Route::get('/services/show/{id}', [ServiceOfferController::class, 'showService'])->name('admin.services.show');
         Route::get('/services/edit/{id}', [ServiceOfferController::class, 'editService'])->name('admin.services.edit');
         Route::put('/services/update/{id}', [ServiceOfferController::class, 'updateService'])->name('admin.services.update');
+        Route::delete('/services/delete/{id}', [ServiceOfferController::class, 'deleteService'])->name('admin.services.delete');
         Route::get('/offers/acceptance', [ServiceOfferController::class, 'offers'])->name('offers.acceptance');
         Route::get('/offers/show/{id}', [ServiceOfferController::class, 'showOffer'])->name('admin.offers.show');
         Route::get('/offers/edit/{id}', [ServiceOfferController::class, 'editOffer'])->name('admin.offers.edit');
         Route::put('/offers/update/{id}', [ServiceOfferController::class, 'updateOffer'])->name('admin.offers.update');
+        Route::delete('/offers/delete/{id}', [ServiceOfferController::class, 'deleteOffer'])->name('admin.offers.delete');
         Route::post('/clinics/services/approve/{id}', [ServiceOfferController::class, 'changeServiceStatus']);
         Route::post('/clinics/offers/approve/{id}', [ServiceOfferController::class, 'changeOfferStatus']);
         Route::delete('/clinics/rates/delete/{id}', [ServiceOfferController::class, 'deleteRate']);
@@ -95,6 +97,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         Route::post('/reservations/{id}/status/{status?}', [ReservationController::class, 'changeStatus'])->name('reservations.status');
         Route::get('/reservations/{id}/advance_payment/status/{status}', [ReservationController::class, 'advancePaymentReturnStatus'])->name('reservations.advance_payment.status');
         Route::post('/clinics/logo/delete/{id}', [ClinicController::class,'destroyClinicLogo'])->name('clinic.logo.destroy');
+        Route::get('/rates', [ClinicController::class,'rates'])->name('rates.index');
 
         //end admin services and offers
 

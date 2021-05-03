@@ -352,8 +352,8 @@
 
 
         function initialize() {
-            var stockholm = new google.maps.LatLng{{$clinic->location ?? $location}};
-            var parliament = new google.maps.LatLng{{$clinic->location ?? $location}};
+            var stockholm = new google.maps.LatLng{{$clinic->location ?? $location ?? ''}};
+            var parliament = new google.maps.LatLng{{$clinic->location ?? $location ?? ''}};
             $("#coordinates").val(stockholm);
             var mapOptions = {
                 zoom: 13,

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Clinic\Clinic;
 use App\Models\Clinic\ClinicRequest;
+use App\Models\Clinic\Rate;
 use App\Models\Data\City;
 use App\Models\Data\Setting;
 use App\Models\User\User;
@@ -22,7 +23,29 @@ class ClinicController extends Controller
      */
     public function index()
     {
-        $clinics = Clinic::paginate(15);
+        $clinics = Clinic::query();
+
+        if (request()->has('name_ar') and request()->get('name_ar') != '') {
+            $clinics = $clinics->where('name_ar', 'like', '%' . request()->get('name_ar') . '%');
+        }
+        if (request()->has('city_district') and request()->get('city_district') != '') {
+            $clinics = $clinics->where('city_district', 'like', '%' . request()->get('city_district') . '%');
+        }
+        if (request()->has('phone') and request()->get('phone') != '') {
+            $clinics = $clinics->where('phone', 'like', '%' . request()->get('phone') . '%');
+        }
+
+        if (request()->has('user_name') and request()->get('user_name') != '') {
+            $users = User::where('name', 'like', '%' . request()->get('user_name') . '%')->get()->pluck('id');
+            $clinics = $clinics->whereIn('user_id', $users);
+        }
+
+        if (request()->has('email') and request()->get('email') != '') {
+            $users = User::where('email', 'like', '%' . request()->get('email') . '%')->get()->pluck('id');
+            $clinics = $clinics->whereIn('user_id', $users);
+        }
+
+        $clinics = $clinics->paginate(15);
         return view('admin.clinics.index', compact('clinics'));
     }
 
@@ -58,10 +81,10 @@ class ClinicController extends Controller
         $clinic->phone = $request->phone;
         $clinic->full_address_ar = $request->full_address_ar;
         $clinic->location = $request->location;
-        $clinic->longitude = Str::replaceFirst('(', '', explode(', ', $request->location)[0]);
-        $clinic->latitude = Str::replaceLast(')', '', explode(', ', $request->location)[1]);
+        $clinic->longitude = Str::replaceFirst('(', '', explode(', ', $request->location)[0] ?? '');
+        $clinic->latitude = Str::replaceLast(')', '', explode(', ', $request->location)[1] ?? '') ;
         $clinic->city_id = $request->city_id ?? '1';
-        $clinic->district_id = $request->district_id ?? '5';
+        $clinic->district_id = $request->district_id ?? '1';
         $clinic->city_district = $request->city_district ?? '';
         $clinic->city_name = trim(explode('-', $request->city_district ?? '')[0] ?? '');
 
@@ -90,7 +113,8 @@ class ClinicController extends Controller
     public function show($id)
     {
         $clinic = Clinic::find($id);
-        return view('admin.clinics.show', compact('clinic'));
+        $location = Setting::getValue('location');
+        return view('admin.clinics.show', compact('clinic','location'));
     }
 
     /**
@@ -130,7 +154,7 @@ class ClinicController extends Controller
         $clinic->longitude = Str::replaceFirst('(', '', explode(', ', $request->location)[0]);
         $clinic->latitude = Str::replaceLast(')', '', explode(', ', $request->location)[1]);
         $clinic->city_id = $request->city_id ?? '1';
-        $clinic->district_id = $request->district_id ?? '5';
+        $clinic->district_id = $request->district_id ?? '1';
         $clinic->city_district = $request->city_district ?? '';
         $clinic->city_name = trim(explode('-', $request->city_district ?? '')[0] ?? '');
         if ($request->has('logo') and $request->logo != null) {
@@ -215,6 +239,7 @@ class ClinicController extends Controller
         }
         return true;
     }
+
     public function destroyClinicLogo(Request $request, $clinic_id)
     {
         $clinic = Clinic::find($clinic_id);
@@ -226,7 +251,14 @@ class ClinicController extends Controller
         }
         return true;
     }
+    public function rates()
+    {
+        $rates = Rate::query();
 
+
+        $rates = $rates->paginate(15);
+        return view('admin.rates.index', compact('rates'));
+    }
     public function clinicRequestsIndex()
     {
         $clinicRequests = ClinicRequest::orderBy('id', 'desc')->paginate(15);

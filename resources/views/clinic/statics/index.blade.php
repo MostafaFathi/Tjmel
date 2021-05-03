@@ -43,8 +43,17 @@
                         }
                     </style>
                     <div class="row">
-                        <div class="col-sm-6 col-xl-6">
-                            <div class="card card-body  has-bg-image" style="min-height: 150px;background-color: #aeadaf;" >
+                        <div class="col-sm-6 col-xl-12 text-right" style="padding: 25px;">
+                            <a class="btn btn-success" style="font-size: 18px;padding: 5px 30px;height: 50px;background: #4bec68;" target="_blank" href="https://api.whatsapp.com/send?phone=966569670978">
+                                <i class="fab fa-whatsapp" style="font-size: 32px;margin-top: -18px;"></i>
+                                <span style="margin-top: 8px;display: inline-block;">الدعم الفني المباشر</span>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-xl-4">
+                            <div class="card card-body  has-bg-image" style="min-height: 110px;background-color: #aeadaf;" >
                                 <div class="media">
                                     <div class="media-body">
                                         <h3 class="mb-0 text-size-28">{{number_format($dailyIncome??'0',2)}} ر.س.</h3>
@@ -57,8 +66,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-xl-6">
-                            <div class="card card-body bg-success-400 has-bg-image" style="min-height: 150px;">
+                        <div class="col-sm-6 col-xl-4">
+                            <div class="card card-body bg-success-400 has-bg-image" style="min-height: 110px;">
                                 <div class="media">
                                     <div class="media-body ">
                                         <h3 class="mb-0 text-size-28">{{number_format($monthlyIncome??'0',2)}} ر.س.</h3>
@@ -71,8 +80,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-xl-12">
-                            <div class="card card-body bg-danger-400 has-bg-image" style="min-height: 150px;">
+                        <div class="col-sm-12 col-xl-4">
+                            <div class="card card-body bg-danger-400 has-bg-image" style="min-height: 110px;">
                                 <div class="media">
                                     <div class="media-body">
                                         <h3 class="mb-0 text-size-28">{{number_format($yearlyIncome??'0',2)}} ر.س.</h3>
@@ -86,7 +95,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12 col-xl-12">
-                            <div class="card card-body bg-danger-400 has-bg-image" style="background: #bebebe;min-height: 150px;">
+                            <div class="card card-body bg-danger-400 has-bg-image" style="background: #bebebe;min-height: 110px;">
                                 <div class="media">
                                     <div class="media-body">
                                         <h3 class="mb-0 text-size-28">{{$totalReservations}} </h3>
@@ -100,7 +109,7 @@
                             </div>
                         </div>
                         <div class="col-sm-4 col-xl-4">
-                            <div class="card card-body  has-bg-image" style="min-height: 150px;background-color: #88d9e3;">
+                            <div class="card card-body  has-bg-image" style="min-height: 110px;background-color: #88d9e3;">
                                 <div class="media">
                                     <div class="media-body">
                                         <h3 class="mb-0 text-size-28">{{$comingReservations??'0'}}</h3>
@@ -114,7 +123,7 @@
                             </div>
                         </div>
                         <div class="col-sm-4 col-xl-4">
-                            <div class="card card-body  has-bg-image" style="min-height: 150px;background-color: #b1d095;">
+                            <div class="card card-body  has-bg-image" style="min-height: 110px;background-color: #b1d095;">
                                 <div class="media">
                                     <div class="media-body">
                                         <h3 class="mb-0 text-size-28">{{$completedReservations??'0'}}</h3>
@@ -128,7 +137,7 @@
                             </div>
                         </div>
                         <div class="col-sm-4 col-xl-4">
-                            <div class="card card-body  has-bg-image" style="min-height: 150px;    background-color: #bd8c98;">
+                            <div class="card card-body  has-bg-image" style="min-height: 110px;    background-color: #bd8c98;">
                                 <div class="media">
                                     <div class="media-body">
                                         <h3 class="mb-0 text-size-28">{{$unCompletedReservations??'0'}}</h3>

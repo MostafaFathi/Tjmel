@@ -103,6 +103,7 @@ class PaymentController extends Controller
         $transaction->reserve_id = $reservation->id;
         $transaction->clinic_id = $reservation->clinic_id;
         $transaction->value = $advance_payment;
+        $transaction->type = 'wallet';
         $transaction->description = 'pay to reserve from wallet';
         $transaction->save();
 
@@ -145,6 +146,7 @@ class PaymentController extends Controller
         $transaction->reserve_id = $reservation->id;
         $transaction->clinic_id = $reservation->clinic_id;
         $transaction->value = $amount;
+        $transaction->type = 'payment';
         $transaction->description = 'pay to reserve from tab payment';
         $transaction->save();
 

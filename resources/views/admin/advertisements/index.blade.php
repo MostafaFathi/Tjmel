@@ -45,6 +45,7 @@
                         <th class="d-none">Title (AR)</th>
                         <th class="d-none">Title (EN)</th>
                         <th class="">صورة الاعلان</th>
+                        <th class="">العيادة</th>
                         <th class="" style="width: 20%">التحكم</th>
 
                     </tr>
@@ -69,6 +70,7 @@
                                 @endif
                             </td>
 
+                            <td class="">{{$advertisement->clinic->name_ar ?? '--'}}</td>
 
 
 

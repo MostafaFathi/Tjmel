@@ -20,7 +20,12 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $reservations = Reserve::orderBy('id','desc')->where('status','!=',0)->get();
+        $reservations = Reserve::query();
+        if (request()->has('user') and request()->get('user') != '') {
+            $appUser = AppUser::where('mobile',request()->get('user'))->get()->pluck('id');
+            $reservations = $reservations->whereIn('app_user_id', $appUser);
+        }
+        $reservations = $reservations->orderBy('id','desc')->where('status','!=',0)->get();
         return view('admin.reservations.index',compact('reservations'));
     }
 

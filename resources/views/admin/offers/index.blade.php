@@ -80,10 +80,12 @@
                                 <a class="dropdown-item " data-placement="top" title="تعديل"
                                    href="{{route('admin.offers.edit',$offer->id)}}"
                                   ><i class="icon-pencil7"></i>تعديل</a>
-
+                                    <a class="dropdown-item" data-placement="top" title="حذف" href="javascript:void(0)"
+                                       onclick="delete_item('{{$offer->id}}','{{$offer->name}}')" data-toggle="modal"
+                                       data-target="#delete_item_modal"><i class="icon-cross3"></i>حذف</a>
                                 <a class="dropdown-item" data-placement="top" title="{{$offer->status == 0 or $offer->status == 2 ? 'موافقة ونشر' : 'رفض واخفاء'}}" href="javascript:void(0)"
                                    onclick="approve_item('{{$offer->id}}','{{$offer->name}}')" data-toggle="modal"
-                                   data-target="#delete_item_modal"><i class="{{$offer->status == 0 || $offer->status == 2 ? 'icon-check2' : 'icon-cross3'}} "></i>{{$offer->status == 0 || $offer->status == 2 ? 'موافقة ونشر' : 'رفض واخفاء'}}</a>
+                                   data-target="#approve_item_modal"><i class="{{$offer->status == 0 || $offer->status == 2 ? 'icon-check2' : 'icon-blocked'}} "></i>{{$offer->status == 0 || $offer->status == 2 ? 'موافقة ونشر' : 'رفض واخفاء'}}</a>
 
                                 </div>
 
@@ -105,8 +107,41 @@
             </div>
         </div>
         <!-- /basic table -->
-        {{----}}
         <div id="delete_item_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="delete_form_delete" method="post" action="">
+                        @csrf
+                        {{ method_field('DELETE') }}
+                        <input name="id" id="item_id_delete" class="form-control" type="hidden">
+                        <input name="_method" type="hidden" value="DELETE">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">حذف العرض <span id="del_label_title_delete"></span>
+                            </h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <h4>تأكيد حذف العرض</h4>
+                            <p id="grup_title_delete"></p>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">اغلاق</button>
+                            <button type="submit" class="btn btn-danger waves-effect" id="delete_ur_deletel">حذف</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+
+
+
+        </div>
+
+        {{----}}
+        <div id="approve_item_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -151,7 +186,13 @@
 @section('js_code')
 
     <script>
-
+        function delete_item(id, title) {
+            $('#item_id_delete').val(id);
+            var url = "<?php echo e(url('admin/offers/delete')); ?>/" + id;
+            $('#delete_form_delete').attr('action', url);
+            $('#grup_title_delete').text(title);
+            $('#del_label_title_delete').html(title);
+        }
         function approve_item(id, title) {
             $('#item_id').val(id);
             var url = "{{url('admin/clinics/offers/approve')}}/" + id;

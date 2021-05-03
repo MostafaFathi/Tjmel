@@ -120,6 +120,9 @@
         .bg-danger-400 {
             background-color: #FFB045;
         }
+        .btn-outline-success{
+
+        }
         .card{
             border-radius: 15px;
         }

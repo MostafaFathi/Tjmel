@@ -3,6 +3,7 @@
 namespace App\Models\Advertisement;
 
 use App\Helpers\File;
+use App\Models\Clinic\Clinic;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +14,10 @@ class Advertisement extends Model
     protected $hidden = ['title_ar', 'title_en', 'image', 'description_ar', 'description_en', 'created_at', 'updated_at'];
     protected $appends = ['image_url'];
 
+    public function clinic()
+    {
+        return $this->belongsTo(Clinic::class);
+    }
     public function getImageUrlAttribute()
     {
         if ($this->image)

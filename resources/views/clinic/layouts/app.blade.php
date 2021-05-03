@@ -137,15 +137,17 @@
         }
 
         .nav-sidebar .nav-item:not(.nav-item-divider) {
-            box-shadow: 0px 1px 1px;
-            padding: 16px 5px;
+            box-shadow: 0px 0.4px 0.5px;
+            padding: 6px 0px;
             width: 145px;
             background: #fbfbfb;
             border-radius: 38px;
             margin-bottom: 6px;
             font-size: 14px !important;
         }
-
+        .nav-sidebar .nav-item:not(.nav-item-divider):last-child {
+            margin-bottom: 2px;
+        }
         .card {
             border: 0px !important;
             box-shadow: none !important;

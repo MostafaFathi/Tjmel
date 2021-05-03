@@ -140,6 +140,16 @@ class ServiceOfferController extends Controller
         Rate::destroy($id);
         return back();
     }
+    public function deleteService($id)
+    {
+        Service::destroy($id);
+        return back();
+    }
+    public function deleteOffer($id)
+    {
+        Offer::destroy($id);
+        return back();
+    }
 
 
 }

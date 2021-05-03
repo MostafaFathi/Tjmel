@@ -30,16 +30,22 @@
 
 
                 @hasanyrole('clinic')
+                <li class="nav-item {{request()->routeIs('reservations.index')?'active' :'' }}">
+                    <a href="{{route('reservations.index')}}"
+                       class="nav-link  ">
+                        <span>الحجوزات</span>
+                    </a>
+                </li>
                 <li class="nav-item  {{request()->routeIs('services.create')?'active' :'' }}">
                     <a href="{{route('services.create')}}"
                        class="nav-link ">
                         <span>إضافة خدمة</span>
                     </a>
                 </li>
-                <li class="nav-item  {{request()->routeIs('services.edit')?'active' :'' }}">
-                    <a href="{{route('services.edit',0)}}"
+                <li class="nav-item  {{request()->routeIs('services.index')?'active' :'' }}">
+                    <a href="{{route('services.index')}}"
                        class="nav-link ">
-                        <span>تعديل خدمة</span>
+                        <span>إدارة الخدمات</span>
                     </a>
                 </li>
                 <li class="nav-item {{request()->routeIs('offers.create')?'active' :'' }}">
@@ -48,24 +54,19 @@
                         <span>إضافة عرض</span>
                     </a>
                 </li>
-                <li class="nav-item  {{request()->routeIs('offers.edit')?'active' :'' }}">
-                    <a href="{{route('offers.edit',0)}}"
+                <li class="nav-item  {{request()->routeIs('offers.index')?'active' :'' }}">
+                    <a href="{{route('offers.index')}}"
                        class="nav-link ">
-                        <span>تعديل عرض</span>
+                        <span>إدارة العروض</span>
                     </a>
                 </li>
                 <li class="nav-item {{request()->routeIs('appointments.*')?'active' :'' }}">
                     <a href="{{route('appointments.index')}}"
                        class="nav-link  ">
-                        <span>التحكم بالمواعيد</span>
+                        <span>فتح المواعيد</span>
                     </a>
                 </li>
-                <li class="nav-item {{request()->routeIs('reservations.index')?'active' :'' }}">
-                    <a href="{{route('reservations.index')}}"
-                       class="nav-link  ">
-                        <span>عرض الحجوزات</span>
-                    </a>
-                </li>
+
                 <li class="nav-item {{request()->routeIs('statics')?'active' :'' }}">
                     <a href="{{route('statics')}}"
                        class="nav-link  ">

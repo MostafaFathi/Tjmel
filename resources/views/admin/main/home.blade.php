@@ -166,7 +166,7 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-6 col-xl-3">
+            <div class="col-sm-6 col-xl-4">
                 <div class="card card-body bg-blue-400 has-bg-image">
                     <div class="media">
                         <div class="media-body">
@@ -180,7 +180,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-xl-3">
+            <div class="col-sm-6 col-xl-4">
                 <div class="card card-body bg-success-400 has-bg-image">
                     <div class="media">
                         <div class="media-body ">
@@ -194,7 +194,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-xl-3">
+            <div class="col-sm-6 col-xl-4">
                 <div class="card card-body bg-danger-400 has-bg-image">
                     <div class="media">
                         <div class="media-body">
@@ -208,12 +208,26 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-xl-3">
+            <div class="col-sm-6 col-xl-6">
                 <div class="card card-body  has-bg-image" style="background: #38d038">
                     <div class="media">
                         <div class="media-body">
                             <h3 class="mb-0">{{$usersWallet??''}}</h3>
                             <span class="text-uppercase font-size-xs font-weight-bold">المبالغ المدفوعة</span>
+                        </div>
+
+                        <div class="ml-3 align-self-center">
+                            <i class="icon-cash icon-3x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-xl-6">
+                <div class="card card-body  has-bg-image" style="background: #38a0d0">
+                    <div class="media">
+                        <div class="media-body">
+                            <h3 class="mb-0">{{$usersPaidWallet??''}}</h3>
+                            <span class="text-uppercase font-size-xs font-weight-bold">المبالغ المصروفة</span>
                         </div>
 
                         <div class="ml-3 align-self-center">

@@ -29,6 +29,7 @@ class UserController extends Controller
     {
         $request->validate([
             'email' => 'email|required|unique:users',
+            'mobile' => 'nullable|unique:users,mobile,NULL,id',
             'name_ar' => 'required',
             'name_en' => 'required',
             'password' => 'required',
@@ -43,7 +44,7 @@ class UserController extends Controller
         if ($request->password) {
             $user->password = Hash::make($request->password);
         }
-        $user->mobile = $request->mobile ? $request->mobile : "";
+        $user->mobile = $request->mobile ? $request->mobile : null;
 
 
         $user->save();
@@ -91,7 +92,7 @@ class UserController extends Controller
         if ($request->password) {
             $user->password = Hash::make($request->password);
         }
-        $user->mobile = $request->mobile ? $request->mobile : "";
+        $user->mobile = $request->mobile ? $request->mobile : null;
 
 
 

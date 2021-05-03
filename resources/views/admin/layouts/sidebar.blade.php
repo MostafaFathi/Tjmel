@@ -104,13 +104,11 @@
                         <span>إدارة مستخدمي التطبيق</span>
                     </a>
                 </li>
-                @endhasanyrole
-                @hasanyrole('admin')
                 <li class="nav-item ">
-                    <a href="{{route('settings.edit',0)}}"
-                       class="nav-link  {{request()->routeIs('edit.*')?'active' :'' }}">
-                        <i class="icon-cog3"></i>
-                        <span> الاعدادات</span>
+                    <a href="{{route('rates.index')}}"
+                       class="nav-link  {{request()->routeIs('rates.*')?'active' :'' }}">
+                        <i class="icon-star-full2"></i>
+                        <span>إدارة التقييمات</span>
                     </a>
                 </li>
                 @endhasanyrole
@@ -118,6 +116,13 @@
                 <li class="nav-item-header">
                     <div class="text-uppercase font-size-xs line-height-xs">الاعدادات</div>
                     <i class="icon-menu" title="Admin"></i>
+                </li>
+                <li class="nav-item ">
+                    <a href="{{route('settings.edit',0)}}"
+                       class="nav-link  {{request()->routeIs('edit.*')?'active' :'' }}">
+                        <i class="icon-cog3"></i>
+                        <span> الاعدادات</span>
+                    </a>
                 </li>
                 <li class="nav-item ">
                     <a href="{{route('users.index')}}"

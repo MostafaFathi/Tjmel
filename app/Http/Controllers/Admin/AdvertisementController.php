@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Advertisement\Advertisement;
+use App\Models\Clinic\Clinic;
 use Illuminate\Http\Request;
 
 class AdvertisementController extends Controller
@@ -26,7 +27,8 @@ class AdvertisementController extends Controller
      */
     public function create()
     {
-        return view('admin.advertisements.create');
+        $clinics = Clinic::all();
+        return view('admin.advertisements.create',compact('clinics'));
     }
 
     /**
@@ -39,13 +41,14 @@ class AdvertisementController extends Controller
     {
         $request->validate([
             'image' => 'required',
+            'clinic_id' => 'required',
+        ],[
+            'image.required' => 'حقل الصورة مطلوب',
+            'clinic_id.required' => 'حصل العيادة مطلوب',
         ]);
 
         $advertisement = new Advertisement();
-        $advertisement->title_ar = $request->title_ar;
-        $advertisement->title_en = $request->title_en;
-        $advertisement->description_ar = $request->description_ar;
-        $advertisement->description_en = $request->description_en;
+        $advertisement->clinic_id = $request->clinic_id ?? '';
         if($request->has('image') and $request->image != null){
             $imageName = $request->image->store('public/advertisement');
             $advertisement->image = $imageName;
@@ -76,7 +79,8 @@ class AdvertisementController extends Controller
     public function edit($id)
     {
         $advertisement = Advertisement::find($id);
-        return view('admin.advertisements.edit', compact('advertisement'));
+        $clinics = Clinic::all();
+        return view('admin.advertisements.edit', compact('advertisement','clinics'));
     }
 
     /**
@@ -89,14 +93,13 @@ class AdvertisementController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'image' => 'required',
+            'clinic_id' => 'required',
+        ],[
+            'clinic_id.required' => 'حصل العيادة مطلوب',
         ]);
 
         $advertisement =  Advertisement::find($id);
-        $advertisement->title_ar = $request->title_ar;
-        $advertisement->title_en = $request->title_en;
-        $advertisement->description_ar = $request->description_ar;
-        $advertisement->description_en = $request->description_en;
+        $advertisement->clinic_id = $request->clinic_id ?? '';
         if($request->has('image') and $request->image != null){
             $imageName = $request->image->store('public/advertisement');
             $advertisement->image = $imageName;

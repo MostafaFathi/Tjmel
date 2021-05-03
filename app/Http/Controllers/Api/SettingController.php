@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\Validate;
 use App\Http\Controllers\Controller;
 use App\Models\Advertisement\Advertisement;
+use App\Models\Clinic\Clinic;
 use App\Models\Data\AboutUs;
 use App\Models\Data\Agreement;
 use App\Models\Data\Category;
@@ -21,21 +22,25 @@ class SettingController extends Controller
         $about_us = AboutUs::get()->first();
         return response()->json(['data' => $about_us], 200);
     }
+
     public function showAgreement()
     {
         $agreement = Agreement::get()->first();
         return response()->json(['data' => $agreement], 200);
     }
+
     public function showSettings()
     {
         $settings = Setting::get();
         return response()->json(['data' => $settings], 200);
     }
+
     public function showCities()
     {
         $cities = City::get();
         return response()->json(['data' => $cities], 200);
     }
+
     public function storeContactUs(Request $request)
     {
         $rules = [
@@ -71,9 +76,15 @@ class SettingController extends Controller
         $categories = Category::all();
         return response()->json(['data' => $categories], 200);
     }
+
     public function getAdvertisement()
     {
-        $advertisement = Advertisement::all();
-        return response()->json(['data' => $advertisement], 200);
+        $advertisements = Advertisement::with('clinic')->get();
+        $advertisements->each(function ($advertisement) {
+            $advertisement->clinic->makeHidden([
+                'rates',
+            ]);
+        });
+        return response()->json(['data' => $advertisements], 200);
     }
 }

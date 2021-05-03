@@ -33,7 +33,7 @@
         <!-- Basic table -->
         <div class="card">
             <div class="table-responsive">
-                <table class="table" id="reservation_tb" style="width: max-content;">
+                <table class="table" id="reservation_tb" style="{{count($reservations) > 0 ? 'width: max-content;' : ''}}">
                     <thead>
 
                     <tr>
@@ -44,6 +44,7 @@
                         <th class="" style="max-width: 250px">العيادة</th>
                         <th class="" style="max-width: 250px">الخدمة</th>
                         <th class="">وقت وتاريخ الحجز</th>
+                        <th class="">موعد الحجز</th>
                         <th class="">حالة الحجز</th>
                         <th class="" style="max-width: 250px">سبب الالغاء</th>
                         <th class="">التحكم</th>
@@ -63,6 +64,7 @@
                             <td style="max-width: 250px">{{$reservation->clinic->name_ar ?? '--'}}</td>
                             <td style="max-width: 250px">{{$reservation->service->name_ar ?? '--'}}</td>
                             <td>{{\Carbon\Carbon::parse($reservation->created_at)}}</td>
+                            <td>{{$reservation->appointment_date}} {{$reservation->appointment_time}}</td>
 
                             <td>
                                 {{$reservation->status_name ?? ""}}
@@ -103,7 +105,7 @@
                     @endforeach
                     @if(count($reservations) == 0)
                         <tr>
-                            <td colspan="6" class="text-center">
+                            <td colspan="10" class="text-center">
                                 لا يوجد بيانات
                             </td>
                         </tr>

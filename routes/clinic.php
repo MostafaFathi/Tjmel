@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Admin\ClinicController;
 use App\Http\Controllers\Admin\SectionController;
-use App\Http\Controllers\Admin\ServiceOfferController;
 use App\Http\Controllers\Clinic\AppointmentController;
 use App\Http\Controllers\Clinic\OfferController;
 use App\Http\Controllers\Clinic\ReservationController;
@@ -44,6 +43,9 @@ Route::group(['prefix' => 'clinic', 'middleware' => ['auth']], function () {
         Route::post('/reservations/{id}/status/{status?}', [ReservationController::class, 'changeStatus'])->name('reservations.status');
         Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
         Route::get('/statics', [HomeController::class, 'statics'])->name('statics');
+        Route::delete('/services/delete/{id}', [ServiceController::class, 'destroy'])->name('services.delete');
+        Route::delete('/offers/delete/{id}', [OfferController::class, 'destroy'])->name('offers.delete');
+
     });
 
     /* End Dashboard management routes */

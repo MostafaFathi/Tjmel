@@ -18,7 +18,7 @@ class VisitorsSeed extends Seeder
         AppUser::create([
             'id' => 10101010,
             'name' => "Guest",
-            'email' => 'Guest@tjmel.com',
+            'email' => 'Guest@tjmel-sa.com',
             'password' => Hash::make("123123123"),
             'account_type' => 1,
         ]);

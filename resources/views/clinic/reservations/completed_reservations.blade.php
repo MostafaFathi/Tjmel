@@ -13,9 +13,10 @@
             <th class="numeric">رقم الحجز</th>
             <th class="">اسم العميل</th>
             <th class="">رقم الجوال</th>
-            <th class="">المبلغ المدفوع</th>
+            <th class="">المبلغ المدفوع للعيادة</th>
             <th class="">الخدمة</th>
             <th class="">وقت وتاريخ الموعد</th>
+            <th class="">ملاحظات</th>
 
         </tr>
 
@@ -33,14 +34,16 @@
                 <td>{{$reservation->remained_value ?? '--'}}</td>
                 <td>{{$reservation->service_type == 'service' ? $reservation->service->name_ar ?? '--' : $reservation->offer->name_ar ?? '--'}}</td>
                 <td>{{\Carbon\Carbon::parse($reservation->appointment_date)->translatedFormat('l').': '.$reservation->appointment_date.' '.$reservation->appointment_time }}</td>
-
+                <td>
+                    {{$reservation->reason ?? '--'}}
+                </td>
 
             </tr>
 
         @endforeach
         @if(count($completedReservations) == 0)
             <tr>
-                <td colspan="6" class="text-center">
+                <td colspan="7" class="text-center">
                     لا يوجد بيانات
                 </td>
             </tr>

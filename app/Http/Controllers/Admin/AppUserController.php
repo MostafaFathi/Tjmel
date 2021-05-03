@@ -16,7 +16,18 @@ class AppUserController extends Controller
     public function index()
     {
         $pageCount = 15;
-        $appUsers = AppUser::where('id','!=','10101010')->paginate($pageCount);
+        $appUsers = AppUser::query();
+        if (request()->has('mobile') and request()->get('mobile') != '') {
+            $appUsers = $appUsers->where('mobile', 'like', '%' . request()->get('mobile') . '%');
+        }
+        if (request()->has('name') and request()->get('name') != '') {
+            $appUsers = $appUsers->where('name', 'like', '%' . request()->get('name') . '%');
+        }
+        if (request()->has('wallet') and request()->get('wallet') != '') {
+            $appUsers = $appUsers->where('wallet',  request()->get('wallet'));
+        }
+        $appUsers = $appUsers->where('id','!=','10101010')->paginate($pageCount);
+
         return view('admin.app_users.index',compact('appUsers','pageCount'));
 
     }

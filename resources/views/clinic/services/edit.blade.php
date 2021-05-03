@@ -35,31 +35,11 @@
 
                 <div class="row">
                     <div class="col-lg-8 col-md-8 col-sm-12">
-                        <form class="form-update" action="{{route('services.update',0)}}" method="post"
+                        <form class="form-update" action="{{route('services.update',$service->id)}}" method="post"
                               enctype="multipart/form-data">
                             @method('put')
 
                             {{csrf_field()}}
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-12 " style="margin: 0 auto">
-                                    <div class="form-group">
-                                        <label class="control-label" for="name">إختر الخدمة</label>
-                                        <select name="service_id" required id="service_id"
-                                                class="form-control service_id"
-                                                style="background: #e6e6e6;">
-                                            <option value="">إختر</option>
-                                            @foreach($services as $service)
-                                                <option
-                                                    value="{{$service->id}}" {{$service->id == old('service_id') ? 'selected' : ''}}>{{$service->name_ar}}</option>
-                                            @endforeach
-                                        </select>
-
-                                    </div>
-                                    <div class="form-group">
-                                        <i class="icon-spinner9 spinner loader d-none"></i>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-12 " style="margin: 0 auto">
                                     <div class="form-group">
@@ -69,7 +49,7 @@
                                             <option value="">إختر</option>
                                             @foreach($sections as $section)
                                                 <option
-                                                    value="{{$section->id}}" {{$section->id == old('section_id') ? 'selected' : ''}}>{{$section->title_ar}}</option>
+                                                    value="{{$section->id}}" {{$section->id == $service->section_id ? 'selected' : ''}}>{{$section->title_ar}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -80,7 +60,7 @@
                                     <div class="form-group">
                                         <label class="control-label" for="name">عدل اسم الخدمة</label>
                                         <input type="text" class="form-control" required name="name_ar" id="name_ar"
-                                               value="{{old('name_ar')}}">
+                                               value="{{$service->name_ar}}">
                                     </div>
                                 </div>
                             </div>
@@ -90,14 +70,14 @@
                                     <div class="form-group">
                                         <label class="control-label" for="name">عدل تفاصيل الخدمة</label>
                                         <textarea name="description_ar" class="form-control" id="description_ar"
-                                                  rows="5">{{old('description_ar')}}</textarea>
+                                                  rows="5">{{$service->description_ar}}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-5 " style="margin: 0 auto">
                                     <div class="form-group">
                                         <label class="control-label" for="name">عدل تعليمات الخدمة</label>
                                         <textarea name="instructions_ar" class="form-control" id="instructions_ar"
-                                                  rows="5">{{old('instructions_ar')}}</textarea>
+                                                  rows="5">{{$service->instructions_ar}}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-1"></div>
@@ -108,7 +88,7 @@
                                     <div class="form-group">
                                         <label class="control-label" for="name">عدل سعر الخدمة</label>
                                         <input type="number" class="form-control" required id="price" name="price"
-                                               value="{{old('price')}}">
+                                               value="{{$service->price}}">
                                     </div>
                                 </div>
 

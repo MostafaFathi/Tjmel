@@ -16,7 +16,8 @@ class OfferController extends Controller
      */
     public function index()
     {
-        //
+        $offers= auth()->user()->clinic->offers()->paginate(10);
+        return view('clinic.offers.index', compact('offers'));
     }
 
     /**
@@ -83,8 +84,9 @@ class OfferController extends Controller
     public function edit($id)
     {
         $sections = Section::all();
-        $offers = auth()->user()->clinic->offers;
-        return view('clinic.offers.edit',compact('sections','offers'));
+        $offer = auth()->user()->clinic->offers->where('id',$id)->first();
+        if (!$offer) abort(404);
+        return view('clinic.offers.edit',compact('sections','offer'));
     }
 
     /**
@@ -131,6 +133,11 @@ class OfferController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $offer = auth()->user()->clinic->offers->where('id',$id)->first();
+        if (!$offer) abort(404);
+
+        Offer::destroy($id);
+
+        return back()->with('success', 'تمت عملية الحذف بنجاح');
     }
 }

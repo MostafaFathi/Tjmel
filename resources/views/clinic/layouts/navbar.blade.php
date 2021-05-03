@@ -1,7 +1,7 @@
 <div class="navbar navbar-expand-md navbar-dark fixed-top">
 	<div class="navbar-brand  text-center" style="font-size: 18px;color: #6d6d6d">
     <h4 style="text-align: right;line-height: 1.0;padding-right: 25px;">لوحة تحكم العيادات</h4>
-        <h6 style="text-align: right;line-height: 1.0;padding-right: 25px;    color: #fca87e;">{{auth()->user()->clinic->name_ar}}</h6>
+        <h6 style="text-align: right;line-height: 1.0;padding-right: 25px;    color: #fca87e;font-weight: bold">{{auth()->user()->clinic->name_ar}}</h6>
 	</div>
 
 	<div class="d-md-none">
@@ -28,7 +28,7 @@
 
 
             <a href="/" class="d-inline-block">
-                <img src="{{asset('portal/assets/images/logo.svg')}}" alt="" style="    height: 70px;">
+                <img src="{{asset('portal/assets/images/logo.svg')}}" alt="" style="    height: 58px;">
             </a>
 
 

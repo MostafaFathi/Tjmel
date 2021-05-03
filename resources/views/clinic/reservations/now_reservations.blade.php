@@ -13,7 +13,7 @@
             <th class="numeric">رقم الحجز</th>
             <th class="">اسم العميل</th>
             <th class="">رقم الجوال</th>
-            <th class="">المبلغ المدفوع</th>
+            <th class="">المبلغ المتبقي</th>
             <th class="">الخدمة</th>
             <th class="">وقت وتاريخ الموعد</th>
             <th class="">حالة الحجز</th>
