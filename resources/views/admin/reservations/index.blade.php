@@ -57,7 +57,7 @@
 
 
                     @foreach($reservations as $reservation)
-                        <tr style="color:{{$reservation->status_color}}">
+                        <tr style="background-color:{{$reservation->status_color}}">
                             <td>{{$reservation->display_id}}</td>
                             <td style="max-width: 250px">{{$reservation->app_user->name ?? '--'}}</td>
                             <td>{{$reservation->app_user->mobile ?? '--'}}</td>
