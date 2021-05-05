@@ -43,7 +43,7 @@ class Reserve extends Model
 
     public function getStatusColorAttribute()
     {
-        return ['', '#82ee61', '#f58e8e', '#f58e8e', '#f58e8e','#f5cf8e'][$this->status];
+        return ['', '#d9ffce', '#ffd5d5', '#ffd5d5', '#ffd5d5','#fde4bd'][$this->status];
     }
 
     public function getAppointmentDateAttribute($value)
