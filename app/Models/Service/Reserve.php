@@ -14,7 +14,7 @@ class Reserve extends Model
 {
     use HasFactory;
 
-    protected $appends = ['clinic_name', 'service_name', 'service_price', 'offer_name', 'offer_price_before', 'offer_price_after', 'status_name','tip_image','clinic_location','day_name'];
+    protected $appends = ['clinic_name', 'service_name', 'service_price', 'offer_name', 'offer_price_before', 'offer_price_after', 'status_name','status_color','tip_image','clinic_location','day_name'];
     protected $hidden = ['created_at', 'updated_at','service','offer','clinic'];
 
     public function app_user()
@@ -39,6 +39,11 @@ class Reserve extends Model
     public function getStatusNameAttribute()
     {
         return ['جديد', 'مكتمل', 'غير مكتمل عدم حضور العميل', 'إلغاء من العيادة', 'إلغاء من العميل','تم الحجز'][$this->status];
+    }
+
+    public function getStatusColorAttribute()
+    {
+        return ['', '#82ee61', '#f58e8e', '#f58e8e', '#f58e8e','#f5cf8e'][$this->status];
     }
 
     public function getAppointmentDateAttribute($value)

@@ -70,14 +70,18 @@
                                     <div class="form-group">
                                         <label class="control-label" for="name">أكتب تفاصيل الخدمة</label>
                                         <textarea name="description_ar" class="form-control" id="description_ar"
-                                                  rows="5">{{old('description_ar')}}</textarea>
+                                                  rows="5">{{old('description_ar') ?? '📝 تفاصيل :
+أمسح من هنا واكتب تفاصيل الخدمة او العرض كما تريد ، ويفضل أن تكون بطريقة تسويقية تشوق العميل للحجز.'}}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-5" style="margin: 0 auto">
                                     <div class="form-group">
                                         <label class="control-label" for="name">أكتب تعليمات الخدمة</label>
                                         <textarea name="instructions_ar" class="form-control" id="instructions_ar"
-                                                  rows="5">{{old('instructions_ar')}}</textarea>
+                                                  rows="5">{{old('instructions_ar') ?? '⛔ تعليمات :
+▪️ عدم التعرض للشمس قبل وبعد جلسات الليزر .
+▪️ يجب إزالة الشعر بالشفرة قبل 24 أو 48 ساعة من موعد الجلسة.
+▪️ لاتضع اي كريمات او مرطبات او مواد عطرية على المنطقة قبل جلسة الليزر .'}}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-1"></div>
