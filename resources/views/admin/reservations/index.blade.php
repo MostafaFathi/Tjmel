@@ -62,14 +62,14 @@
                             <td style="max-width: 250px">{{$reservation->app_user->name ?? '--'}}</td>
                             <td>{{$reservation->app_user->mobile ?? '--'}}</td>
                             <td style="max-width: 250px">{{$reservation->clinic->name_ar ?? '--'}}</td>
-                            <td style="max-width: 250px">{{$reservation->service->name_ar ?? '--'}}</td>
+                            <td style="max-width: 200px">{{$reservation->service->name_ar ?? '--'}}</td>
                             <td>{{\Carbon\Carbon::parse($reservation->created_at)}}</td>
                             <td>{{$reservation->appointment_date}} {{$reservation->appointment_time}}</td>
 
                             <td>
                                 {{$reservation->status_name ?? ""}}
                             </td>
-                            <td style="max-width: 250px">
+                            <td style="max-width: 200px">
                                 {{$reservation->reason ?? "--"}}
                             </td>
                             <td>
