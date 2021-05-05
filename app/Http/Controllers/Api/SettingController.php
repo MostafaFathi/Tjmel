@@ -81,9 +81,10 @@ class SettingController extends Controller
     {
         $advertisements = Advertisement::with('clinic')->get();
         $advertisements->each(function ($advertisement) {
-            $advertisement->clinic->makeHidden([
-                'rates',
-            ]);
+            if ($advertisement->clinic)
+                $advertisement->clinic->makeHidden([
+                    'rates',
+                ]);
         });
         return response()->json(['data' => $advertisements], 200);
     }
