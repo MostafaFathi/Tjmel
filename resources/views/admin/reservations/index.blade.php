@@ -110,6 +110,13 @@
                             </td>
                         </tr>
                     @endif
+                    @if(count($reservations) > 0)
+                        <tr>
+                            <td colspan="10" class="text-center">
+                                {{ $reservations->links() }}
+                            </td>
+                        </tr>
+                    @endif
                     </tbody>
                 </table>
             </div>

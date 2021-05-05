@@ -25,7 +25,7 @@ class ReservationController extends Controller
             $appUser = AppUser::where('mobile',request()->get('user'))->get()->pluck('id');
             $reservations = $reservations->whereIn('app_user_id', $appUser);
         }
-        $reservations = $reservations->orderBy('id','desc')->where('status','!=',0)->get();
+        $reservations = $reservations->orderBy('id','desc')->where('status','!=',0)->paginate(15);
         return view('admin.reservations.index',compact('reservations'));
     }
 
