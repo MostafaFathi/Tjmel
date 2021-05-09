@@ -63,12 +63,12 @@
         }
 
         .sidebar-dark .nav-sidebar .nav-link:not(.disabled):hover, .sidebar-light .card[class*=bg-]:not(.bg-light):not(.bg-white):not(.bg-transparent) .nav-sidebar .nav-link:not(.disabled):hover {
-            color: #593B6B !important;
+            color: #d7d7d7 !important;
             background: transparent;
         }
 
         .sidebar-dark .nav-sidebar .nav-link, .sidebar-light .card[class*=bg-]:not(.bg-light):not(.bg-white):not(.bg-transparent) .nav-sidebar .nav-link {
-            color: #969696 !important;
+            color: white !important;
             font-size: 13px;
             font-weight: bold;
             padding: 15px 20px;
@@ -140,7 +140,7 @@
             box-shadow: 0px 0.4px 0.5px;
             padding: 6px 0px;
             width: 145px;
-            background: #fbfbfb;
+            background: #5e446e;
             border-radius: 38px;
             margin-bottom: 6px;
             font-size: 14px !important;

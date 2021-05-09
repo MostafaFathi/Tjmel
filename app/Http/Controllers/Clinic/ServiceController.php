@@ -57,7 +57,8 @@ class ServiceController extends Controller
         $service->instructions_ar = $request->instructions_ar;
         $service->price = $request->price;
         $service->save();
-        return back()->with('success', 'تمت عملية الاضافة بنجاح');
+        return redirect()->route('services.index')->with('success', 'تمت عملية الاضافة بنجاح');
+
 
     }
 
@@ -116,7 +117,7 @@ class ServiceController extends Controller
         $service->instructions_ar = $request->instructions_ar;
         $service->price = $request->price;
         $service->save();
-        return back()->with('success', 'تمت عملية الحفظ بنجاح');
+        return redirect()->route('services.index')->with('success', 'تمت عملية الحفظ بنجاح');
     }
 
     /**

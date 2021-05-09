@@ -27,8 +27,8 @@
 
 
 
-            <a href="/" class="d-inline-block">
-                <img src="{{asset('portal/assets/images/logo.svg')}}" alt="" style="    height: 58px;">
+            <a href="{{route('dashboard')}}" class="d-inline-block">
+                <img src="{{asset('portal/assets/images/logo.png')}}" alt="" style="    height: 58px;">
             </a>
 
 

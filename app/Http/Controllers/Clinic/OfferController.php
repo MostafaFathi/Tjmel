@@ -60,7 +60,8 @@ class OfferController extends Controller
         $offer->price_before = $request->price_before;
         $offer->price_after = $request->price_after;
         $offer->save();
-        return back()->with('success','تمت عملية الاضافة بنجاح');
+        return redirect()->route('offers.index')->with('success', 'تمت عملية الاضافة بنجاح');
+
     }
 
     /**
@@ -122,7 +123,8 @@ class OfferController extends Controller
         $offer->price_before = $request->price_before;
         $offer->price_after = $request->price_after;
         $offer->save();
-        return back()->with('success','تمت عملية الحفظ بنجاح');
+        return redirect()->route('offers.index')->with('success', 'تمت عملية الحفظ بنجاح');
+
     }
 
     /**

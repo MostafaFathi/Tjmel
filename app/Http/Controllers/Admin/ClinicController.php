@@ -254,9 +254,8 @@ class ClinicController extends Controller
     public function rates()
     {
         $rates = Rate::query();
+        $rates = $rates->orderBy('id','desc')->paginate(15);
 
-
-        $rates = $rates->paginate(15);
         return view('admin.rates.index', compact('rates'));
     }
     public function clinicRequestsIndex()
