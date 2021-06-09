@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 class UserAddressController extends Controller
 {
     use Location;
+
     public function showUserAddresses()
     {
         $addresses = auth('sanctum')->user()->addresses;
@@ -59,6 +60,10 @@ class UserAddressController extends Controller
         $address = auth('sanctum')->user()->addresses->where('id', $id)->first();
         if (!$address)
             return response()->json(['message' => 'العنوان غير موجود'], 422);
+
+        $countAddresses = auth('sanctum')->user()->addresses->count();
+        if ($countAddresses <= 1)
+            return response()->json(['message' => 'لا يمكن حذف العنوان الاخير'], 422);
 
         UserAddress::destroy($id);
 
