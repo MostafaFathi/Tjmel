@@ -57,9 +57,10 @@ class AppointmentController extends Controller
                 foreach ($appointments as $appointment) {
 
                     if (explode(' ', $appointment->date)[0] == $month . '-' . str_pad($i, 2, '0', STR_PAD_LEFT)) {
-                        dd($selectedTimes);
+
                         $flag = true;
                         array_push($selectedTimes, $appointment->times);
+                        dd($selectedTimes,$appointment->times);
                         $monthList .= '<li class="day-btn checked" date="' . $currentMonth . '-' . $i . '"><input type="hidden" class="day-date" name="dates[]" value="' . $currentMonth . '-' . $i . '">' . $i . '<span>' . Carbon::parse($currentMonth . '-' . $i)->translatedFormat('l') . '</span></li>';
                     }
                 }
