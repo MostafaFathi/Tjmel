@@ -44,12 +44,13 @@ class AppointmentController extends Controller
         $appointments = [];
         if ($id) {
             $serviceIdAndType = explode('-', $id);
-            dd($serviceIdAndType);
+
             $appointments = Appointment::where('clinic_id', auth()->user()->clinic->id)
                 ->where('service_id', $serviceIdAndType[0])
                 ->where('service_type', $serviceIdAndType[1])
                 ->where('date', 'like', '%' . $month . '%')
                 ->get();
+            dd($appointments);
             $monthList = '<ul class="month-days">';
             for ($i = 1; $i <= $days; $i++) {
                 $flag = false;
