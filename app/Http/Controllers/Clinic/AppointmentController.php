@@ -50,7 +50,7 @@ class AppointmentController extends Controller
                 ->where('service_type', $serviceIdAndType[1])
                 ->where('date', 'like', '%' . $month . '%')
                 ->get();
-            dd($appointments);
+
             $monthList = '<ul class="month-days">';
             for ($i = 1; $i <= $days; $i++) {
                 $flag = false;
@@ -81,6 +81,7 @@ class AppointmentController extends Controller
         }
 
         $times = $this->generateTimeIntervals('7:00 am', '1:30 am');
+        dd($selectedTimes);
         $selectedTimes = array_unique(Arr::collapse($selectedTimes), SORT_REGULAR);
         return response()->json(['days' => $days, 'monthList' => $monthList, 'times' => $times, 'selectedTimes' => $selectedTimes, 'currentMonthName' => $currentMonthName, 'currentMonth' => $currentMonth, 'nextMonth' => $nextMonth, 'prevMonth' => $prevMonth]);
     }
