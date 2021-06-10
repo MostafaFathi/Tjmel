@@ -60,6 +60,7 @@ class AppointmentController extends Controller
 
                         $flag = true;
                         array_push($selectedTimes, $appointment->times);
+                        if (count($appointment->times) != 0)
                         dd($selectedTimes,$appointment->times);
                         $monthList .= '<li class="day-btn checked" date="' . $currentMonth . '-' . $i . '"><input type="hidden" class="day-date" name="dates[]" value="' . $currentMonth . '-' . $i . '">' . $i . '<span>' . Carbon::parse($currentMonth . '-' . $i)->translatedFormat('l') . '</span></li>';
                     }
