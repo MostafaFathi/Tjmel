@@ -14,8 +14,8 @@ class AddClinicIdToAdvertisements extends Migration
     public function up()
     {
         Schema::table('advertisements', function (Blueprint $table) {
-            $table->bigInteger('clinic_id')->unsigned()->index();
-            $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('cascade');
+//            $table->bigInteger('clinic_id')->unsigned()->index();
+//            $table->foreign('clinic_id')->references('id')->on('clinics')->onDelete('cascade');
         });
     }
 
