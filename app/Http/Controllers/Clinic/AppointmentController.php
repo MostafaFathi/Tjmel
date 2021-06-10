@@ -51,11 +51,11 @@ class AppointmentController extends Controller
                 ->where('date', 'like', '%' . $month . '%')
                 ->get();
             $monthList = '<ul class="month-days">';
-            dd($appointments);
+
             for ($i = 1; $i <= $days; $i++) {
                 $flag = false;
                 foreach ($appointments as $appointment) {
-
+if (explode(' ', $appointment->date)[0] != ($month . '-' . str_pad($i, 2, '0', STR_PAD_LEFT))) dd($appointment,($month . '-' . str_pad($i, 2, '0', STR_PAD_LEFT)));
                     if (explode(' ', $appointment->date)[0] == ($month . '-' . str_pad($i, 2, '0', STR_PAD_LEFT))) {
 
                         $flag = true;
