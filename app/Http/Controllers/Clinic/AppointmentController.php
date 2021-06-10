@@ -144,7 +144,7 @@ class AppointmentController extends Controller
             ->where('service_type', $serviceIdAndType[1])
             ->where('date', 'like', '%' . $request->current_month . '%')
             ->get();
-        dd($aa);
+
         return back()->with('success', 'تمت عملية الحفظ بنجاح');
     }
 
