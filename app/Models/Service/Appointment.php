@@ -33,9 +33,13 @@ class Appointment extends Model
             foreach ($value as $key => $item) {
                 $myTime = Carbon::createFromFormat('Y-m-d H:i a', $this->date->format('Y-m-d') . ' ' . $item['time']);
 
-                if (explode('.', request()->route()->action['as'])[0] == 'api')
+                if (explode('.', request()->route()->action['as'])[0] == 'api') {
                     if ($item['status'] != "reserved" and $myTime > Carbon::now()->addHour())
                         array_push($newArray, $item);
+                } else {
+                    array_push($newArray, $item);
+                }
+
             }
         }
         return $newArray;
