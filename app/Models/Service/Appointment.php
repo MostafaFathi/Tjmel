@@ -29,7 +29,6 @@ class Appointment extends Model
         $value = json_decode($value,true);
         $newArray = [];
         if ($value != null and !empty($value)){
-            dd($value);
             foreach ($value  as $key => $item) {
                 $myTime = Carbon::createFromFormat('Y-m-d H:i a', $this->date->format('Y-m-d') . ' ' . $item['time']);
 
