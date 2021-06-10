@@ -139,7 +139,12 @@ class AppointmentController extends Controller
             }
 
         }
-
+        $aa = Appointment::where('clinic_id', auth()->user()->clinic->id)
+            ->where('service_id', $serviceIdAndType[0])
+            ->where('service_type', $serviceIdAndType[1])
+            ->where('date', 'like', '%' . $request->current_month . '%')
+            ->pluck('id');
+        dd($aa);
         return back()->with('success', 'تمت عملية الحفظ بنجاح');
     }
 
