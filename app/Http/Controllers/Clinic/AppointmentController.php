@@ -50,7 +50,7 @@ class AppointmentController extends Controller
                 ->where('service_type', $serviceIdAndType[1])
                 ->where('date', 'like', '%' . $month . '%')
                 ->get();
-dd($appointments);
+dd($days);
             $monthList = '<ul class="month-days">';
             for ($i = 1; $i <= $days; $i++) {
                 $flag = false;
