@@ -50,18 +50,17 @@ class AppointmentController extends Controller
                 ->where('service_type', $serviceIdAndType[1])
                 ->where('date', 'like', '%' . $month . '%')
                 ->get();
-dd($days);
             $monthList = '<ul class="month-days">';
+            dd($appointments);
             for ($i = 1; $i <= $days; $i++) {
                 $flag = false;
                 foreach ($appointments as $appointment) {
 
-                    if (explode(' ', $appointment->date)[0] == $month . '-' . str_pad($i, 2, '0', STR_PAD_LEFT)) {
+                    if (explode(' ', $appointment->date)[0] == ($month . '-' . str_pad($i, 2, '0', STR_PAD_LEFT))) {
 
                         $flag = true;
                         array_push($selectedTimes, $appointment->times);
-                        if (count($appointment->times) != 0)
-                        dd($selectedTimes,$appointment->times);
+
                         $monthList .= '<li class="day-btn checked" date="' . $currentMonth . '-' . $i . '"><input type="hidden" class="day-date" name="dates[]" value="' . $currentMonth . '-' . $i . '">' . $i . '<span>' . Carbon::parse($currentMonth . '-' . $i)->translatedFormat('l') . '</span></li>';
                     }
                 }
