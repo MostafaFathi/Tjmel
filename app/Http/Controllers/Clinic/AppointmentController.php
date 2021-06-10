@@ -28,7 +28,7 @@ class AppointmentController extends Controller
         $prevMonth = $date->subMonths(2)->format('Y-m');
         $times = $this->generateTimeIntervals('7:00 am', '1:30 am');
 
-        return view('clinic.appointments.index', compact('services', 'offers','days', 'times', 'currentMonthName', 'currentMonth', 'nextMonth', 'prevMonth'));
+        return view('clinic.appointments.index', compact('services', 'offers', 'days', 'times', 'currentMonthName', 'currentMonth', 'nextMonth', 'prevMonth'));
     }
 
     public function getDate($month, $id = null)
@@ -43,7 +43,7 @@ class AppointmentController extends Controller
         $selectedTimes = [];
         $appointments = [];
         if ($id) {
-            $serviceIdAndType = explode('-',$id);
+            $serviceIdAndType = explode('-', $id);
             $appointments = Appointment::where('clinic_id', auth()->user()->clinic->id)
                 ->where('service_id', $serviceIdAndType[0])
                 ->where('service_type', $serviceIdAndType[1])
@@ -79,7 +79,7 @@ class AppointmentController extends Controller
         }
 
         $times = $this->generateTimeIntervals('7:00 am', '1:30 am');
-        $selectedTimes = array_unique(Arr::collapse($selectedTimes),SORT_REGULAR);
+        $selectedTimes = array_unique(Arr::collapse($selectedTimes), SORT_REGULAR);
         return response()->json(['days' => $days, 'monthList' => $monthList, 'times' => $times, 'selectedTimes' => $selectedTimes, 'currentMonthName' => $currentMonthName, 'currentMonth' => $currentMonth, 'nextMonth' => $nextMonth, 'prevMonth' => $prevMonth]);
     }
 
@@ -107,7 +107,8 @@ class AppointmentController extends Controller
         ], [
             'service_id.required' => 'حقل اسم الخدمة مطلوب',
         ]);
-        $service = auth()->user()->clinic->services->where('id', $request->service_id)->first();
+        $serviceIdAndType = explode('-', $request->service_id);
+        $service = $serviceIdAndType[1] == 'service' ? auth()->user()->clinic->services->where('id', $request->service_id)->first() : auth()->user()->clinic->offers->where('id', $request->service_id)->first();
         if (!$service)
             return back()->withErrors('إما انك لم تقم باختيار خدمة او ان هذه الخدمة ليست لعيادتكم.');
 
@@ -119,7 +120,6 @@ class AppointmentController extends Controller
             }
             $key++;
         }
-        $serviceIdAndType = explode('-',$request->service_id);
         $aa = Appointment::where('clinic_id', auth()->user()->clinic->id)
             ->where('service_id', $serviceIdAndType[0])
             ->where('service_type', $serviceIdAndType[1])
