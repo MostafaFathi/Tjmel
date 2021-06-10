@@ -44,6 +44,7 @@ class AppointmentController extends Controller
         $appointments = [];
         if ($id) {
             $serviceIdAndType = explode('-', $id);
+            dd($serviceIdAndType);
             $appointments = Appointment::where('clinic_id', auth()->user()->clinic->id)
                 ->where('service_id', $serviceIdAndType[0])
                 ->where('service_type', $serviceIdAndType[1])
