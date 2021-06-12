@@ -211,7 +211,7 @@ class ClinicController extends Controller
 
         $reservation = new Reserve();
         $reservation->app_user_id = auth('sanctum')->user()->id;
-        $reservation->display_id = mt_rand(100000, 999999) . '-' . Carbon::today()->format('m-Y');
+        $reservation->display_id = mt_rand(10000, 99999);;
         $reservation->clinic_id = $id;
         $reservation->service_id = $request->offer_id;
         $reservation->service_type = 'offer';
