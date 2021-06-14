@@ -53,7 +53,7 @@
 
     body {
         font-family: 'Droid Arabic Kufi', serif !important;
-        background: #ffffff url('{{asset('portal/assets/images/background.jpg')}}') no-repeat;
+        background: #ffffff url('{{asset('portal/assets/images/rate_background.jpg')}}') no-repeat;
         background-size: cover;
         background-position: center;
         text-align: center;
@@ -114,39 +114,46 @@
 <body>
 
 <section class="login">
+    @if(!$rateCode)
+        <img src="{{asset('portal/assets/images/rated_before.png')}}" class="img-fluid">
 
-    <div class="brand">
+    @else
+        <div class="brand">
 
-        <img src="{{asset('portal/assets/images/logo.svg')}}">
+            <img src="{{asset('portal/assets/images/rate_logo.png')}}">
 
-    </div>
+        </div>
 
-    <div class="links">
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        @if(isset($message) and $message == 'success')
-            شكرا لتقييم العيادة
-        @else
-            <form class="" id="rate-form" method="post" enctype="multipart/form-data"
-                  action="{{route('rate.store')}}">
+        <div class="links">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-                {{csrf_field()}}
-                <div class="" style="">
-                    <div class="col-6" style="    margin: 0 auto;">
-                        <input type="hidden" name="hash_code" id="hash_code" value="{{$rateCode->hash_code}}">
-                        <div class="form-group" style="    margin-bottom: 0;">
-                            <label class="control-label "> تقييم {{$rateCode->clinic->name_ar ?? ''}}</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="hidden" name="rate" class="rate-company-value">
-                            <span id="rateMe">
+            @if(isset($message) and $message == 'success')
+                شكرا لتقييم العيادة
+            @else
+                <form class="" id="rate-form" method="post" enctype="multipart/form-data"
+                      action="{{route('rate.store')}}">
+
+                    {{csrf_field()}}
+                    <div class="" style="">
+                        <div class="col-6" style="    margin: 0 auto;">
+                            <input type="hidden" name="hash_code" id="hash_code" value="{{$rateCode->hash_code}}">
+                            <div class="form-group" style="    margin-bottom: 0;">
+                                <label class="control-label "> تقييم {{$rateCode->clinic->name_ar ?? ''}}</label>
+                            </div>
+                            <div class="form-group" style="    margin-bottom: 0;">
+                                <label class="control-label ">كم يستاهلون نجمة ؟</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" name="rate" class="rate-company-value">
+                                <span id="rateMe">
   <i class="fas fa-star py-2 px-1 rate-popover" data-index="0" data-html="true" data-toggle="popover"
      data-placement="top" title="ضعيف"></i>
   <i class="fas fa-star py-2 px-1 rate-popover" data-index="1" data-html="true" data-toggle="popover"
@@ -158,20 +165,21 @@
   <i class="fas fa-star py-2 px-1 rate-popover" data-index="4" data-html="true" data-toggle="popover"
      data-placement="top" title="ممتاز"></i>
 </span>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">تعليق</label>
-                            <textarea name="comment" class="form-control" id="comment" style="resize: none;"
-                                      rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-success" type="submit">نشر</button>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">اكتب تعليقك</label>
+                                <textarea name="comment" class="form-control" id="comment" style="resize: none;"
+                                          rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-success" type="submit">نشر</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        @endif
-    </div>
+                </form>
+            @endif
+        </div>
+    @endif
 
 </section>
 

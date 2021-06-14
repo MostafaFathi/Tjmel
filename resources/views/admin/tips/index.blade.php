@@ -18,7 +18,7 @@
             <div class="d-flex">
                 <div class="breadcrumb">
                     <a href="/admin" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> الرئيسية</a>
-                    <a href="{{route('tips.index')}}" class="breadcrumb-item">الإعلانات</a>
+                    <a href="{{route('tips.index')}}" class="breadcrumb-item">التلميحات</a>
 
                 </div>
 

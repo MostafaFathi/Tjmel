@@ -97,7 +97,8 @@ class HomeController extends Controller
     {
         $code = request('hash') ?? '';
         $rateCode = RateCode::where('hash_code', $code)->first();
-        if (!$rateCode) return 'Code not found';
+
+//        if (!$rateCode) return 'Code not found';
 
         return view('rate', compact('rateCode'));
     }
