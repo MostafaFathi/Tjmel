@@ -63,7 +63,7 @@
                             <div class="form-group">
                                 <label class="control-label" for="clinic_id">العيادة</label>
                                 <select class="form-control selectpicker" id="clinic_id" name="clinic_id">
-                                    <option value="">اختر</option>
+                                    <option value="0">اختر</option>
                                 @foreach($clinics as $clinic)
                                         <option value="{{$clinic->id}}" {{$advertisement->clinic_id == $clinic->id ? 'selected' : '' }}>{{$clinic->name_ar}}</option>
                                     @endforeach
