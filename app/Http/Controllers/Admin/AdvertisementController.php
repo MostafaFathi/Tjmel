@@ -41,10 +41,8 @@ class AdvertisementController extends Controller
     {
         $request->validate([
             'image' => 'required',
-            'clinic_id' => 'required',
         ],[
             'image.required' => 'حقل الصورة مطلوب',
-            'clinic_id.required' => 'حصل العيادة مطلوب',
         ]);
 
         $advertisement = new Advertisement();
@@ -92,12 +90,6 @@ class AdvertisementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'clinic_id' => 'required',
-        ],[
-            'clinic_id.required' => 'حصل العيادة مطلوب',
-        ]);
-
         $advertisement =  Advertisement::find($id);
         $advertisement->clinic_id = $request->clinic_id ?? '';
         if($request->has('image') and $request->image != null){
