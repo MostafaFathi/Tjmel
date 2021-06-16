@@ -42,7 +42,7 @@ class AppUser extends Authenticatable
 
     public function reservations()
     {
-        return $this->hasMany(Reserve::class);
+        return $this->hasMany(Reserve::class)->orderBy('id','desc');
     }
     public function addresses()
     {
