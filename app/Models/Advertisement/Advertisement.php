@@ -16,7 +16,6 @@ class Advertisement extends Model
 
     public function clinic()
     {
-        if ($this->clinic_id == 0) return null;
         return $this->belongsTo(Clinic::class);
     }
 
