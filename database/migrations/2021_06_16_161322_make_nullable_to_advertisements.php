@@ -14,7 +14,7 @@ class MakeNullableToAdvertisements extends Migration
     public function up()
     {
         Schema::table('advertisements', function (Blueprint $table) {
-            $table->dropForeign(['clinic_id']);
+//            $table->dropForeign(['clinic_id']);
 
         });
     }
