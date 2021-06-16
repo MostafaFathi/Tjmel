@@ -70,7 +70,7 @@
                                 @endif
                             </td>
 
-                            <td class="">{{$advertisement->clinic->name_ar ?? '--'}}</td>
+                            <td class="">{{isset($advertisement->clinic) ? $advertisement->clinic->name_ar : '--'}}</td>
 
 
 
