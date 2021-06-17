@@ -31,6 +31,9 @@
     <!-- Theme JS files -->
 
     <style>
+        .rate-popover{
+            color: #d4d4d4;
+        }
         .amber-text {
             color: orange;
         }
@@ -109,6 +112,7 @@
         color: #593b6b;
         border: 1px solid #593b6b;
     }
+
 </style>
 
 <body>
@@ -145,10 +149,10 @@
                     <div class="" style="">
                         <div class="col-6" style="    margin: 0 auto;">
                             <input type="hidden" name="hash_code" id="hash_code" value="{{$rateCode->hash_code}}">
-                            <div class="form-group" style="    margin-bottom: 0;">
-                                <label class="control-label "> تقييم {{$rateCode->clinic->name_ar ?? ''}}</label>
+                            <div class="form-group" style="    margin-bottom: 0;color: white">
+                                <label class="control-label " style="font-size: 24px"> تقييم {{$rateCode->clinic->name_ar ?? ''}}</label>
                             </div>
-                            <div class="form-group" style="    margin-bottom: 0;">
+                            <div class="form-group" style="    margin-bottom: 0;color: white">
                                 <label class="control-label ">كم يستاهلون نجمة ؟</label>
                             </div>
                             <div class="form-group">
@@ -167,7 +171,7 @@
 </span>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">اكتب تعليقك</label>
+                                <label class="control-label" style="color: white">اكتب تعليقك</label>
                                 <textarea name="comment" class="form-control" id="comment" style="resize: none;"
                                           rows="3"></textarea>
                             </div>
