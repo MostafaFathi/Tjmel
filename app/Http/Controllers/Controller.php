@@ -35,7 +35,7 @@ class Controller extends BaseController
 
         $user = AppUser::where('mobile', $request->mobile)->where('otp_code', $request->otp_code)->first();
 
-        if ($user->status === 1)
+        if ($user and $user->status === 1)
             return response()->json(['message' => 'تم حظر رقم الجوال', 'status' => false], 422);
 
         $token = null;
