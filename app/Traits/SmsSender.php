@@ -15,7 +15,7 @@ trait SmsSender
         curl_setopt($crl, CURLOPT_RETURNTRANSFER, true);
 
         $result = curl_exec($crl);
-//dd($result);
+
         curl_close($crl);
         return json_decode($result);
     }

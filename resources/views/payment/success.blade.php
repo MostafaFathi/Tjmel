@@ -28,7 +28,7 @@
     }
     body{
         font-family: 'Droid Arabic Kufi', serif !important;
-        background: #CFDE40 url('{{asset('portal/assets/images/background.jpg')}}') no-repeat;
+        background: #ffffff url('{{asset('portal/assets/images/background.jpg')}}') no-repeat;
         background-size: cover;
         background-position: center;
         text-align: center;
