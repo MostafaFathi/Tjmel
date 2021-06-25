@@ -121,6 +121,11 @@ class PaymentController extends Controller
         return view('payment.fail');
     }
 
+    public function cancel()
+    {
+        return view('payment.cancel');
+    }
+
     private function saveAppointment($reservation)
     {
         $appointment = Appointment::wheredate('date', Carbon::parse($reservation->appointment_date))

@@ -168,8 +168,8 @@ class ClinicController extends Controller
         $clinic->save();
 
         $this->updateClinicUser($clinic->user_id, $request, $clinic->id);
-
-        return redirect()->route('clinics.index')->with('success', 'success')->with('id', $clinic->id);
+        return back()->with('success', 'success');
+//        return redirect()->route('clinics.index')->with('success', 'success')->with('id', $clinic->id);
     }
 
     /**

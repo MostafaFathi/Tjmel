@@ -22,7 +22,7 @@
     }
     body{
         font-family: 'Droid Arabic Kufi', serif !important;
-        background: #CFDE40 url('{{asset('portal/assets/images/background.jpg')}}') no-repeat;
+        background: #ffffff url('{{asset('portal/assets/images/background.jpg')}}') no-repeat;
         background-size: cover;
         background-position: center;
         text-align: center;
@@ -99,7 +99,7 @@
                 console.log('response', response);
             },
             onClose: () => {
-                console.log("onClose Event");
+                window.open('{{route('payment.cancel')}}',"_self")
             },
             onLoad:() => {
                 console.log("onLoad");

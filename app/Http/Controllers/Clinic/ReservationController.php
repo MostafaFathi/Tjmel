@@ -103,6 +103,7 @@ class ReservationController extends Controller
         $reservation->reason = $request->comment;
         $reservation->save();
 
+
         if ($reservation->status == 1){
             $hashCode = Str::random(7);
             $rateCode = new RateCode();

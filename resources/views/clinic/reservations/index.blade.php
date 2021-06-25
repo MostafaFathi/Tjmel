@@ -108,7 +108,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">اغلاق</button>
-                            <button type="submit" class="btn btn-success waves-effect" id="delete_url">حفظ الحالة الجديدة</button>
+                            <button type="submit" class="btn btn-success waves-effect save_btn" id="delete_url">حفظ الحالة الجديدة</button>
                         </div>
                     </form>
                 </div>
@@ -128,6 +128,7 @@
 @section('js_code')
     <script>
         function approve_item(id, status, title, description) {
+            $('.dropdown-item').attr('disabled','disabled');
             $('#item_id').val(id);
             var url = "{{url('clinic/reservations/')}}/" + id + "/status/" + status;
             $('#delete_form').attr('action', url);
@@ -142,6 +143,9 @@
                 window.history.replaceState(null,
                     null, "?page="+$(this).attr('name'));
                 return false;
+            })
+            $(document).on('click','.save_btn',function(){
+                $(this).addClass('d-none');
             })
             $("#today-reservations-search,#now-reservations-search,#completed-reservations-search,#un-completed-reservations-search").on("keyup", function() {
                 var value = $(this).val().toLowerCase();

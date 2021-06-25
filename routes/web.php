@@ -134,6 +134,7 @@ Route::group(['prefix' => 'payment', 'as'=>'payment.'], function () {
     Route::post('/callback/post', [PaymentController::class, 'postCallback'])->name('callback.post');
     Route::get('/success', [PaymentController::class, 'success'])->name('success');
     Route::get('/fail', [PaymentController::class, 'fail'])->name('fail');
+    Route::get('/cancel', [PaymentController::class, 'cancel'])->name('cancel');
 });
 Route::get('/rate', [HomeController::class, 'rate'])->name('rate');
 Route::get('/rate/success', [HomeController::class, 'successRate'])->name('rate.success');
