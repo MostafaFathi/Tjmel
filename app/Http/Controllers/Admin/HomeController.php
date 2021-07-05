@@ -51,7 +51,7 @@ class HomeController extends Controller
         $totalComingReservations = Reserve::where('status', 5)->count();
         $totalUnCompletedReservations = Reserve::whereIn('status', [2, 3, 4])->count();
         $usersWallet = AppUser::sum('wallet_from_admin');
-        $usersPaidWallet = Transaction::where('type','wallet')->sum('value');
+        $usersPaidWallet = Transaction::where('type', 'wallet')->sum('value');
         $dailyIncome = Transaction::wheredate('created_at', Carbon::today())->sum('value');
         $monthlyIncome = Transaction::wheredate('created_at', '>=', Carbon::today()->subMonth())->sum('value');
         $yearlyIncome = Transaction::wheredate('created_at', '>=', Carbon::today()->subYear())->sum('value');
@@ -77,8 +77,8 @@ class HomeController extends Controller
         }
         $clinicIncomeArray = (object)($clinicIncomeArray);
 
-        $canceledReservation = Reserve::where('status',3)->where('advance_payment_status',0)->get();
-        return view('admin.main.home', compact('appUsers','canceledReservation', 'services', 'offers', 'totalReservations', 'totalCompletedReservations', 'totalUnCompletedReservations', 'totalComingReservations', 'usersWallet','usersPaidWallet', 'clinicCount', 'clinicRequestCount', 'dailyIncome', 'monthlyIncome', 'yearlyIncome', 'clinicIncomeArray'));
+        $canceledReservation = Reserve::where('status', 3)->where('advance_payment_status', 0)->get();
+        return view('admin.main.home', compact('appUsers', 'canceledReservation', 'services', 'offers', 'totalReservations', 'totalCompletedReservations', 'totalUnCompletedReservations', 'totalComingReservations', 'usersWallet', 'usersPaidWallet', 'clinicCount', 'clinicRequestCount', 'dailyIncome', 'monthlyIncome', 'yearlyIncome', 'clinicIncomeArray'));
     }
 
     public function telescope()
@@ -102,6 +102,7 @@ class HomeController extends Controller
 
         return view('rate', compact('rateCode'));
     }
+
     public function successRate()
     {
         return view('success_rate');
@@ -129,6 +130,11 @@ class HomeController extends Controller
         $rate->comment = $request->comment;
         $rate->rate = $request->rate;
         $rate->save();
+
+        $clinic = Clinic::find($rate->clinic_id);
+        $rating = count($clinic->rates) > 0 ? $clinic->rates->sum('rate') / count($clinic->rates) : 0;
+        $clinic->rating = $rating;
+        $clinic->save();
 
         RateCode::destroy($rateCode->id);
 

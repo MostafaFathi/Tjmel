@@ -23,7 +23,7 @@ class Clinic extends Model
         'images' => 'json'
     ];
     //,'city_name','district_name'
-    protected $appends = ['rating', 'images_urls', 'location_on_map', 'city', 'district_name', 'is_favorite','distance'];
+    protected $appends = [/*'rating',*/ 'images_urls', 'location_on_map', 'city', 'district_name', 'is_favorite','distance'];
 
     public function city()
     {

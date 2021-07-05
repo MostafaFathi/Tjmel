@@ -137,7 +137,12 @@ class ServiceOfferController extends Controller
 
     public function deleteRate($id)
     {
+        $rate = Rate::find($id);
+        $clinic = Clinic::find($rate->clinic_id);
         Rate::destroy($id);
+        $rating = count($clinic->rates) > 0 ? $clinic->rates->sum('rate') / count($clinic->rates) : 0;
+        $clinic->rating = $rating;
+        $clinic->save();
         return back();
     }
     public function deleteService($id)
