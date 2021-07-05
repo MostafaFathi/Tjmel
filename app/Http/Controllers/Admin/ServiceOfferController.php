@@ -134,7 +134,6 @@ class ServiceOfferController extends Controller
         $offer->save();
         return back();
     }
-
     public function deleteRate($id)
     {
         $rate = Rate::find($id);
@@ -155,6 +154,4 @@ class ServiceOfferController extends Controller
         Offer::destroy($id);
         return back();
     }
-
-
 }

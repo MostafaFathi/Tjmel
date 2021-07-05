@@ -135,12 +135,9 @@ class HomeController extends Controller
         $rating = count($clinic->rates) > 0 ? $clinic->rates->sum('rate') / count($clinic->rates) : 0;
         $clinic->rating = $rating;
         $clinic->save();
-
         RateCode::destroy($rateCode->id);
 
         return redirect(route('rate.success'));
-
-
     }
 
     public function test($id)
