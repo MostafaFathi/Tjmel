@@ -6,7 +6,7 @@ trait SmsSender
     protected function send($phoneNumber, $message)
     {
         $user = 'tjmel';
-        $password = 'Salah@4313477';
+        $password = 'Tjmel4313477';
         $sender = 'TJMEL';
         $message = urlencode($message);
 
