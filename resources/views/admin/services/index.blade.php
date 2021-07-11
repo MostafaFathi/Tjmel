@@ -29,7 +29,105 @@
 
 
     <div class="content">
+        <form action="" method="get" class="submit-search-form form">
+            <h5>البحث</h5>
+            <div class="form-row">
 
+
+                <div class="input-group col-3 mb-md-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="addon-wrapping">اسم الخدمة</span>
+                    </div>
+                    <input type="text" class="form-control" autocomplete="chrome-off" name="service_name"
+                           value="{{request()->get('service_name')}}"
+                           aria-describedby="addon-wrapping">
+                </div>
+
+
+                <input type="hidden" name="is_search_opened" class="is_search_opened"
+                       value="{{request()->has('is_search_opened') ? request()->get('is_search_opened') : 0}}">
+
+                <div class="collapse w-100 mb-3 {{request()->get('is_search_opened') == 1 ? 'show' : ''}}"
+                     id="collapseExample">
+                    <div class="card card-body">
+
+                        <div class="form-row">
+
+                            <div class="input-group col-4 mb-md-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"
+                                          id="addon-wrapping">اسم العيادة</span>
+                                </div>
+                                <input type="text" class="form-control" autocomplete="chrome-off" name="clinic_name_ar"
+                                       value="{{request()->get('clinic_name_ar')}}"
+                                       aria-describedby="addon-wrapping">
+                            </div>
+                            <div class="input-group col-4 mb-md-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"
+                                          id="addon-wrapping">حالة العرض</span>
+                                </div>
+                                <select name="service_status" class="form-control" id="">
+                                    <option value="100" {{request()->has('service_status') && request()->get('service_status') == 100 ? 'selected' : ''}}>إختر</option>
+                                    <option value="0" {{request()->has('service_status') && request()->get('service_status') == 0 ? 'selected' : ''}}>قيد الانتظار</option>
+                                    <option value="1" {{request()->has('service_status') && request()->get('service_status') == 1 ? 'selected' : ''}}>تم نشره</option>
+                                    <option value="2" {{request()->has('service_status') && request()->get('service_status') == 2 ? 'selected' : ''}}>مرفوض</option>
+                                </select>
+                            </div>
+                            <div class="input-group col-4 mb-md-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"
+                                          id="addon-wrapping">القسم</span>
+                                </div>
+                                <select name="section_id" class="form-control" id="">
+                                    <option value="" {{request()->get('section_id') == 0 ? 'selected' : ''}}>إختر</option>
+                                    @foreach($sections as $section)
+                                        <option value="{{$section->id}}" {{request()->get('section_id') == $section->id ? 'selected' : ''}}>{{$section->title_ar}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="input-group col-5 mb-md-5">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"
+                                          id="addon-wrapping">السعر</span>
+                                </div>
+                                <select id="role" style="border-radius: 0" name="operation" class="form-control col-4">
+                                    <option value="" >اختر</option>
+                                    <option value="=" {{request()->get('operation') == "=" ? 'selected' : ''}}>يساوي</option>
+                                    <option value=">" {{request()->get('operation') == ">" ? 'selected' : ''}}> أكبر </option>
+                                    <option value="<" {{request()->get('operation') == "<" ? 'selected' : ''}}> أصغر </option>
+                                    <option value=">=" {{request()->get('operation') == ">=" ? 'selected' : ''}}> أكبر او يساوي </option>
+                                    <option value="<=" {{request()->get('operation') == "<=" ? 'selected' : ''}}> أصغر او يساوي </option>
+                                </select>
+                                <input type="text" class="form-control" autocomplete="chrome-off" name="price"
+                                       value="{{request()->get('price')}}"
+                                       aria-describedby="addon-wrapping">
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="input-group-append col-2 mb-md-3">
+                    <button class="btn btn-success mr-1 " type="submit">بحث</button>
+                    <button class="btn btn-success mr-1 search-advanced" type="button" data-toggle="collapse"
+                            data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        متقدم
+                    </button>
+                </div>
+
+                <div
+                    class="input-group-append {{request()->get('is_search_opened') == 1 ? 'col-10' : 'col-7'}} mb-md-3 export-div">
+
+
+                </div>
+
+
+            </div>
+        </form>
         <!-- Basic table -->
         <div class="card">
             <div class="table-responsive">
@@ -97,7 +195,8 @@
                     @endforeach
                     <tr>
                         <td colspan="7" class="text-center">
-                            {{ $services->links() }}
+                            {{ $services->appends(request()->all())->links() }}
+
                         </td>
                     </tr>
 
@@ -186,6 +285,21 @@
 @section('js_code')
 
     <script>
+        $(document).on('click', '.search-advanced', function () {
+            var is_search_opened = $('.is_search_opened').val();
+            if (is_search_opened == '0') {
+                is_search_opened = '1';
+                $('.export-div').removeClass('col-7');
+                $('.export-div').addClass('col-10');
+            } else {
+                $('.export-div').removeClass('col-10');
+                $('.export-div').addClass('col-7');
+                is_search_opened = '0';
+            }
+
+            $('.is_search_opened').val(is_search_opened);
+            return false;
+        });
         function delete_item(id, title) {
             $('#item_id_delete').val(id);
             var url = "<?php echo e(url('admin/services/delete')); ?>/" + id;

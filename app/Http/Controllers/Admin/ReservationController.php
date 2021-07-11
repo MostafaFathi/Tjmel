@@ -13,6 +13,10 @@ use Illuminate\Support\Str;
 
 class ReservationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:Manage Reservations');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,9 +25,24 @@ class ReservationController extends Controller
     public function index()
     {
         $reservations = Reserve::query();
-        if (request()->has('user') and request()->get('user') != '') {
-            $appUser = AppUser::where('mobile',request()->get('user'))->get()->pluck('id');
-            $reservations = $reservations->whereIn('app_user_id', $appUser);
+        if (request()->has('clinic_name_ar') and request()->get('clinic_name_ar') != '') {
+            $reservations = $reservations->whereHas('clinic',function($q){
+                $q->where('name_ar','like','%'.request()->get('clinic_name_ar').'%');
+            });
+        }
+        if (request()->has('reservation_status') and request()->get('reservation_status') != ''and request()->get('reservation_status') != 0) {
+            $reservations = $reservations->where('status',request()->get('reservation_status'));
+        }
+
+        if (request()->has('user_name') and request()->get('user_name') != '') {
+            $reservations = $reservations->whereHas('app_user',function($q){
+                $q->where('name','like','%'.request()->get('user_name').'%');
+            });
+        }
+        if (request()->has('phone') and request()->get('phone') != '') {
+            $reservations = $reservations->whereHas('app_user',function($q){
+                $q->where('mobile','like','%'.request()->get('phone').'%');
+            });
         }
         $reservations = $reservations->orderBy('id','desc')->where('status','!=',0)->paginate(15);
         return view('admin.reservations.index',compact('reservations'));

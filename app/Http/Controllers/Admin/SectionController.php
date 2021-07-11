@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class SectionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:Manage Sections');
+    }
     /**
      * Display a listing of the resource.
      *

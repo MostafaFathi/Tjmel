@@ -6,14 +6,31 @@ use App\Http\Controllers\Controller;
 use App\Models\User\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:Manage Web users');
+    }
 
     public function index()
     {
-        $users = User::get();
+        $users = User::query();
+        if (request()->has('user_name') and request()->get('user_name') != '') {
+            $users = $users->where('name_ar', 'like', '%' . request()->get('user_name') . '%');
+        }
+        if (request()->has('email') and request()->get('email') != '') {
+            $users = $users->where('email', request()->get('email'));
+        }
+        if (request()->has('role') and request()->get('role') != '') {
+            $users = $users->whereHas('roles', function ($q) {
+                $q->where('name', request()->get('role'));
+            });
+        }
+        $users = $users->orderBy('id', 'desc')->paginate(15);
         return view('admin.users.index', compact('users'));
     }
 
@@ -21,7 +38,9 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::get();
-        return view('admin.users.create', compact('roles'));
+        $permissions = Permission::get();
+
+        return view('admin.users.create', compact('roles', 'permissions'));
     }
 
 
@@ -49,6 +68,12 @@ class UserController extends Controller
 
         $user->save();
         $user->syncRoles([$request->user_group]);
+        $allPermissions = Permission::get()->pluck('name');
+        if ($user->hasRole('admin')) {
+            $user->syncPermissions([$allPermissions]);
+        } else {
+            $user->syncPermissions([$request->permissions]);
+        }
 
         return redirect()->route('users.index')->with('success', 'success')->with('id', $user->id);
     }
@@ -71,8 +96,9 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $roles = Role::get();
+        $permissions = Permission::get();
 
-        return view('admin.users.edit', compact('user', 'roles'));
+        return view('admin.users.edit', compact('user', 'roles', 'permissions'));
     }
 
 
@@ -95,10 +121,14 @@ class UserController extends Controller
         $user->mobile = $request->mobile ? $request->mobile : null;
 
 
-
         $user->save();
         $user->syncRoles([$request->user_group]);
-
+        $allPermissions = Permission::get()->pluck('name');
+        if ($user->hasRole('admin')) {
+            $user->syncPermissions([$allPermissions]);
+        } else {
+            $user->syncPermissions([$request->permissions]);
+        }
         return redirect()->route('users.index')->with('success', 'success')->with('id', $user->id);
     }
 

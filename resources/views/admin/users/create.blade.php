@@ -1,7 +1,12 @@
 @extends('admin.layouts.app')
 
 @section('content')
-
+    <link href="{{asset('js/multiselect/css/multi-select.css')}}" rel="stylesheet" type="text/css"/>
+    <style>
+        .ms-container {
+            width: 40% !important;
+        }
+    </style>
     <!-- Page header -->
     <div class="page-header page-header-light">
         <div class="page-header-content header-elements-md-inline">
@@ -115,8 +120,31 @@
                         </div>
                     </div>
 
+                    <div class="row d-none permissions_div">
+                        <div class="col-12">
 
-                    <div class="form-group">
+
+                            <div class="form-group">
+                                <label class="control-label">صلاحيات المستخدم</label>
+                                <select class="form-control"
+                                        name="permissions[]" id="user_permissions" multiple>
+                                    @foreach($permissions as $permission)
+                                        <option value="{{$permission->id}}" >{{$permission->name}}</option>
+                                    @endforeach
+                                </select>
+                                <small class="form-control-feedback"></small>
+                            </div>
+
+                            <div class="button-box m-t-20 m-b-20">
+                                <a id="select-all" class="btn btn-danger" href="javascript:void(0)">Select all</a>
+                                <a id="deselect-all" class="btn btn-info" href="javascript:void(0)">De-select all</a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="form-group pt-3">
 
                         <button class="btn btn-success">Save</button>
 
@@ -128,4 +156,35 @@
 
 
     </div>
+@endsection
+@section('js_assets')
+
+    <script type="text/javascript"
+            src="{{asset('js/multiselect/js/jquery.multi-select.js')}}"></script>
+    <script>
+        $(document).on('change', '#permissions', function () {
+            if ($(this).val() == 3) {
+                $('.permissions_div').removeClass('d-none');
+            }else{
+                $('.permissions_div').addClass('d-none');
+            }
+            return false;
+        });
+        $('#permissions').change();
+        $('#user_permissions').multiSelect();
+
+        $('#select-all').click(function () {
+            $('#user_permissions').multiSelect('select_all');
+            return false;
+        });
+        $('#deselect-all').click(function () {
+            $('#user_permissions').multiSelect('deselect_all');
+            return false;
+        });
+        $('#refresh').on('click', function () {
+            $('#user_permissions').multiSelect('refresh');
+            return false;
+        });
+    </script>
+
 @endsection

@@ -16,6 +16,10 @@ use Illuminate\Support\Str;
 
 class ClinicController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:Manage Clinics|Manage Rates');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,6 +27,8 @@ class ClinicController extends Controller
      */
     public function index()
     {
+        $this->middleware('can:Manage Clinics');
+
         $clinics = Clinic::query();
 
         if (request()->has('name_ar') and request()->get('name_ar') != '') {
@@ -56,6 +62,8 @@ class ClinicController extends Controller
      */
     public function create()
     {
+        $this->middleware('can:Manage Clinics');
+
         $clinic = new Clinic();
         $cities = City::all();
         $location = Setting::getValue('location');
@@ -70,6 +78,7 @@ class ClinicController extends Controller
      */
     public function store(Request $request)
     {
+        $this->middleware('can:Manage Clinics');
         $request->validate([
             'email' => 'email|required|unique:users',
             'clinic_name_ar' => 'required',
@@ -112,6 +121,7 @@ class ClinicController extends Controller
      */
     public function show($id)
     {
+        $this->middleware('can:Manage Clinics');
         $clinic = Clinic::find($id);
         $location = Setting::getValue('location');
         return view('admin.clinics.show', compact('clinic','location'));
@@ -125,6 +135,7 @@ class ClinicController extends Controller
      */
     public function edit($id)
     {
+        $this->middleware('can:Manage Clinics');
         $clinic = Clinic::find($id);
         $cities = City::all();
         $location = Setting::getValue('location');
@@ -136,10 +147,11 @@ class ClinicController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, $id)
     {
+        $this->middleware('can:Manage Clinics');
         $clinic = Clinic::find($id);
         $request->validate([
             'email' => 'required|unique:users,email,' . $clinic->user_id,
@@ -168,8 +180,8 @@ class ClinicController extends Controller
         $clinic->save();
 
         $this->updateClinicUser($clinic->user_id, $request, $clinic->id);
-        return back()->with('success', 'success');
-//        return redirect()->route('clinics.index')->with('success', 'success')->with('id', $clinic->id);
+        return redirect($request->previous_url ?? route('clinics.index'))->with('success', 'success')->with('id', $clinic->id);
+
     }
 
     /**
@@ -180,6 +192,7 @@ class ClinicController extends Controller
      */
     public function destroy($id)
     {
+        $this->middleware('can:Manage Clinics');
         Clinic::destroy($id);
         return back()->with('success', 'success');
     }
@@ -253,13 +266,35 @@ class ClinicController extends Controller
     }
     public function rates()
     {
+
         $rates = Rate::query();
+        if (request()->has('clinic_name_ar') and request()->get('clinic_name_ar') != '') {
+            $rates = $rates->whereHas('clinic',function($q){
+                $q->where('name_ar','like','%'.request()->get('clinic_name_ar').'%');
+            });
+        }
+        if (request()->has('rate_value') and request()->get('rate_value') != '') {
+            $rates = $rates->where('rate',request()->get('rate_value'));
+        }
+
+        if (request()->has('user_name') and request()->get('user_name') != '') {
+            $rates = $rates->whereHas('app_user',function($q){
+                $q->where('name','like','%'.request()->get('user_name').'%');
+            });
+        }
+        if (request()->has('phone') and request()->get('phone') != '') {
+            $rates = $rates->whereHas('app_user',function($q){
+                $q->where('mobile','like','%'.request()->get('phone').'%');
+            });
+        }
         $rates = $rates->orderBy('id','desc')->paginate(15);
 
         return view('admin.rates.index', compact('rates'));
     }
     public function clinicRequestsIndex()
     {
+        $this->middleware('can:Manage Clinic requests');
+
         $clinicRequests = ClinicRequest::orderBy('id', 'desc')->paginate(15);
         return view('admin.settings.applications.index', compact('clinicRequests'));
     }

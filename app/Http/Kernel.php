@@ -83,6 +83,8 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'localization' => \App\Http\Middleware\localization::class,
         'blocked' => \App\Http\Middleware\CheckIfBlocked::class,
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+
 
     ];
 }

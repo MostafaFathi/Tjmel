@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class AgreementController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:Manage Agreement');
+    }
     /**
      * Display a listing of the resource.
      *

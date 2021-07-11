@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class AdvertisementController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:Manage Advertisements');
+    }
     /**
      * Display a listing of the resource.
      *

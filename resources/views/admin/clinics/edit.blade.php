@@ -127,6 +127,7 @@
                             <input type="hidden" name="location" id="coordinates" value="{{$clinic->location}}">
                         </div>
                     </div>
+                    <input type="hidden" value="{{ url()->previous()}}" name="previous_url">
                     <div class="form-group">
 
                         <button class="btn btn-success">حفظ التغييرات</button>

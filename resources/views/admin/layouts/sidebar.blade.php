@@ -47,7 +47,8 @@
                         <span>الرئيسية</span>
                     </a>
                 </li>
-                @hasanyrole('admin')
+                @hasanyrole('admin|user')
+                @can('Manage Advertisements')
                 <li class="nav-item ">
                     <a href="{{route('advertisements.index')}}"
                        class="nav-link  {{request()->routeIs('advertisements.*')?'active' :'' }}">
@@ -55,6 +56,8 @@
                         <span>إدارة الاعلانات</span>
                     </a>
                 </li>
+                @endcan
+                @can('Manage Tips')
                 <li class="nav-item ">
                     <a href="{{route('tips.index')}}"
                        class="nav-link  {{request()->routeIs('tips.*')?'active' :'' }}">
@@ -62,6 +65,8 @@
                         <span>إدارة التلميحات</span>
                     </a>
                 </li>
+                @endcan
+                @can('Manage Clinics')
                 <li class="nav-item ">
                     <a href="{{route('clinics.index')}}"
                        class="nav-link  {{request()->routeIs('clinics.*')?'active' :'' }}">
@@ -69,6 +74,8 @@
                         <span>إدارة العيادات</span>
                     </a>
                 </li>
+                @endcan
+                @can('Manage Sections')
                 <li class="nav-item ">
                     <a href="{{route('sections.index')}}"
                        class="nav-link  {{request()->routeIs('sections.*')?'active' :'' }}">
@@ -76,6 +83,8 @@
                         <span>إدارة الاقسام</span>
                     </a>
                 </li>
+                @endcan
+                @can('Manage Services')
                 <li class="nav-item ">
                     <a href="{{route('services.acceptance')}}"
                        class="nav-link  {{request()->routeIs('services.*')?'active' :'' }}">
@@ -83,6 +92,8 @@
                         <span>إدارة الخدمات</span>
                     </a>
                 </li>
+                @endcan
+                @can('Manage Offers')
                 <li class="nav-item ">
                     <a href="{{route('offers.acceptance')}}"
                        class="nav-link  {{request()->routeIs('offers.*')?'active' :'' }}">
@@ -90,6 +101,8 @@
                         <span>إدارة العروض</span>
                     </a>
                 </li>
+                @endcan
+                @can('Manage Reservations')
                 <li class="nav-item ">
                     <a href="{{route('admin.reservations.index')}}"
                        class="nav-link  {{request()->routeIs('reservations.*')?'active' :'' }}">
@@ -97,6 +110,8 @@
                         <span>إدارة الحجوزات</span>
                     </a>
                 </li>
+                @endcan
+                @can('Manage App users')
                 <li class="nav-item ">
                     <a href="{{route('app_users.index')}}"
                        class="nav-link  {{request()->routeIs('app_users.*')?'active' :'' }}">
@@ -104,6 +119,8 @@
                         <span>إدارة مستخدمي التطبيق</span>
                     </a>
                 </li>
+                @endcan
+                @can('Manage Rates')
                 <li class="nav-item ">
                     <a href="{{route('rates.index')}}"
                        class="nav-link  {{request()->routeIs('rates.*')?'active' :'' }}">
@@ -111,12 +128,17 @@
                         <span>إدارة التقييمات</span>
                     </a>
                 </li>
+                @endcan
+
                 @endhasanyrole
-                @hasanyrole('admin')
+                @hasanyrole('admin|user')
+                @canany('Manage Settings','Manage Web users','Manage About us','Manage Agreement','Manage Contact us','Manage Clinic requests','Manage Telescope')
                 <li class="nav-item-header">
                     <div class="text-uppercase font-size-xs line-height-xs">الاعدادات</div>
                     <i class="icon-menu" title="Admin"></i>
                 </li>
+                @endcanany
+                @can('Manage Settings')
                 <li class="nav-item ">
                     <a href="{{route('settings.edit',0)}}"
                        class="nav-link  {{request()->routeIs('edit.*')?'active' :'' }}">
@@ -124,6 +146,8 @@
                         <span> الاعدادات</span>
                     </a>
                 </li>
+                @endcan
+                @can('Manage Web users')
                 <li class="nav-item ">
                     <a href="{{route('users.index')}}"
                        class="nav-link  {{request()->routeIs('users.*')?'active' :'' }}">
@@ -131,6 +155,8 @@
                         <span>إدارة المستخدمين</span>
                     </a>
                 </li>
+                @endcan
+                @can('Manage About us')
                 <li class="nav-item ">
                     <a href="{{route('about_us.create')}}"
                        class="nav-link  {{request()->routeIs('about_us.*')?'active' :'' }}">
@@ -138,6 +164,8 @@
                         <span>من نحن</span>
                     </a>
                 </li>
+                @endcan
+                @can('Manage Agreement')
                 <li class="nav-item ">
                     <a href="{{route('agreement.create')}}"
                        class="nav-link  {{request()->routeIs('agreement.*')?'active' :'' }}">
@@ -145,6 +173,8 @@
                         <span>اتفاقية المستخدم</span>
                     </a>
                 </li>
+                @endcan
+                @can('Manage Contact us')
                 <li class="nav-item ">
                     <a href="{{route('contact_us.index')}}"
                        class="nav-link  {{request()->routeIs('contact_us.*')?'active' :'' }}">
@@ -152,6 +182,8 @@
                         <span>اتصل بنا</span>
                     </a>
                 </li>
+                @endcan
+                @can('Manage Clinic requests')
                 <li class="nav-item ">
                     <a href="{{route('applications.index')}}"
                        class="nav-link  {{request()->routeIs('applications.*')?'active' :'' }}">
@@ -159,6 +191,8 @@
                         <span>طلبات العيادات</span>
                     </a>
                 </li>
+                @endcan
+                @can('Manage Telescope')
                 <li class="nav-item ">
                     <a href="{{route('telescope_view')}}"
                        class="nav-link  {{request()->routeIs('telescope_view*')?'active' :'' }}">
@@ -167,6 +201,7 @@
                     </a>
                 </li>
 
+                @endcan
 
 
                 <li class="nav-item d-none">

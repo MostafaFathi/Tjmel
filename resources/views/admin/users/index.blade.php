@@ -32,7 +32,76 @@
 
 
     <div class="content">
+        <form action="" method="get" class="submit-search-form form">
+            <h5>البحث</h5>
+            <div class="form-row">
 
+
+                <div class="input-group col-3 mb-md-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="addon-wrapping">اسم المستخدم</span>
+                    </div>
+                    <input type="text" class="form-control" autocomplete="chrome-off" name="user_name"
+                           value="{{request()->get('user_name')}}"
+                           aria-describedby="addon-wrapping">
+                </div>
+
+
+                <input type="hidden" name="is_search_opened" class="is_search_opened"
+                       value="{{request()->has('is_search_opened') ? request()->get('is_search_opened') : 0}}">
+
+                <div class="collapse w-100 mb-3 {{request()->get('is_search_opened') == 1 ? 'show' : ''}}"
+                     id="collapseExample">
+                    <div class="card card-body">
+
+                        <div class="form-row">
+
+                            <div class="input-group col-4 mb-md-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"
+                                          id="addon-wrapping">البريد الالكتروني</span>
+                                </div>
+                                <input type="text" class="form-control" autocomplete="chrome-off" name="email"
+                                       value="{{request()->get('email')}}"
+                                       aria-describedby="addon-wrapping">
+                            </div>
+                            <div class="input-group col-4 mb-md-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"
+                                          id="addon-wrapping">النوع</span>
+                                </div>
+                                <select name="role" class="form-control" id="">
+                                    <option value="" >إختر</option>
+                                    <option value="admin" {{request()->has('role') && request()->get('role') == 'admin' ? 'selected' : ''}}>admin</option>
+                                    <option value="clinic" {{request()->has('role') && request()->get('role') == 'clinic' ? 'selected' : ''}}>clinic</option>
+                                    <option value="user" {{request()->has('role') && request()->get('role') == 'user' ? 'selected' : ''}}>user</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="input-group-append col-2 mb-md-3">
+                    <button class="btn btn-success mr-1 " type="submit">بحث</button>
+                    <button class="btn btn-success mr-1 search-advanced" type="button" data-toggle="collapse"
+                            data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        متقدم
+                    </button>
+                </div>
+
+                <div
+                    class="input-group-append {{request()->get('is_search_opened') == 1 ? 'col-10' : 'col-7'}} mb-md-3 export-div">
+
+
+                </div>
+
+
+            </div>
+        </form>
         <!-- Basic table -->
         <div class="card">
             <div class="table-responsive">
@@ -92,7 +161,11 @@
 
                     @endforeach
 
-
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            {{ $users->appends(request()->all())->links() }}
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -144,7 +217,21 @@
 @section('js_code')
 
     <script>
+        $(document).on('click', '.search-advanced', function () {
+            var is_search_opened = $('.is_search_opened').val();
+            if (is_search_opened == '0') {
+                is_search_opened = '1';
+                $('.export-div').removeClass('col-7');
+                $('.export-div').addClass('col-10');
+            } else {
+                $('.export-div').removeClass('col-10');
+                $('.export-div').addClass('col-7');
+                is_search_opened = '0';
+            }
 
+            $('.is_search_opened').val(is_search_opened);
+            return false;
+        });
         function delete_item(id, title) {
             $('#item_id').val(id);
             var url = "{{url('admin/users')}}/" + id;

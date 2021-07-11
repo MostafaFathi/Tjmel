@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class TipController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:Manage Tips');
+    }
     /**
      * Display a listing of the resource.
      *

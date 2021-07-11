@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class AppUserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:Manage App users');
+    }
     /**
      * Display a listing of the resource.
      *

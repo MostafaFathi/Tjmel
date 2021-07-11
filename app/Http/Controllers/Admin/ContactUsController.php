@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class ContactUsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:Manage Contact us');
+    }
     /**
      * Display a listing of the resource.
      *

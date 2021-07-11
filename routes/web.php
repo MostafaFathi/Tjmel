@@ -53,7 +53,7 @@ Auth::routes(['register' => false]);
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
     /* Start Dashboard management routes */
-    Route::group(['middleware' => ['role:admin']], function () {
+    Route::group(['middleware' => ['role:admin|user']], function () {
         /* Resources calls */
         Route::resources(['users' => UserController::class]);
         Route::resources(['users_groups' => UserGroupsController::class]);
@@ -63,31 +63,37 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         Route::resources(['agreement' => AgreementController::class]);
         Route::resources(['contact_us' => ContactUsController::class]);
         Route::resources(['settings' => SettingController::class]);
-        Route::resources(['clinics' => ClinicController::class]);
+        Route::group(['middleware' => ['permission:Manage Clinics']], function () {
+            Route::resources(['clinics' => ClinicController::class]);
+        });
+
         Route::resources(['sections' => SectionController::class]);
         Route::resources(['tips' => TipController::class]);
         Route::resources(['app_users' => AppUserController::class]);
         Route::group(['as' => 'admin.'], function () {
             Route::resources(['reservations' => ReservationController::class]);
         });
+        Route::group(['prefix' => 'ajax'], function () {
+            Route::get('/clinic', [ClinicController::class, 'getClinicAjax'])->name('getClinicAjax');
+        });
         /* one route calls */
         Route::get('/city/districts/{id}', [SettingController::class, 'cityDistricts'])->name('city.districts');
         Route::post('/clinics/image/delete/{id}', [ClinicController::class, 'destroyClinicImage'])->name('products.image.destroy');
-        Route::get('/applications', [ClinicController::class, 'clinicRequestsIndex'])->name('applications.index');
-        Route::get('/applications/{id}/destroy', [ClinicController::class, 'clinicRequestDestroy'])->name('applications.destroy');
+        Route::get('/applications', [ClinicController::class, 'clinicRequestsIndex'])->name('applications.index')->middleware('can:Manage Clinic requests');
+        Route::get('/applications/{id}/destroy', [ClinicController::class, 'clinicRequestDestroy'])->name('applications.destroy')->middleware('can:Manage Clinic requests');
         Route::get('/test/{id}', [HomeController::class, 'test'])->name('test');
 
         //start admin services and offers
-        Route::get('/services/acceptance', [ServiceOfferController::class, 'services'])->name('services.acceptance');
-        Route::get('/services/show/{id}', [ServiceOfferController::class, 'showService'])->name('admin.services.show');
-        Route::get('/services/edit/{id}', [ServiceOfferController::class, 'editService'])->name('admin.services.edit');
-        Route::put('/services/update/{id}', [ServiceOfferController::class, 'updateService'])->name('admin.services.update');
-        Route::delete('/services/delete/{id}', [ServiceOfferController::class, 'deleteService'])->name('admin.services.delete');
-        Route::get('/offers/acceptance', [ServiceOfferController::class, 'offers'])->name('offers.acceptance');
-        Route::get('/offers/show/{id}', [ServiceOfferController::class, 'showOffer'])->name('admin.offers.show');
-        Route::get('/offers/edit/{id}', [ServiceOfferController::class, 'editOffer'])->name('admin.offers.edit');
-        Route::put('/offers/update/{id}', [ServiceOfferController::class, 'updateOffer'])->name('admin.offers.update');
-        Route::delete('/offers/delete/{id}', [ServiceOfferController::class, 'deleteOffer'])->name('admin.offers.delete');
+        Route::get('/services/acceptance', [ServiceOfferController::class, 'services'])->name('services.acceptance')->middleware('can:Manage Services');
+        Route::get('/services/show/{id}', [ServiceOfferController::class, 'showService'])->name('admin.services.show')->middleware('can:Manage Services');
+        Route::get('/services/edit/{id}', [ServiceOfferController::class, 'editService'])->name('admin.services.edit')->middleware('can:Manage Services');
+        Route::put('/services/update/{id}', [ServiceOfferController::class, 'updateService'])->name('admin.services.update')->middleware('can:Manage Services');
+        Route::delete('/services/delete/{id}', [ServiceOfferController::class, 'deleteService'])->name('admin.services.delete')->middleware('can:Manage Services');
+        Route::get('/offers/acceptance', [ServiceOfferController::class, 'offers'])->name('offers.acceptance')->middleware('can:Manage Offers');
+        Route::get('/offers/show/{id}', [ServiceOfferController::class, 'showOffer'])->name('admin.offers.show')->middleware('can:Manage Offers');
+        Route::get('/offers/edit/{id}', [ServiceOfferController::class, 'editOffer'])->name('admin.offers.edit')->middleware('can:Manage Offers');
+        Route::put('/offers/update/{id}', [ServiceOfferController::class, 'updateOffer'])->name('admin.offers.update')->middleware('can:Manage Offers');
+        Route::delete('/offers/delete/{id}', [ServiceOfferController::class, 'deleteOffer'])->name('admin.offers.delete')->middleware('can:Manage Offers');
         Route::post('/clinics/services/approve/{id}', [ServiceOfferController::class, 'changeServiceStatus']);
         Route::post('/clinics/offers/approve/{id}', [ServiceOfferController::class, 'changeOfferStatus']);
         Route::delete('/clinics/rates/delete/{id}', [ServiceOfferController::class, 'deleteRate']);
@@ -96,8 +102,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
         Route::post('/reservations/{id}/status/{status?}', [ReservationController::class, 'changeStatus'])->name('reservations.status');
         Route::get('/reservations/{id}/advance_payment/status/{status}', [ReservationController::class, 'advancePaymentReturnStatus'])->name('reservations.advance_payment.status');
-        Route::post('/clinics/logo/delete/{id}', [ClinicController::class,'destroyClinicLogo'])->name('clinic.logo.destroy');
-        Route::get('/rates', [ClinicController::class,'rates'])->name('rates.index');
+        Route::post('/clinics/logo/delete/{id}', [ClinicController::class, 'destroyClinicLogo'])->name('clinic.logo.destroy');
+        Route::get('/rates', [ClinicController::class, 'rates'])->name('rates.index')->middleware('can:Manage Rates');
 
         //end admin services and offers
 
@@ -121,14 +127,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
         dd(shell_exec('cd .. && git reset --hard'));
     });
     Route::get('/git/reset/{id}', function ($id) {
-        dd(shell_exec('cd .. && git reset --hard '.$id));
+        dd(shell_exec('cd .. && git reset --hard ' . $id));
     });
     Route::get('/git/pull', function () {
         dd(shell_exec('cd .. && git pull origin main'));
     });
 
 });
-Route::group(['prefix' => 'payment', 'as'=>'payment.'], function () {
+Route::group(['prefix' => 'payment', 'as' => 'payment.'], function () {
     Route::get('/{userId}/{reserveId}', [PaymentController::class, 'index'])->name('index');
     Route::get('/callback', [PaymentController::class, 'callback'])->name('callback');
     Route::post('/callback/post', [PaymentController::class, 'postCallback'])->name('callback.post');

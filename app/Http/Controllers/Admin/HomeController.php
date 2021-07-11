@@ -40,7 +40,7 @@ class HomeController extends Controller
     public function index()
     {
 
-        if (!auth()->user()->hasRole('admin')) return redirect()->to(route('dashboard'));
+        if (!auth()->user()->hasRole('admin') and !auth()->user()->hasRole('user')) return redirect()->to(route('dashboard'));
         $appUsers = AppUser::count() - 1;
         $clinicCount = Clinic::count();
         $clinicRequestCount = ClinicRequest::count();
