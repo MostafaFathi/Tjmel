@@ -23,7 +23,7 @@ class Clinic extends Model
         'images' => 'json'
     ];
     //,'city_name','district_name'
-    protected $appends = [/*'rating',*/ 'images_urls', 'location_on_map', 'city', 'district_name', 'is_favorite','distance'];
+    protected $appends = [/*'rating',*/ 'images_urls', 'location_on_map', 'city', 'district_name', 'is_favorite','favorite_type','distance'];
 
     public function city()
     {
@@ -97,7 +97,7 @@ class Clinic extends Model
 //        dd(auth('sanctum')->user()->favorites);
         $isFavorite = false;
         foreach (auth('sanctum')->user()->favorites ?? [] as $favorite) {
-           if ($favorite->clinic_id == $this->id){
+           if ($favorite->type == 0 and $favorite->clinic_id == $this->id   ){
                $isFavorite = true;
                break;
            }
@@ -150,5 +150,9 @@ class Clinic extends Model
             return (float) $distance;
         }
 
+    }
+    public function getFavoriteTypeAttribute()
+    {
+        return 'Clinic';
     }
 }

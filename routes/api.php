@@ -48,6 +48,8 @@ Route::group(['middleware' => ['localization', 'auth:sanctum','blocked','throttl
         Route::get('/', [FavoriteController::class, 'showUserFavorites'])->name('index');
         Route::post('/', [FavoriteController::class, 'storeUserFavorite'])->name('store');
         Route::post('/remove', [FavoriteController::class, 'destroyUserFavorite'])->name('destroy');
+        Route::post('/offer', [FavoriteController::class, 'storeOfferFavorite'])->name('offer.store');
+        Route::post('/offer/remove', [FavoriteController::class, 'destroyOfferFavorite'])->name('offer.destroy');
     });
     Route::group(['prefix' => 'clinic', 'as' => 'clinic.'], function () {
         /* one route calls */
@@ -94,6 +96,7 @@ Route::group(['as' => 'api.', 'middleware' => ['localization', 'throttle:api']],
         Route::get('/agreement', [SettingController::class, 'showAgreement'])->name('agreement');
         Route::post('/contact_us', [SettingController::class, 'storeContactUs'])->name('contact_us');
         Route::get('/advertisements', [SettingController::class, 'getAdvertisement'])->name('advertisements');
+        Route::get('/sections', [SettingController::class, 'showSections'])->name('sections');
         Route::get('/', [SettingController::class, 'showSettings'])->name('show');
         Route::get('/cities', [SettingController::class, 'showCities'])->name('cities.show');
 

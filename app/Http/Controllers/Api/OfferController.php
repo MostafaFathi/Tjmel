@@ -26,7 +26,12 @@ class OfferController extends Controller
         $city_name = '%' . $location['city_name'] . '%' ?? '';
         $clinics = Clinic::where('city_name', 'LIKE', $city_name)->get()->pluck('id');
 //        dd($city_name);
-        $offers = Offer::where('status', 1)->wherein('clinic_id', $clinics)->orderBy('price_after', 'asc')->get();
+        $offers = Offer::query();
+        if (request()->has('section_id') and request()->get('section_id') != 0){
+
+            $offers = $offers->where('section_id', request()->get('section_id'));
+        }
+        $offers = $offers->where('status', 1)->wherein('clinic_id', $clinics)->orderBy('price_after', 'asc')->get();
 //            ->paginate($perPage);
         return response()->json(['data' => $offers->makeHidden('clinic')], 200);
     }

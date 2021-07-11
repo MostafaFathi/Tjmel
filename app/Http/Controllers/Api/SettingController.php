@@ -13,6 +13,7 @@ use App\Models\Data\City;
 use App\Models\Data\ContactUs;
 use App\Models\Data\District;
 use App\Models\Data\Setting;
+use App\Models\Service\Section;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -21,6 +22,20 @@ class SettingController extends Controller
     {
         $about_us = AboutUs::get()->first();
         return response()->json(['data' => $about_us], 200);
+    }
+    public function showSections()
+    {
+        $sections = Section::get();
+        $section = new Section();
+        $section->id = 0;
+        $section->title_ar = 'كل الاقسام';
+        $section->image = null;
+        $arr = [];
+        array_push($arr,$section);
+        foreach ($sections as $section) {
+            array_push($arr,$section);
+        }
+        return response()->json(['data' => $arr], 200);
     }
 
     public function showAgreement()

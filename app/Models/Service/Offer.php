@@ -14,7 +14,7 @@ class Offer extends Model
 {
     use HasFactory;
 
-    protected $appends = ['status_name', 'status_color','clinic_logo', 'section_name', 'section_logo','advanced_payment','image_url', 'earliest_appointment'];
+    protected $appends = ['status_name', 'status_color', 'is_favorite','favorite_type','clinic_logo', 'section_name', 'section_logo','advanced_payment','image_url', 'earliest_appointment'];
     protected $hidden = ['created_at','updated_at', 'section'];
 
     public function clinic()
@@ -64,6 +64,10 @@ class Offer extends Model
         else
             return null;
     }
+    public function getFavoriteTypeAttribute()
+    {
+        return 'Offer';
+    }
     public function getEarliestAppointmentAttribute()
     {
         $appointments = $this->appointments;
@@ -85,5 +89,19 @@ class Offer extends Model
             }
         }
         return 'لا يوجد موعد متاح';
+    }
+    public function getIsFavoriteAttribute()
+    {
+        if (auth('sanctum')->user() and auth('sanctum')->user()->id == 10101010)
+            return null;
+//        dd(auth('sanctum')->user()->favorites);
+        $isFavorite = false;
+        foreach (auth('sanctum')->user()->favorites ?? [] as $favorite) {
+            if ( $favorite->type == 1 and $favorite->offer_id == $this->id ){
+                $isFavorite = true;
+                break;
+            }
+        }
+        return $isFavorite;
     }
 }
