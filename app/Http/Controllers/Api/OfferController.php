@@ -76,7 +76,11 @@ class OfferController extends Controller
         foreach ($clinics as $clinic) {
 
             if (isset($clinic->offers) and count($clinic->offers) > 0) {
-                foreach ($clinic->offers->where('status', 1) as $item) {
+                $offers = $clinic->offers->where('status', 1);
+                if (request()->has('section_id') and request()->get('section_id') != 0){
+                    $offers = $clinic->offers->where('status', 1)->where('section_id', request()->get('section_id'));
+                }
+                foreach ($offers as $item) {
                     array_push($array, $item->makeHidden('clinic'));
                 }
 
